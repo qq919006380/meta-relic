@@ -136,9 +136,8 @@ export default function NFTPage() {
           {filteredNFTs.map((nft, index) => (
             <div
               key={nft.name}
-              className="bg-museum-stone/60 rounded-lg overflow-hidden hover:scale-105 transition-transform"
+              className="bg-museum-stone/60 rounded-lg overflow-hidden hover:bg-museum-stone/80 cursor-pointer transition-transform"
             >
-              {/* NFT 图片预览 */}
               <div className="relative aspect-square">
                 {['身体', '头', '眼睛', '鼻子', '佩饰'].map((trait) => {
                   const path = nft.image[trait];
@@ -154,10 +153,9 @@ export default function NFTPage() {
                     />
                   );
                 })}
-              </div>
-              {/* 添加名字显示 */}
-              <div className="p-3 text-center">
-                <h3 className="text-lg font-semibold text-museum-slate">{nft.name}</h3>
+                <div className="absolute bottom-0 left-0 right-0 bg-museum-ink/40 backdrop-blur-sm p-2">
+                  <h3 className="text-center text-museum-cream font-medium">{nft.name}</h3>
+                </div>
               </div>
             </div>
           ))}
