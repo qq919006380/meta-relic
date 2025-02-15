@@ -49,7 +49,14 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+  			museum: {
+  				cream: '#FFFF9F',      // 奶油色
+  				sand: '#E0D5B5',       // 沙色
+  				stone: '#909493',      // 石头灰
+  				slate: '#737574',      // 深灰
+  				ink: '#110E09',        // 墨黑
+  			},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

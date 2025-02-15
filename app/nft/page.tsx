@@ -108,7 +108,7 @@ export default function NFTPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-museum-sand text-museum-cream flex flex-col">
       <div className="p-4">
         <div className="flex flex-wrap gap-2">
           {tag.map((tagName) => {
@@ -119,8 +119,8 @@ export default function NFTPage() {
                 onClick={() => handleFilterChange('编号', tagName)}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   isSelected
-                    ? 'bg-blue-500 text-white' 
-                    : 'bg-[#111111] text-white hover:bg-blue-500'
+                    ? 'bg-museum-stone text-museum-cream' 
+                    : 'bg-museum-slate text-museum-sand hover:bg-museum-stone'
                 }`}
               >
                 {tagName}
@@ -135,7 +135,7 @@ export default function NFTPage() {
           {filteredNFTs.map((nft, index) => (
             <div 
               key={nft.name}
-              className="bg-[#111111] rounded-lg overflow-hidden hover:scale-105 transition-transform"
+              className="bg-museum-stone/60 rounded-lg overflow-hidden hover:scale-105 transition-transform"
             >
               {/* NFT 图片预览 */}
               <div className="relative aspect-square">
@@ -156,7 +156,7 @@ export default function NFTPage() {
               </div>
               {/* 添加名字显示 */}
               <div className="p-3 text-center">
-                <h3 className="text-lg font-semibold">{nft.name}</h3>
+                <h3 className="text-lg font-semibold text-museum-slate">{nft.name}</h3>
               </div>
             </div>
           ))}
