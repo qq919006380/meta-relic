@@ -57,7 +57,7 @@ for (let i = 1; i <= TOTAL_NFTS; i++) {
   // 为每个特征类型随机选择一个特征
   traitFolders.forEach(traitType => {
     const selectedTrait = getRandomTrait(traitType);
-    metadata.image[traitType] = `/metadataImg/${traitType}/${selectedTrait}`;
+    metadata.image[traitType] = `/metadata/img/${traitType}/${selectedTrait}`;
     metadata.attributes.push({
       trait_type: traitType,
       value: path.parse(selectedTrait).name
