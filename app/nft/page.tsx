@@ -22,13 +22,12 @@ interface Filters {
   身体?: string;
   鼻子?: string;
 }
-const tag=['守','兴','勇','忠','勤','福']
+const tag = ['守', '兴', '勇', '忠', '勤', '福']
 
 export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [filteredNFTs, setFilteredNFTs] = useState<NFTMetadata[]>([]);
-  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     fetch('/metadata/metadata.json')
@@ -42,12 +41,12 @@ export default function NFTPage() {
 
   useEffect(() => {
     let filtered = metadata;
-    
+
     // 编号筛选（支持多选）
     if (filters.编号) {
       const selectedTags = filters.编号.split(',').filter(Boolean);
       if (selectedTags.length > 0) {
-        filtered = filtered.filter(nft => 
+        filtered = filtered.filter(nft =>
           selectedTags.some(tag => nft.name.includes(tag))
         );
       }
@@ -57,7 +56,7 @@ export default function NFTPage() {
     Object.entries(filters).forEach(([key, value]) => {
       if (key !== '编号' && value) {
         filtered = filtered.filter(nft =>
-          nft.attributes.some(attr => 
+          nft.attributes.some(attr =>
             attr.trait_type === key && attr.value === value
           )
         );
@@ -72,7 +71,7 @@ export default function NFTPage() {
       setFilters(prev => {
         const currentTags = prev.编号 ? prev.编号.split(',') : [];
         const tagIndex = currentTags.indexOf(value);
-        
+
         let newTags;
         if (tagIndex === -1) {
           // 添加新标签
@@ -81,7 +80,7 @@ export default function NFTPage() {
           // 移除已选标签
           newTags = currentTags.filter((_, index) => index !== tagIndex);
         }
-        
+
         return {
           ...prev,
           编号: newTags.join(',')
@@ -95,9 +94,7 @@ export default function NFTPage() {
     }
   };
 
-  const handleSearch = () => {
-    handleFilterChange('编号', searchText);
-  };
+  
 
   if (!metadata.length) {
     return (
@@ -109,31 +106,35 @@ export default function NFTPage() {
 
   return (
     <div className="min-h-screen bg-museum-sand text-museum-cream flex flex-col">
-      <div className="p-4">
-        <div className="flex flex-wrap gap-2">
+      <div className="p-4 ">
+        <div className="flex flex-wrap gap-2 justify-center items-center">
+          <div className='text-museum-slate'>搜索</div>
           {tag.map((tagName) => {
             const isSelected = filters.编号?.split(',').includes(tagName);
+            const tagCount = metadata.filter(nft => nft.name.includes(tagName)).length;
             return (
               <button
                 key={tagName}
                 onClick={() => handleFilterChange('编号', tagName)}
-                className={`px-4 py-2 rounded-lg transition-colors ${
-                  isSelected
-                    ? 'bg-museum-stone text-museum-cream' 
-                    : 'bg-museum-slate text-museum-sand hover:bg-museum-stone'
-                }`}
+                className={`px-4 py-2 rounded-lg transition-colors ${isSelected
+                  ? 'bg-museum-stone text-museum-cream'
+                  : 'bg-museum-ink/80 text-museum-sand'
+                  }`}
               >
-                {tagName}
+                {tagName} ({tagCount})
               </button>
             );
           })}
         </div>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 container mx-auto">
+        <p className="text-museum-slate text-sm mb-2 text-right">
+          {filters.编号 ? '搜索结果' : '总共'}：{filteredNFTs.length} 个
+        </p>
         <div className="grid grid-cols-4 gap-6">
           {filteredNFTs.map((nft, index) => (
-            <div 
+            <div
               key={nft.name}
               className="bg-museum-stone/60 rounded-lg overflow-hidden hover:scale-105 transition-transform"
             >
