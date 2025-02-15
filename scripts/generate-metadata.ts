@@ -22,8 +22,11 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// 读取特征目录
-const traitFolders = fs.readdirSync(IMAGES_DIR);
+// 读取特征目录，过滤掉 .DS_Store 文件
+const traitFolders = fs.readdirSync(IMAGES_DIR)
+  .filter(folder => folder !== '.DS_Store');
+
+console.log('Available folders:', traitFolders); // 现在应该只显示实际的特征文件夹
 
 // 收集所有特征的图片
 const traitImages: Record<string, string[]> = {};
@@ -48,8 +51,8 @@ const allMetadata: NFTMetadata[] = [];
 
 for (let i = 1; i <= TOTAL_NFTS; i++) {
   const metadata: NFTMetadata = {
-    name: `Relic #${i}`,
-    description: `Relic #${i} - A unique combination of traits`,
+    name: '', // 暂时为空，稍后设置
+    description: '', // 暂时为空，稍后设置
     image: {},
     attributes: []
   };
@@ -63,6 +66,14 @@ for (let i = 1; i <= TOTAL_NFTS; i++) {
       value: path.parse(selectedTrait).name
     });
   });
+
+  // 获取头和鼻子的特征值
+  const headValue = metadata.attributes.find(attr => attr.trait_type === '头')?.value || '';
+  const noseValue = metadata.attributes.find(attr => attr.trait_type === '鼻子')?.value || '';
+  
+  // 组合名字
+  metadata.name = `${headValue}${noseValue} #${i}`;
+  metadata.description = `${metadata.name} - A unique combination of traits`;
 
   allMetadata.push(metadata);
 }

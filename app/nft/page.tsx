@@ -22,11 +22,13 @@ interface Filters {
   身体?: string;
   鼻子?: string;
 }
+const tag=['守','兴','勇','忠','勤','福']
 
 export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [filteredNFTs, setFilteredNFTs] = useState<NFTMetadata[]>([]);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     fetch('/metadata/metadata.json')
@@ -41,11 +43,14 @@ export default function NFTPage() {
   useEffect(() => {
     let filtered = metadata;
     
-    // 编号筛选
+    // 编号筛选（支持多选）
     if (filters.编号) {
-      filtered = filtered.filter(nft => 
-        nft.name.includes(filters.编号 || '')
-      );
+      const selectedTags = filters.编号.split(',').filter(Boolean);
+      if (selectedTags.length > 0) {
+        filtered = filtered.filter(nft => 
+          selectedTags.some(tag => nft.name.includes(tag))
+        );
+      }
     }
 
     // 属性筛选
@@ -63,10 +68,35 @@ export default function NFTPage() {
   }, [filters, metadata]);
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilters(prev => ({
-      ...prev,
-      [key]: value || undefined
-    }));
+    if (key === '编号') {
+      setFilters(prev => {
+        const currentTags = prev.编号 ? prev.编号.split(',') : [];
+        const tagIndex = currentTags.indexOf(value);
+        
+        let newTags;
+        if (tagIndex === -1) {
+          // 添加新标签
+          newTags = [...currentTags, value];
+        } else {
+          // 移除已选标签
+          newTags = currentTags.filter((_, index) => index !== tagIndex);
+        }
+        
+        return {
+          ...prev,
+          编号: newTags.join(',')
+        };
+      });
+    } else {
+      setFilters(prev => ({
+        ...prev,
+        [key]: value || undefined
+      }));
+    }
+  };
+
+  const handleSearch = () => {
+    handleFilterChange('编号', searchText);
   };
 
   if (!metadata.length) {
@@ -78,46 +108,29 @@ export default function NFTPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex">
-      {/* 左侧筛选栏 */}
-      <div className="w-64 bg-[#111111] p-4 space-y-6">
-        {/* 编号搜索 */}
-        <div>
-          <h3 className="text-lg mb-2">编号</h3>
-          <input
-            type="text"
-            placeholder="搜索编号..."
-            className="w-full px-3 py-2 bg-[#222222] rounded focus:outline-none"
-            onChange={(e) => handleFilterChange('编号', e.target.value)}
-          />
+    <div className="min-h-screen bg-black text-white flex flex-col">
+      <div className="p-4">
+        <div className="flex flex-wrap gap-2">
+          {tag.map((tagName) => {
+            const isSelected = filters.编号?.split(',').includes(tagName);
+            return (
+              <button
+                key={tagName}
+                onClick={() => handleFilterChange('编号', tagName)}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  isSelected
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-[#111111] text-white hover:bg-blue-500'
+                }`}
+              >
+                {tagName}
+              </button>
+            );
+          })}
         </div>
-
-        {/* 属性筛选 */}
-        {['佩饰', '头', '眼睛', '身体', '鼻子'].map((trait) => (
-          <div key={trait}>
-            <h3 className="text-lg mb-2">{trait}</h3>
-            <select
-              className="w-full px-3 py-2 bg-[#222222] rounded focus:outline-none"
-              onChange={(e) => handleFilterChange(trait, e.target.value)}
-            >
-              <option value="">全部</option>
-              {Array.from(new Set(metadata
-                .flatMap(nft => nft.attributes
-                  .filter(attr => attr.trait_type === trait)
-                  .map(attr => attr.value)
-                )
-              )).map(value => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
       </div>
 
-      {/* 主要内容区域 */}
-      <div className="flex-1 p-8">
+      <div className="flex-1">
         <div className="grid grid-cols-4 gap-6">
           {filteredNFTs.map((nft, index) => (
             <div 
@@ -140,6 +153,10 @@ export default function NFTPage() {
                     />
                   );
                 })}
+              </div>
+              {/* 添加名字显示 */}
+              <div className="p-3 text-center">
+                <h3 className="text-lg font-semibold">{nft.name}</h3>
               </div>
             </div>
           ))}
