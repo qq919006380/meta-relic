@@ -126,28 +126,20 @@ export default function NFTPage() {
             >
               {/* NFT 图片预览 */}
               <div className="relative aspect-square">
-                {Object.entries(nft.image).map(([trait, path]) => (
-                  <Image
-                    key={trait}
-                    src={path}
-                    alt={trait}
-                    fill
-                    style={{ objectFit: 'contain' }}
-                    className="absolute top-0 left-0"
-                  />
-                ))}
-              </div>
-              {/* NFT 信息 */}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{nft.name}</h3>
-                <div className="space-y-1">
-                  {nft.attributes.map((attr) => (
-                    <div key={attr.trait_type} className="flex justify-between text-sm">
-                      <span className="text-gray-400">{attr.trait_type}</span>
-                      <span>{attr.value}</span>
-                    </div>
-                  ))}
-                </div>
+                {['身体', '头', '眼睛', '鼻子', '佩饰'].map((trait) => {
+                  const path = nft.image[trait];
+                  if (!path) return null;
+                  return (
+                    <Image
+                      key={trait}
+                      src={path}
+                      alt={trait}
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      className="absolute top-0 left-0"
+                    />
+                  );
+                })}
               </div>
             </div>
           ))}
