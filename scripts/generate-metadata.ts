@@ -13,7 +13,7 @@ interface NFTMetadata {
   }>;
 }
 
-const IMAGES_DIR = path.join(process.cwd(), 'public', 'metadataImg');
+const IMAGES_DIR = path.join(process.cwd(), 'public', 'metadata','img');
 const OUTPUT_DIR = path.join(process.cwd(), 'public', 'metadata');
 const TOTAL_NFTS = 100;
 
