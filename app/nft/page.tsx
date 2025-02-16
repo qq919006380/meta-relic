@@ -3,6 +3,15 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { NFT_TAGS, NFT_TRAIT_LAYERS } from '../constants';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { NFTDetailDialog } from './components/NFTDetailDialog';
+import metadata from '@/public/metadata/metadata.json';
 
 interface NFTMetadata {
   name: string;
@@ -29,6 +38,7 @@ export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [filteredNFTs, setFilteredNFTs] = useState<NFTMetadata[]>([]);
+  const [selectedNFT, setSelectedNFT] = useState<NFTMetadata | null>(null);
 
   useEffect(() => {
     fetch('/metadata/metadata.json')
@@ -150,6 +160,7 @@ export default function NFTPage() {
           {filteredNFTs.map((nft, index) => (
             <div
               key={nft.name}
+              onClick={() => setSelectedNFT(nft)}
               className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/40 cursor-pointer transition-transform"
             >
               <div className="relative aspect-square">
@@ -175,6 +186,14 @@ export default function NFTPage() {
           ))}
         </div>
       </div>
+
+      <NFTDetailDialog 
+        nft={selectedNFT}
+        onOpenChange={(open) => {
+          if (!open) setSelectedNFT(null);
+        }}
+        allMetadata={metadata}
+      />
     </div>
   );
 }
