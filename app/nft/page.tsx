@@ -106,9 +106,9 @@ export default function NFTPage() {
   return (
     <div className="min-h-screen bg-museum-sand text-museum-cream flex flex-col">
       <nav className="bg-museum-stone/60 p-4">
-        <div className="container mx-auto flex justify-center items-center">
-          <div className="flex items-center gap-4 w-full">
-            <Link href="/">
+        <div className="container mx-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+            <Link href="/" className="flex justify-center">
               <Image
                 src="/logo.png"
                 alt="Logo"
@@ -118,7 +118,7 @@ export default function NFTPage() {
               />
             </Link>
 
-            <div className="flex-1 flex justify-center gap-2 items-center">
+            <div className="flex-1 flex flex-wrap justify-center gap-2 items-center">
               <div className='text-museum-slate'>搜索</div>
               {NFT_TAGS.map((tagName) => {
                 const isSelected = filters.编号?.split(',').includes(tagName);
@@ -127,10 +127,11 @@ export default function NFTPage() {
                   <button
                     key={tagName}
                     onClick={() => handleFilterChange('编号', tagName)}
-                    className={`px-4 py-2 rounded-lg transition-colors ${isSelected
-                      ? 'bg-museum-stone text-museum-cream'
-                      : 'bg-museum-ink/80 text-museum-sand'
-                      }`}
+                    className={`px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg transition-colors ${
+                      isSelected
+                        ? 'bg-museum-stone text-museum-cream'
+                        : 'bg-museum-ink/80 text-museum-sand'
+                    }`}
                   >
                     {tagName} ({tagCount})
                   </button>
@@ -141,15 +142,15 @@ export default function NFTPage() {
         </div>
       </nav>
 
-      <div className="flex-1 container mx-auto">
+      <div className="flex-1 container mx-auto px-4">
         <p className="text-museum-slate text-sm mb-2 text-right">
           {filters.编号 ? '搜索结果' : '总共'}：{filteredNFTs.length} 个
         </p>
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredNFTs.map((nft, index) => (
             <div
               key={nft.name}
-              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/80 cursor-pointer transition-transform"
+              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/40 cursor-pointer transition-transform"
             >
               <div className="relative aspect-square">
                 {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
@@ -166,7 +167,7 @@ export default function NFTPage() {
                     />
                   );
                 })}
-                <div className="absolute bottom-0 left-0 right-0 bg-museum-ink/40 backdrop-blur-sm p-2">
+                <div className="absolute z-10 bottom-0 left-0 right-0 bg-museum-ink/40 backdrop-blur-sm p-2">
                   <h3 className="text-center text-museum-cream font-medium">{nft.name}</h3>
                 </div>
               </div>
