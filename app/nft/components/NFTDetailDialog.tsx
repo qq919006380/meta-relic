@@ -65,9 +65,27 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
 
   const handleExport = async () => {
     if (!imageRef.current) return;
-    // console.log('imageRef.current', imageRef.current);
-    // return;
+
     try {
+      // 等待所有图片加载完成
+      const images = imageRef.current.getElementsByTagName('img');
+      await Promise.all(
+        Array.from(images).map(
+          img =>
+            new Promise((resolve) => {
+              if (img.complete) {
+                resolve(null);
+              } else {
+                img.onload = () => resolve(null);
+                img.onerror = () => resolve(null);
+              }
+            })
+        )
+      );
+
+      // 确保 DOM 已经完全更新
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       const dataUrl = await toPng(imageRef.current, {
         quality: 1.0,
         pixelRatio: 3,
