@@ -2,6 +2,7 @@ import Image from 'next/image';
 import {
   Dialog,
   DialogContent,
+  DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { NFT_TRAIT_LAYERS } from '../../constants';
@@ -42,10 +43,13 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
 
   return (
     <Dialog open={!!nft} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl p-0 gap-0 h-[90vh] md:h-auto">
+      <DialogTitle className="sr-only">
+        {nft.name} - NFT Details
+      </DialogTitle>
+      <DialogContent className="max-w-4xl p-0 gap-0 h-[90vh] md:h-auto bg-museum-sand border-museum-stone/30">
         <div className="grid grid-cols-1 md:grid-cols-2 h-full md:h-auto">
           {/* 左侧预览 */}
-          <div className="relative md:m-0 m-auto aspect-square bg-museum-stone/30 h-[40vh] md:h-auto flex items-center justify-center">
+          <div className="relative md:m-0 m-auto aspect-square bg-museum-stone/10 h-[40vh] md:h-auto flex items-center justify-center">
             {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
               const path = nft.image[trait];
               if (!path) return null;
@@ -65,15 +69,15 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
 
           {/* 右侧属性选择 */}
           <div className="p-4 md:p-6 overflow-y-auto">
-            <h2 className="text-lg md:text-xl font-bold mb-4">{nft.name}</h2>
-            
+            <h2 className="text-lg md:text-xl font-bold mb-4 text-museum-ink">{nft.name}</h2>
+
             <Tabs defaultValue={NFT_TRAIT_LAYERS[0].trait} className="w-full">
-              <TabsList className="grid grid-cols-3 md:grid-cols-5 h-auto gap-1">
+              <TabsList className="grid grid-cols-3 md:grid-cols-5 h-auto gap-1 bg-museum-stone/5">
                 {NFT_TRAIT_LAYERS.map(({ trait }) => (
-                  <TabsTrigger 
-                    key={trait} 
+                  <TabsTrigger
+                    key={trait}
                     value={trait}
-                    className="text-xs md:text-sm data-[state=active]:bg-museum-stone/20"
+                    className="text-xs md:text-sm text-museum-slate data-[state=active]:bg-museum-stone/20 data-[state=active]:text-museum-ink"
                   >
                     {trait}
                   </TabsTrigger>
@@ -87,7 +91,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
                       <Button
                         key={option}
                         variant="outline"
-                        className="aspect-square p-0 w-full h-full relative overflow-hidden"
+                        className="aspect-square bg-museum-stone/20 p-0 w-full h-full relative overflow-hidden border-museum-stone/30 hover:border-museum-stone hover:bg-museum-stone/5"
                       >
                         <Image
                           src={`/metadata/img/${trait}/${option}.png`}
