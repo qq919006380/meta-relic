@@ -146,17 +146,20 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
                 );
               })}
             </div>
-            <Button 
-              onClick={handleExport}
-              className="absolute z-20 bottom-4 left-4 bg-museum-ink text-museum-sand hover:bg-museum-ink/90"
-            >
-              导出图片
-            </Button>
           </div>
 
           {/* 右侧属性选择 */}
           <div className="p-4 md:p-6 overflow-y-auto">
-            <h2 className="text-lg md:text-xl font-bold mb-4 text-museum-ink">{nft.name}</h2>
+            <div className="flex items-center  space-x-3 mb-4">
+              <h2 className="text-lg md:text-xl font-bold text-museum-ink">{nft.name}</h2>
+              <Button 
+                size="sm"
+                onClick={handleExport}
+                className="bg-museum-ink/80 text-museum-sand hover:bg-museum-ink/90"
+              >
+                导出图片
+              </Button>
+            </div>
             
             <Tabs defaultValue={NFT_TRAIT_LAYERS[0].trait} className="w-full">
               <TabsList className="grid grid-cols-3 md:grid-cols-5 h-auto gap-1 bg-museum-stone/5">
