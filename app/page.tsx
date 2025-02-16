@@ -18,9 +18,25 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     setIsLoaded(true);
+    // 在客户端运行时获取窗口尺寸
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
@@ -33,23 +49,26 @@ export default function Home() {
           style={{ y }}
         >
           {[...Array(20)].map((_, i) => {
-            // 随机选择两个标签组合
+            // 使用 windowSize 而不是直接访问 window
+            const randomX = Math.random() * (windowSize.width || 1000);
+            const randomY = Math.random() * (windowSize.height || 800);
+            
             const tag1 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
             const tag2 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
-
+            
             return (
               <motion.div
                 key={i}
                 className="absolute text-6xl text-museum-ink/10"
-                initial={{
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight,
+                initial={{ 
+                  x: randomX,
+                  y: randomY,
                   rotate: 0,
                   scale: 0
                 }}
                 animate={{
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight,
+                  x: randomX,
+                  y: randomY,
                   rotate: 360,
                   scale: 1
                 }}
