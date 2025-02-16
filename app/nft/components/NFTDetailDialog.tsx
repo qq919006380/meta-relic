@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -40,6 +41,23 @@ function getTraitOptions(metadata: NFTMetadata[], traitType: string): string[] {
 
 export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDialogProps) {
   if (!nft) return null;
+  
+  // 添加状态来跟踪每个特质的当前值
+  const [currentTraits, setCurrentTraits] = useState(() => {
+    // 初始化为 NFT 当前的特质
+    return nft.attributes.reduce((acc, attr) => {
+      acc[attr.trait_type] = attr.value;
+      return acc;
+    }, {} as Record<string, string>);
+  });
+
+  // 处理特质切换
+  const handleTraitChange = (traitType: string, value: string) => {
+    setCurrentTraits(prev => ({
+      ...prev,
+      [traitType]: value
+    }));
+  };
 
   return (
     <Dialog open={!!nft} onOpenChange={onOpenChange}>
@@ -51,12 +69,13 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
           {/* 左侧预览 */}
           <div className="relative md:m-0 m-auto aspect-square bg-museum-stone/10 h-[40vh] md:h-auto flex items-center justify-center">
             {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
-              const path = nft.image[trait];
-              if (!path) return null;
+              // 使用当前选中的特质值来显示图片
+              const value = currentTraits[trait];
+              if (!value) return null;
               return (
                 <Image
                   key={trait}
-                  src={path}
+                  src={`/metadata/img/${trait}/${value}.png`}
                   alt={trait}
                   fill
                   draggable={false}
@@ -70,12 +89,12 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
           {/* 右侧属性选择 */}
           <div className="p-4 md:p-6 overflow-y-auto">
             <h2 className="text-lg md:text-xl font-bold mb-4 text-museum-ink">{nft.name}</h2>
-
+            
             <Tabs defaultValue={NFT_TRAIT_LAYERS[0].trait} className="w-full">
               <TabsList className="grid grid-cols-3 md:grid-cols-5 h-auto gap-1 bg-museum-stone/5">
                 {NFT_TRAIT_LAYERS.map(({ trait }) => (
-                  <TabsTrigger
-                    key={trait}
+                  <TabsTrigger 
+                    key={trait} 
                     value={trait}
                     className="text-xs md:text-sm text-museum-slate data-[state=active]:bg-museum-stone/20 data-[state=active]:text-museum-ink"
                   >
@@ -87,20 +106,27 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
               {NFT_TRAIT_LAYERS.map(({ trait }) => (
                 <TabsContent key={trait} value={trait} className="mt-4">
                   <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
-                    {getTraitOptions(allMetadata, trait).map((option) => (
-                      <Button
-                        key={option}
-                        variant="outline"
-                        className="aspect-square bg-museum-stone/20 p-0 w-full h-full relative overflow-hidden border-museum-stone/30 hover:border-museum-stone hover:bg-museum-stone/5"
-                      >
-                        <Image
-                          src={`/metadata/img/${trait}/${option}.png`}
-                          alt={`${trait} ${option}`}
-                          fill
-                          className="object-cover"
-                        />
-                      </Button>
-                    ))}
+                    {getTraitOptions(allMetadata, trait).map((option) => {
+                      const isSelected = currentTraits[trait] === option;
+                      return (
+                        <div
+                          key={option}
+                          onClick={() => handleTraitChange(trait, option)}
+                          className={`
+                            aspect-square p-0 w-full h-full relative overflow-hidden cursor-pointer
+                            border border-museum-stone/30 bg-museum-stone/5 rounded-md
+                            ${isSelected ? 'ring-2 ring-museum-ink ring-offset-2 ring-offset-museum-sand' : ''}
+                          `}
+                        >
+                          <Image
+                            src={`/metadata/img/${trait}/${option}.png`}
+                            alt={`${trait} ${option}`}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      )
+                    })}
                   </div>
                 </TabsContent>
               ))}
