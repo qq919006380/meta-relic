@@ -45,7 +45,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
       <DialogContent className="max-w-4xl p-0 gap-0 h-[90vh] md:h-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 h-full md:h-auto">
           {/* 左侧预览 */}
-          <div className="relative md:m-0 m-auto aspect-square bg-museum-slate/30 h-[40vh] md:h-auto">
+          <div className="relative md:m-0 m-auto aspect-square bg-museum-stone/30 h-[40vh] md:h-auto flex items-center justify-center">
             {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
               const path = nft.image[trait];
               if (!path) return null;
@@ -87,7 +87,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
                       <Button
                         key={option}
                         variant="outline"
-                        className="aspect-square p-0 relative overflow-hidden"
+                        className="aspect-square p-0 w-full h-full relative overflow-hidden"
                       >
                         <Image
                           src={`/metadata/img/${trait}/${option}.png`}
