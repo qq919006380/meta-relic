@@ -149,7 +149,7 @@ export default function NFTPage() {
           {filteredNFTs.map((nft, index) => (
             <div
               key={nft.name}
-              className="bg-museum-stone/60 rounded-lg overflow-hidden hover:bg-museum-stone/80 cursor-pointer transition-transform"
+              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/80 cursor-pointer transition-transform"
             >
               <div className="relative aspect-square">
                 {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {

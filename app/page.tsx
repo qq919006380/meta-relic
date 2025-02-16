@@ -2,6 +2,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { NFT_TAGS } from './constants';
+import Image from 'next/image';
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -9,12 +11,12 @@ export default function Home() {
     target: containerRef,
     offset: ["start start", "end end"]
   });
-  
+
   // 新的视差效果
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
   const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -26,43 +28,56 @@ export default function Home() {
       {/* Hero Section */}
       <div className="h-screen relative overflow-hidden bg-museum-sand">
         {/* 背景视差层 */}
-        <motion.div 
+        <motion.div
           className="absolute inset-0 overflow-hidden"
           style={{ y }}
         >
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-6xl text-museum-ink/10"
-              initial={{ 
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                rotate: 0,
-                scale: 0
-              }}
-              animate={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                rotate: 360,
-                scale: 1
-              }}
-              transition={{
-                duration: Math.random() * 10 + 5,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-            >
-              石狗
-            </motion.div>
-          ))}
+          {[...Array(20)].map((_, i) => {
+            // 随机选择两个标签组合
+            const tag1 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
+            const tag2 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
+
+            return (
+              <motion.div
+                key={i}
+                className="absolute text-6xl text-museum-ink/10"
+                initial={{
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                  rotate: 0,
+                  scale: 0
+                }}
+                animate={{
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                  rotate: 360,
+                  scale: 1
+                }}
+                transition={{
+                  duration: Math.random() * 10 + 5,
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              >
+                {tag1 + tag2}
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* 主标题内容 - 反向视差 */}
-        <motion.div 
+        <motion.div
           className="relative z-10 h-full flex items-center justify-center"
           style={{ y: textY, opacity }}
         >
           <div className="text-center">
+            <Image
+              src="/logo.png"
+              alt="Meta Relic Logo"
+              width={547}
+              height={238}
+              className=" "
+            />
             <motion.h1
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -99,7 +114,7 @@ export default function Home() {
       {/* 文化介绍部分 */}
       <div className="min-h-screen bg-museum-sand text-museum-ink py-20">
         <div className="max-w-6xl mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 1 }}
