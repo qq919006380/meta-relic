@@ -128,7 +128,7 @@ export default function Home() {
           </div>
         </motion.div>
       </div>
-
+      
       {/* 文化介绍部分 */}
       <div className="min-h-screen bg-museum-sand text-museum-ink py-20">
         <div className="max-w-6xl mx-auto px-4">
