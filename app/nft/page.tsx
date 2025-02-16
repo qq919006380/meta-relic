@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { NFT_TAGS, NFT_TRAIT_LAYERS } from '../constants';
 
 interface NFTMetadata {
   name: string;
@@ -22,7 +24,6 @@ interface Filters {
   身体?: string;
   鼻子?: string;
 }
-const tag = ['守', '兴', '勇', '忠', '勤', '福']
 
 export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
@@ -94,8 +95,6 @@ export default function NFTPage() {
     }
   };
 
-  
-
   if (!metadata.length) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -106,27 +105,41 @@ export default function NFTPage() {
 
   return (
     <div className="min-h-screen bg-museum-sand text-museum-cream flex flex-col">
-      <div className="p-4 ">
-        <div className="flex flex-wrap gap-2 justify-center items-center">
-          <div className='text-museum-slate'>搜索</div>
-          {tag.map((tagName) => {
-            const isSelected = filters.编号?.split(',').includes(tagName);
-            const tagCount = metadata.filter(nft => nft.name.includes(tagName)).length;
-            return (
-              <button
-                key={tagName}
-                onClick={() => handleFilterChange('编号', tagName)}
-                className={`px-4 py-2 rounded-lg transition-colors ${isSelected
-                  ? 'bg-museum-stone text-museum-cream'
-                  : 'bg-museum-ink/80 text-museum-sand'
-                  }`}
-              >
-                {tagName} ({tagCount})
-              </button>
-            );
-          })}
+      <nav className="bg-museum-stone/60 p-4">
+        <div className="container mx-auto flex justify-center items-center">
+          <div className="flex items-center gap-4 w-full">
+            <Link href="/">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={547}
+                height={238}
+                className="rounded-lg w-[100px]"
+              />
+            </Link>
+
+            <div className="flex-1 flex justify-center gap-2 items-center">
+              <div className='text-museum-slate'>搜索</div>
+              {NFT_TAGS.map((tagName) => {
+                const isSelected = filters.编号?.split(',').includes(tagName);
+                const tagCount = metadata.filter(nft => nft.name.includes(tagName)).length;
+                return (
+                  <button
+                    key={tagName}
+                    onClick={() => handleFilterChange('编号', tagName)}
+                    className={`px-4 py-2 rounded-lg transition-colors ${isSelected
+                      ? 'bg-museum-stone text-museum-cream'
+                      : 'bg-museum-ink/80 text-museum-sand'
+                      }`}
+                  >
+                    {tagName} ({tagCount})
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
-      </div>
+      </nav>
 
       <div className="flex-1 container mx-auto">
         <p className="text-museum-slate text-sm mb-2 text-right">
@@ -139,7 +152,7 @@ export default function NFTPage() {
               className="bg-museum-stone/60 rounded-lg overflow-hidden hover:bg-museum-stone/80 cursor-pointer transition-transform"
             >
               <div className="relative aspect-square">
-                {['身体', '头', '眼睛', '鼻子', '佩饰'].map((trait) => {
+                {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
                   const path = nft.image[trait];
                   if (!path) return null;
                   return (
@@ -148,7 +161,7 @@ export default function NFTPage() {
                       src={path}
                       alt={trait}
                       fill
-                      style={{ objectFit: 'contain' }}
+                      style={{ objectFit: 'contain', zIndex }}
                       className="absolute top-0 left-0"
                     />
                   );
