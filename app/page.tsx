@@ -52,15 +52,15 @@ export default function Home() {
             // 使用 windowSize 而不是直接访问 window
             const randomX = Math.random() * (windowSize.width || 1000);
             const randomY = Math.random() * (windowSize.height || 800);
-            
+
             const tag1 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
             const tag2 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
-            
+
             return (
               <motion.div
                 key={i}
                 className="absolute text-6xl text-museum-ink/10"
-                initial={{ 
+                initial={{
                   opacity: 0,
                   scale: 0
                 }}
@@ -82,7 +82,87 @@ export default function Home() {
             );
           })}
         </motion.div>
+        <div className='absolute bottom-0 bg-slate-200 left-0 w-full h-full flex  items-end'>
+          {/* <Image
+            src="/img/l10.png"
+            alt="Meta Relic Logo"
+            width={449}
+            height={285}
+            className="absolute left-1/2 -translate-x-1/2   bottom-[10rem] opacity-70"
+          />
+          <Image
+            src="/img/l8.png"
+            alt="Meta Relic Logo"
+            width={182}
+            height={141}
+            className=" absolute left-[32rem] bottom-[10rem]  "
+          /> */}
+          {/* <Image
+            src="/img/l9.png"
+            alt="Meta Relic Logo"
+            width={244}
+            height={170}
+            className="absolute left-[19rem] bottom-[-1rem]  "
+          /> */}
+          {/* <Image
+            src="/img/l1.png"
+            alt="Meta Relic Logo"
+            width={234}
+            height={304}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/img/l2.png"
+            alt="Meta Relic Logo"
+            width={222}
+            height={312}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/img/l3.png"
+            alt="Meta Relic Logo"
+            width={212}
+            height={326}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/l4.png"
+            alt="Meta Relic Logo"
+            width={211}
+            height={308}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/l5.png"
+            alt="Meta Relic Logo"
+            width={208}
+            height={299}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/img/l6.png"
+            alt="Meta Relic Logo"
+            width={233}
+            height={318}
+            className=" "
+          /> */}
+          {/* <Image
+            src="/l7.png"
+            alt="Meta Relic Logo"
+            width={228}
+            height={319}
+            className=" "
+          /> */}
+          
 
+          {/* <Image
+            src="/img/l11.png"
+            alt="Meta Relic Logo"
+            width={211}
+            height={278}
+            className=" "
+          /> */}
+        </div>
         {/* 主标题内容 - 反向视差 */}
         <motion.div
           className="relative z-10 h-full flex items-center justify-center"
@@ -128,7 +208,7 @@ export default function Home() {
           </div>
         </motion.div>
       </div>
-      
+
       {/* 文化介绍部分 */}
       <div className="min-h-screen bg-museum-sand text-museum-ink py-20">
         <div className="max-w-6xl mx-auto px-4">
@@ -154,25 +234,25 @@ export default function Home() {
             ].map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ 
+                initial={{
                   opacity: 0,
                   scale: 0.95,
                   y: 20
                 }}
-                whileInView={{ 
+                whileInView={{
                   opacity: 1,
                   scale: 1,
                   y: 0
                 }}
-                transition={{ 
+                transition={{
                   duration: 0.6,
                   delay: index * 0.15,
                   ease: [0.215, 0.610, 0.355, 1.000]
                 }}
-                whileHover={{ 
+                whileHover={{
                   scale: 1.03,
                   y: -5,
-                  transition: { 
+                  transition: {
                     duration: 0.2,
                     ease: "easeOut"
                   }
@@ -180,10 +260,10 @@ export default function Home() {
                 className="bg-museum-stone backdrop-blur-sm p-6 rounded-lg hover:bg-museum-stone/80 
                          cursor-pointer transition-all"
               >
-                <motion.h3 
+                <motion.h3
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ 
+                  transition={{
                     duration: 0.5,
                     delay: index * 0.15 + 0.2,
                     ease: "easeOut"
@@ -192,10 +272,10 @@ export default function Home() {
                 >
                   {item.title}
                 </motion.h3>
-                <motion.p 
+                <motion.p
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ 
+                  transition={{
                     duration: 0.5,
                     delay: index * 0.15 + 0.3,
                     ease: "easeOut"
@@ -212,8 +292,8 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ 
-              duration: 0.8, 
+            transition={{
+              duration: 0.8,
               ease: [0.645, 0.045, 0.355, 1]
             }}
             viewport={{ once: true, margin: "-100px" }}
@@ -222,7 +302,7 @@ export default function Home() {
             <motion.h2
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ 
+              transition={{
                 duration: 0.6,
                 ease: [0.215, 0.610, 0.355, 1.000]
               }}
@@ -239,17 +319,17 @@ export default function Home() {
               ].map((text, index) => (
                 <motion.p
                   key={index}
-                  initial={{ 
+                  initial={{
                     opacity: 0,
                     y: 20,
                     scale: 0.98
                   }}
-                  whileInView={{ 
+                  whileInView={{
                     opacity: 1,
                     y: 0,
                     scale: 1
                   }}
-                  transition={{ 
+                  transition={{
                     duration: 0.5,
                     delay: index * 0.1,
                     ease: [0.215, 0.610, 0.355, 1.000]
