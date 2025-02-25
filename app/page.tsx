@@ -202,7 +202,6 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.div>
-
       </div>
 
       {/* 文化介绍部分 */}

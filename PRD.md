@@ -12,10 +12,23 @@
 
 - 把话说石狗的4个模块做成Nav分别对应4个页面
     - https://www.zjlib.com/channels/32.html
-- 首页的起个ip点击可以弹出详情
-
+- 首页的起个ip点击可以弹出详情 - https://ui.shadcn.com/docs/components/popover
 
 
 - 成品展示（待定）
 - 联系我（待定）
 
+----------------
+
+.main{
+    .main > .nav{
+        
+    }
+}
+
+
+
+less 小而美 &
+sass 大而全 @ 
+
+周一 、周二 、周三
