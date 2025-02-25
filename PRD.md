@@ -9,6 +9,13 @@
 - 首页底部添加:public/playbill/home.png
 - 优化首页:添加适当的素材交互
 
+
+- 把话说石狗的4个模块做成Nav分别对应4个页面
+    - https://www.zjlib.com/channels/32.html
+- 首页的起个ip点击可以弹出详情
+
+
+
 - 成品展示（待定）
 - 联系我（待定）
 
