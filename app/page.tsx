@@ -65,7 +65,20 @@ export default function Home() {
 
         {/* 背景文化元素层 */}
         <div className="absolute inset-0">
-          {/* 博物馆主图 */}
+          {/* 新增图片 */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center z-10"
+            style={{ opacity: 0.3 }} // 调整透明度以融合背景
+          >
+            <Image
+              src="/playbill/home.png" // 替换为实际图片路径
+              alt="文化元素"
+              fill
+              className="object-cover" // 确保图片等比例缩放
+            />
+          </motion.div>
+
+          {/* 博物馆主图
           <motion.div
             className="absolute right-[8%] -translate-x-1/2 bottom-[40vh] w-[30vw] h-[40vh] z-20"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -79,7 +92,7 @@ export default function Home() {
               fill
               className="object-contain mix-blend-luminosity"
             />
-          </motion.div>
+          </motion.div> */}
 
           {/* 左侧骑楼元素
           <motion.div
@@ -97,7 +110,7 @@ export default function Home() {
             />
           </motion.div> */}
 
-          {/* 新增三元塔元素 */}
+          {/* 新增三元塔元素
           <motion.div
             className="absolute right-[15%] bottom-[33vh] w-[10vw] h-[25vh] z-20"
             initial={{ x: 100, opacity: 0 }}
@@ -111,7 +124,7 @@ export default function Home() {
               fill
               className="object-contain mix-blend-overlay"
             />
-          </motion.div>
+          </motion.div> */}
 
           {/* 底部装饰石狗群 */}
           <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-10 z-20">
@@ -121,7 +134,7 @@ export default function Home() {
                 className="relative w-24 h-32 opacity-50 hover:opacity-100 transition-opacity"
                 whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
                 initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 0.7 }}
+                whileInView={{ y: 0, opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 120 }}
               >
                 <Image
@@ -136,7 +149,7 @@ export default function Home() {
 
           {/* 底部装饰纹样 */}
           <motion.div
-            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-30"
+            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-30 blur-[4px]"
             initial={{ y: 0 }}
             whileInView={{ y: 0 }}
             transition={{ duration: 1}}
