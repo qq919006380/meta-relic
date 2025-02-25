@@ -3,6 +3,12 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { IP_TAGS } from './constants';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -42,27 +48,6 @@ export default function Home() {
     <div ref={containerRef} className="relative from-museum-stone/80 via-museum-sand/90 to-museum-cream">
       {/* Hero Section */}
       <div className="h-screen relative overflow-hidden bg-gradient-to-br">
-        {/* Logo - 添加动画效果 */}
-        <motion.div
-          className="absolute top-8 left-12 z-30"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{
-            delay: 0.3,
-            type: "spring",
-            stiffness: 120,
-            damping: 10
-          }}
-        >
-          <Image
-            src="/logo.png"
-            alt="Meta Relic Logo"
-            width={200}
-            height={87}
-            className="hover:opacity-90 transition-opacity"
-          />
-        </motion.div>
-
         {/* 背景文化元素层 */}
         <div className="absolute inset-0">
           {/* 新增图片 */}
@@ -130,21 +115,59 @@ export default function Home() {
           <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20">
             {/* 移动端显示3个，桌面端显示7个 */}
             {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
-              <motion.div
-                key={num}
-                className="relative w-16 h-24 md:w-24 md:h-32 opacity-50 hover:opacity-100 transition-opacity"
-                whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
-                initial={{ y: 50, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 120 }}
-              >
-                <Image
-                  src={`/img/l${num}.png`}
-                  alt="石狗"
-                  fill
-                  className="object-contain drop-shadow-lg"
-                />
-              </motion.div>
+              <HoverCard key={num}>
+                <HoverCardTrigger asChild>
+                  <motion.div
+                    className="relative w-16 h-24 md:w-24 md:h-32 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
+                    whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+                    initial={{ y: 50, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ type: 'spring', stiffness: 120 }}
+                  >
+                    <Image
+                      src={`/img/l${num}.png`}
+                      alt="石狗"
+                      fill
+                      className="object-contain drop-shadow-lg"
+                    />
+                  </motion.div>
+                </HoverCardTrigger>
+                <HoverCardContent className="w-[30rem] p-0 bg-museum-sand border-museum-stone shadow-lg">
+                  <div className="flex">
+                    {/* 左侧图片区域 - 垂直居中 */}
+                    <div className="w-1/3 flex items-center justify-center rounded-lg bg-white m-2">
+                      <Image
+                        src={`/img/dogIp/IP${num}.png`}
+                        alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                        width={150}
+                        height={200}
+                        className="object-contain h-full w-full rounded-l-md"
+                      />
+                    </div>
+                    
+                    {/* 右侧文案区域 - 占据2/3宽度 */}
+                    <div className="w-2/3 p-4 flex flex-col space-y-1">
+                      {/* IP名称 */}
+                      <h3 className="text-lg text-museum-ink font-zhanku">
+                        {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                      </h3>
+                      
+                      {/* IP介绍 */}
+                      <p className="text-xs text-museum-slate">
+                        {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
+                      </p>
+                      
+                      {/* 故事背景 */}
+                      <div>
+                        <h4 className="text-xs font-semibold text-museum-stone mt-2">故事背景</h4>
+                        <p className="text-xs text-museum-slate">
+                          {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipBg}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
             ))}
           </div>
 

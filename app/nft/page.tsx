@@ -15,7 +15,6 @@ import metadata from '@/public/metadata/metadata.json';
 import { NFTMetadata, Filters } from '@/app/nft/type';
 import { NFTIntroDialog } from './components/NFTIntroDialog';
 
-
 export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
   const [filters, setFilters] = useState<Filters>({});
