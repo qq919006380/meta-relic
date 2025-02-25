@@ -12,33 +12,16 @@ import {
 import { Button } from "@/components/ui/button"
 import { NFTDetailDialog } from './components/NFTDetailDialog';
 import metadata from '@/public/metadata/metadata.json';
+import { NFTMetadata, Filters } from '@/app/nft/type';
+import { NFTIntroDialog } from './components/NFTIntroDialog';
 
-interface NFTMetadata {
-  name: string;
-  description: string;
-  image: {
-    [key: string]: string;
-  };
-  attributes: Array<{
-    trait_type: string;
-    value: string;
-  }>;
-}
-
-interface Filters {
-  编号?: string;
-  佩饰?: string;
-  头?: string;
-  眼睛?: string;
-  身体?: string;
-  鼻子?: string;
-}
 
 export default function NFTPage() {
   const [metadata, setMetadata] = useState<NFTMetadata[]>([]);
   const [filters, setFilters] = useState<Filters>({});
   const [filteredNFTs, setFilteredNFTs] = useState<NFTMetadata[]>([]);
-  const [selectedNFT, setSelectedNFT] = useState<NFTMetadata | null>(null);
+  const [selectedDetailNFT, setSelectedDetailNFT] = useState<NFTMetadata | null>(null);
+  const [selectedIntroNFT, setSelectedIntroNFT] = useState<NFTMetadata | null>(null);
 
   useEffect(() => {
     fetch('/metadata/metadata.json')
@@ -137,11 +120,10 @@ export default function NFTPage() {
                   <button
                     key={tagName}
                     onClick={() => handleFilterChange('编号', tagName)}
-                    className={`px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg transition-colors ${
-                      isSelected
+                    className={`px-3 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg transition-colors ${isSelected
                         ? 'bg-museum-stone text-museum-cream'
                         : 'bg-museum-ink/80 text-museum-sand'
-                    }`}
+                      }`}
                   >
                     {tagName} ({tagCount})
                   </button>
@@ -160,8 +142,7 @@ export default function NFTPage() {
           {filteredNFTs.map((nft, index) => (
             <div
               key={nft.name}
-              onClick={() => setSelectedNFT(nft)}
-              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/40 cursor-pointer transition-transform"
+              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/40 transition-transform"
             >
               <div className="relative aspect-square">
                 {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {
@@ -179,7 +160,21 @@ export default function NFTPage() {
                   );
                 })}
                 <div className="absolute z-10 bottom-0 left-0 right-0 bg-museum-ink/40 backdrop-blur-sm p-2">
-                  <h3 className="text-center text-museum-cream font-medium">{nft.name}</h3>
+                  <h3 className="text-center text-museum-cream font-medium mb-2">{nft.name}</h3>
+                  <div className="flex justify-center gap-2">
+                    <button
+                      onClick={() => setSelectedDetailNFT(nft)}
+                      className="px-3 py-1 text-sm bg-museum-stone/80 text-museum-sand rounded hover:bg-museum-stone"
+                    >
+                      搭配
+                    </button>
+                    <button
+                      onClick={() => setSelectedIntroNFT(nft)}
+                      className="px-3 py-1 text-sm bg-museum-stone/80 text-museum-sand rounded hover:bg-museum-stone"
+                    >
+                      详情
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -187,12 +182,19 @@ export default function NFTPage() {
         </div>
       </div>
 
-      <NFTDetailDialog 
-        nft={selectedNFT}
+      <NFTDetailDialog
+        nft={selectedDetailNFT}
         onOpenChange={(open) => {
-          if (!open) setSelectedNFT(null);
+          if (!open) setSelectedDetailNFT(null);
         }}
         allMetadata={metadata}
+      />
+
+      <NFTIntroDialog
+        nft={selectedIntroNFT}
+        onOpenChange={(open) => {
+          if (!open) setSelectedIntroNFT(null);
+        }}
       />
     </div>
   );

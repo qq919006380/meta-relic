@@ -2,7 +2,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { NFT_TAGS } from './constants';
 import Image from 'next/image';
 
 export default function Home() {
@@ -40,142 +39,117 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative from-museum-stone/80 via-museum-sand/90 to-museum-cream">
       {/* Hero Section */}
-      <div className="h-screen relative overflow-hidden bg-museum-sand">
-        {/* 背景视差层 */}
+      <div className="h-screen relative overflow-hidden bg-gradient-to-br">
+        {/* Logo - 添加动画效果 */}
         <motion.div
-          className="absolute inset-0 overflow-hidden"
-          style={{ y }}
+          className="absolute top-8 left-12 z-30"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            delay: 0.3,
+            type: "spring",
+            stiffness: 120,
+            damping: 10
+          }}
         >
-          {isLoaded && [...Array(20)].map((_, i) => {
-            // 使用 windowSize 而不是直接访问 window
-            const randomX = Math.random() * (windowSize.width || 1000);
-            const randomY = Math.random() * (windowSize.height || 800);
-
-            const tag1 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
-            const tag2 = NFT_TAGS[Math.floor(Math.random() * NFT_TAGS.length)];
-
-            return (
-              <motion.div
-                key={i}
-                className="absolute text-6xl text-museum-ink/10"
-                initial={{
-                  opacity: 0,
-                  scale: 0
-                }}
-                animate={{
-                  opacity: 1,
-                  x: randomX,
-                  y: randomY,
-                  rotate: 360,
-                  scale: 1
-                }}
-                transition={{
-                  duration: Math.random() * 10 + 5,
-                  repeat: Infinity,
-                  repeatType: "reverse"
-                }}
-              >
-                {tag1 + tag2}
-              </motion.div>
-            );
-          })}
-        </motion.div>
-        <div className='absolute bottom-0 bg-slate-200 left-0 w-full h-full flex  items-end'>
-          {/* <Image
-            src="/img/l10.png"
-            alt="Meta Relic Logo"
-            width={449}
-            height={285}
-            className="absolute left-1/2 -translate-x-1/2   bottom-[10rem] opacity-70"
-          />
           <Image
-            src="/img/l8.png"
+            src="/logo.png"
             alt="Meta Relic Logo"
-            width={182}
-            height={141}
-            className=" absolute left-[32rem] bottom-[10rem]  "
-          /> */}
-          {/* <Image
-            src="/img/l9.png"
-            alt="Meta Relic Logo"
-            width={244}
-            height={170}
-            className="absolute left-[19rem] bottom-[-1rem]  "
-          /> */}
-          {/* <Image
-            src="/img/l1.png"
-            alt="Meta Relic Logo"
-            width={234}
-            height={304}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/img/l2.png"
-            alt="Meta Relic Logo"
-            width={222}
-            height={312}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/img/l3.png"
-            alt="Meta Relic Logo"
-            width={212}
-            height={326}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/l4.png"
-            alt="Meta Relic Logo"
-            width={211}
-            height={308}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/l5.png"
-            alt="Meta Relic Logo"
-            width={208}
-            height={299}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/img/l6.png"
-            alt="Meta Relic Logo"
-            width={233}
-            height={318}
-            className=" "
-          /> */}
-          {/* <Image
-            src="/l7.png"
-            alt="Meta Relic Logo"
-            width={228}
-            height={319}
-            className=" "
-          /> */}
-          
+            width={200}
+            height={87}
+            className="hover:opacity-90 transition-opacity"
+          />
+        </motion.div>
 
-          {/* <Image
-            src="/img/l11.png"
-            alt="Meta Relic Logo"
-            width={211}
-            height={278}
-            className=" "
-          /> */}
+        {/* 背景文化元素层 */}
+        <div className="absolute inset-0">
+          {/* 博物馆主图 */}
+          <motion.div
+            className="absolute right-[8%] -translate-x-1/2 bottom-[40vh] w-[30vw] h-[40vh] z-20"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 0.3, scale: 1 }}
+            transition={{ duration: 1.2 }}
+            whileHover={{ y: -10, scale: 1.05, opacity: 0.6, transition: { duration: 0.2, ease: 'easeOut' } }}
+          >
+            <Image
+              src="/img/l10.png"
+              alt="雷州博物馆"
+              fill
+              className="object-contain mix-blend-luminosity"
+            />
+          </motion.div>
+
+          {/* 左侧骑楼元素
+          <motion.div
+            className="absolute left-[5%] bottom-[35vh] w-[15vw] h-[20vh] z-20"
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 0.4 }}
+            transition={{ duration: 0.8 }}
+            whileHover={{ y: -10, scale: 1.05, opacity: 0.8, transition: { duration: 0.2, ease: 'easeOut' } }}
+          >
+            <Image
+              src="/img/l8.png"
+              alt="雷州骑楼"
+              fill
+              className="object-contain drop-shadow-[5px_5px_10px_rgba(0,0,0,0.2)]"
+            />
+          </motion.div> */}
+
+          {/* 新增三元塔元素 */}
+          <motion.div
+            className="absolute right-[15%] bottom-[33vh] w-[10vw] h-[25vh] z-20"
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 0.6 }}
+            transition={{ duration: 0.8 }}
+            whileHover={{ y: -10, scale: 1.05, opacity: 0.8, transition: { duration: 0.2, ease: 'easeOut' } }}
+          >
+            <Image
+              src="/img/l11.png"
+              alt="雷州三元塔"
+              fill
+              className="object-contain mix-blend-overlay"
+            />
+          </motion.div>
+
+          {/* 底部装饰石狗群 */}
+          <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-10 z-20">
+            {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+              <motion.div
+                key={num}
+                className="relative w-24 h-32 opacity-50 hover:opacity-100 transition-opacity"
+                whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
+                initial={{ y: 50, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 0.7 }}
+                transition={{ type: 'spring', stiffness: 120 }}
+              >
+                <Image
+                  src={`/img/l${num}.png`}
+                  alt="石狗"
+                  fill
+                  className="object-contain drop-shadow-lg"
+                />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* 底部装饰纹样 */}
+          <motion.div
+            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-30"
+            initial={{ y: 0 }}
+            whileInView={{ y: 0 }}
+            transition={{ duration: 1}}
+          />
         </div>
+
         {/* 主标题内容 - 反向视差 */}
         <motion.div
-          className="relative z-10 h-full flex items-center justify-center"
+          className="relative h-full flex items-center justify-center z-10"
           style={{ y: textY, opacity }}
         >
-          <div className="text-center">
-            <Image
-              src="/logo.png"
-              alt="Meta Relic Logo"
-              width={547}
-              height={238}
-              className=" "
-            />
+          <div className="text-center space-y-8">
+            {/* 英文标题 */}
             <motion.h1
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -184,19 +158,26 @@ export default function Home() {
             >
               Meta Relic
             </motion.h1>
-            <motion.p
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-2xl mb-12 text-museum-slate max-w-2xl mx-auto"
+
+            {/* 副标题 */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-xl font-serif font-bold text-museum-ink/80"
             >
               探索雷州石狗文化的数字艺术传承
-            </motion.p>
+            </motion.div>
+
+            {/* 开始探索按钮 */}
             <motion.div
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="relative z-40 pb-4"
             >
+              {/* 按钮容器增加防护间距 */}
+
               <Link
                 href="/nft"
                 className="inline-block px-8 py-4 bg-museum-ink/80 text-museum-sand rounded-lg 
@@ -207,11 +188,47 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.div>
+
       </div>
 
       {/* 文化介绍部分 */}
-      <div className="min-h-screen bg-museum-sand text-museum-ink py-20">
-        <div className="max-w-6xl mx-auto px-4">
+      <div className="min-h-screen bg-gradient-to-b text-museum-ink py-20 relative overflow-hidden">
+        {/* 新增背景文化元素 */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          {/* 左侧装饰元素 - 文化纹样 */}
+          <motion.div
+            className="absolute left-[2%] top-[10%] w-[60vw] h-[80vh]"
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 0.5 }}
+            transition={{ duration: 1.2, delay: 0.3 }}
+            viewport={{ margin: "-30%", once: true }}
+          >
+            <Image
+              src="/img/l13.png"
+              alt="文化纹样1"
+              fill
+              className="object-contain mix-blend-luminosity"
+            />
+          </motion.div>
+
+          {/* 右侧装饰元素 - 文化纹样
+          <motion.div
+            className="absolute right-[2%] top-1/3 w-[60vw] h-[80vh]"
+            initial={{ x: 100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 0.2 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
+            viewport={{ margin: "-30%", once: true }}
+          >
+            <Image
+              src="/img/l12.png"
+              alt="文化纹样2"
+              fill
+              className="object-contain mix-blend-overlay blur-[1px]"
+            />
+          </motion.div> */}
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -258,7 +275,7 @@ export default function Home() {
                   }
                 }}
                 className="bg-museum-stone backdrop-blur-sm p-6 rounded-lg hover:bg-museum-stone/80 
-                         cursor-pointer transition-all"
+                           cursor-pointer transition-all"
               >
                 <motion.h3
                   initial={{ opacity: 0, x: -20 }}
@@ -268,7 +285,7 @@ export default function Home() {
                     delay: index * 0.15 + 0.2,
                     ease: "easeOut"
                   }}
-                  className="text-2xl font-bold mb-4 text-museum-cream"
+                  className="font-zhanku text-2xl mb-4 text-museum-cream"
                 >
                   {item.title}
                 </motion.h3>
@@ -306,7 +323,7 @@ export default function Home() {
                 duration: 0.6,
                 ease: [0.215, 0.610, 0.355, 1.000]
               }}
-              className="text-5xl font-bold mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent"
+              className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent"
             >
               历史渊源
             </motion.h2>
@@ -351,7 +368,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="mt-32 rounded-2xl p-12 bg-gradient-to-b from-museum-stone/5 to-museum-stone/10 backdrop-blur-sm"
           >
-            <h2 className="text-4xl font-bold mb-12 text-museum-ink text-center">信仰起源</h2>
+            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">信仰起源</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
@@ -360,7 +377,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="space-y-6"
               >
-                <h3 className="text-2xl font-semibold text-museum-ink border-b border-museum-stone/20 pb-4">
+                <h3 className="text-2xl font-zhanku text-museum-ink border-b border-museum-stone/20 pb-4">
                   图腾演变
                 </h3>
                 <p className="text-museum-slate leading-relaxed">
@@ -375,7 +392,7 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="space-y-6"
               >
-                <h3 className="text-2xl font-semibold text-museum-ink border-b border-museum-stone/20 pb-4">
+                <h3 className="text-2xl font-zhanku text-museum-ink border-b border-museum-stone/20 pb-4">
                   民族融合
                 </h3>
                 <p className="text-museum-slate leading-relaxed">
@@ -394,7 +411,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="mt-32 rounded-2xl p-12 bg-gradient-to-b from-transparent to-museum-stone/5"
           >
-            <h2 className="text-4xl font-bold mb-12 text-museum-ink text-center">文化传承</h2>
+            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
             <div className="space-y-8 text-museum-slate max-w-4xl mx-auto">
               {[
                 "古雷州百越族中的俚、僚、僮人都是黄帝的亲族，他们从黄河中下游南迁至岭海之滨，一部分移徙雷州成为雷州先民。",
@@ -423,7 +440,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
             className="mt-32 mb-20 rounded-2xl p-12 bg-gradient-to-b from-museum-stone/10 to-transparent"
           >
-            <h2 className="text-4xl font-bold mb-12 text-museum-ink text-center">文化价值</h2>
+            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化价值</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {[
                 {
@@ -443,14 +460,14 @@ export default function Home() {
                   viewport={{ once: true }}
                   className="space-y-6 p-8 rounded-xl bg-museum-stone/5 hover:bg-museum-stone/10 transition-all duration-300"
                 >
-                  <h3 className="text-2xl font-semibold text-museum-ink">{item.title}</h3>
+                  <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
                   <p className="text-museum-slate leading-relaxed">{item.content}</p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

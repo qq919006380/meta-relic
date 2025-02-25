@@ -10,18 +10,7 @@ import { NFT_TRAIT_LAYERS } from '../../constants';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { toPng } from 'html-to-image';
 import { useRef } from 'react';
-
-interface NFTMetadata {
-  name: string;
-  description: string;
-  image: {
-    [key: string]: string;
-  };
-  attributes: Array<{
-    trait_type: string;
-    value: string;
-  }>;
-}
+import { NFTMetadata } from '@/app/nft/type';
 
 interface NFTDetailDialogProps {
   nft: NFTMetadata | null;
