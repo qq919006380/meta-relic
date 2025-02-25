@@ -127,11 +127,12 @@ export default function Home() {
           </motion.div> */}
 
           {/* 底部装饰石狗群 */}
-          <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-10 z-20">
-            {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+          <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20">
+            {/* 移动端显示3个，桌面端显示7个 */}
+            {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
               <motion.div
                 key={num}
-                className="relative w-24 h-32 opacity-50 hover:opacity-100 transition-opacity"
+                className="relative w-16 h-24 md:w-24 md:h-32 opacity-50 hover:opacity-100 transition-opacity"
                 whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
                 initial={{ y: 50, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
