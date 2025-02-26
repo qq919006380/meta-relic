@@ -45,21 +45,21 @@ export default function Home() {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative from-museum-stone/80 via-museum-sand/90 to-museum-cream">
+    <div ref={containerRef} className="relative bg-museum-sand">
       {/* Hero Section */}
-      <div className="h-screen relative overflow-hidden bg-gradient-to-br">
+      <div className="h-screen relative overflow-hidden">
         {/* 背景文化元素层 */}
         <div className="absolute inset-0">
-          {/* 新增图片 */}
+          {/* 背景图片 - 调整透明度和混合模式 */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center z-10"
-            style={{ opacity: 0.3 }} // 调整透明度以融合背景
+            style={{ opacity: 0.15 }} // 降低透明度
           >
             <Image
-              src="/playbill/home.png" // 替换为实际图片路径
+              src="/playbill/home.png"
               alt="文化元素"
               fill
-              className="object-cover" // 确保图片等比例缩放
+              className="object-cover mix-blend-soft-light" // 添加混合模式
             />
           </motion.div>
 
@@ -167,9 +167,9 @@ export default function Home() {
             ))}
           </div>
 
-          {/* 底部装饰纹样 */}
+          {/* 底部装饰纹样 - 调整透明度和模糊度 */}
           <motion.div
-            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-30 blur-[4px]"
+            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-20 blur-[2px]"
             initial={{ y: 0 }}
             whileInView={{ y: 0 }}
             transition={{ duration: 1 }}
@@ -224,7 +224,7 @@ export default function Home() {
       </div>
 
       {/* 文化介绍部分 */}
-      <div className="min-h-screen bg-gradient-to-b text-museum-ink py-20 relative overflow-hidden">
+      <div className="min-h-screen py-20 relative overflow-hidden">
         {/* 新增背景文化元素 */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           {/* 左侧装饰元素 - 文化纹样 */}
@@ -306,8 +306,9 @@ export default function Home() {
                     ease: "easeOut"
                   }
                 }}
-                className="bg-museum-stone backdrop-blur-sm p-6 rounded-lg hover:bg-museum-stone/80 
-                           cursor-pointer transition-all"
+                className="bg-white/10 backdrop-blur-md p-6 rounded-lg 
+                           hover:bg-white/15 cursor-pointer transition-all
+                           border border-white/20 shadow-xl"
               >
                 <motion.h3
                   initial={{ opacity: 0, x: -20 }}
@@ -317,7 +318,7 @@ export default function Home() {
                     delay: index * 0.15 + 0.2,
                     ease: "easeOut"
                   }}
-                  className="font-zhanku text-2xl mb-4 text-museum-cream"
+                  className="font-zhanku text-2xl mb-4 text-museum-ink"
                 >
                   {item.title}
                 </motion.h3>
@@ -329,7 +330,7 @@ export default function Home() {
                     delay: index * 0.15 + 0.3,
                     ease: "easeOut"
                   }}
-                  className="text-museum-cream"
+                  className="text-museum-slate"
                 >
                   {item.content}
                 </motion.p>
@@ -337,7 +338,7 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* 历史渊源部分 */}
+          {/* 历史渊源部分 - 深色毛玻璃效果 */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -346,7 +347,8 @@ export default function Home() {
               ease: [0.645, 0.045, 0.355, 1]
             }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 text-center max-w-4xl mx-auto"
+            className="mt-32 text-center max-w-4xl mx-auto bg-black/10 backdrop-blur-xl 
+                       rounded-2xl p-12 border border-white/20 shadow-lg"
           >
             <motion.h2
               initial={{ opacity: 0, scale: 0.9 }}
@@ -392,13 +394,14 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* 信仰起源部分 */}
+          {/* 信仰起源部分 - 深色毛玻璃效果 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 rounded-2xl p-12 bg-gradient-to-b from-museum-stone/5 to-museum-stone/10 backdrop-blur-sm"
+            className="mt-32 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                       border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">信仰起源</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -435,13 +438,14 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* 文化传承部分 */}
+          {/* 文化传承部分 - 深色毛玻璃效果 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 rounded-2xl p-12 bg-gradient-to-b from-transparent to-museum-stone/5"
+            className="mt-32 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                       border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
             <div className="space-y-8 text-museum-slate max-w-4xl mx-auto">
@@ -464,13 +468,14 @@ export default function Home() {
             </div>
           </motion.div>
 
-          {/* 文化价值部分 */}
+          {/* 文化价值部分 - 深色毛玻璃效果 */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 mb-20 rounded-2xl p-12 bg-gradient-to-b from-museum-stone/10 to-transparent"
+            className="mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                       border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化价值</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -490,7 +495,9 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="space-y-6 p-8 rounded-xl bg-museum-stone/5 hover:bg-museum-stone/10 transition-all duration-300"
+                  className="space-y-6 p-8 rounded-xl bg-white/5 backdrop-blur-lg
+                             hover:bg-white/10 transition-all duration-300 
+                             border border-white/20 shadow-lg"
                 >
                   <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
                   <p className="text-museum-slate leading-relaxed">{item.content}</p>
