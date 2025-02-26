@@ -118,7 +118,7 @@ export default function Home() {
               <HoverCard key={num}>
                 <HoverCardTrigger asChild>
                   <div
-                    className="relative w-16 h-24 md:w-24 md:h-32   transition-opacity cursor-pointer"
+                    className="relative w-16 h-24 md:w-24 md:h-32    transition-opacity cursor-pointer"
                   >
                     <Image
                       src={`/img/l${num}.png`}
@@ -137,7 +137,7 @@ export default function Home() {
                         alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                         width={150}
                         height={200}
-                        className="object-contain h-full w-full rounded-l-md"
+                        className="object-contain h-full w-full rounded-lg shadow-xl  p-2 py-2"
                       />
                     </div>
 

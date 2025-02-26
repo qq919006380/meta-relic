@@ -18,6 +18,8 @@ export default function Nav() {
         { href: '/protection', text: '雷州石狗保护' },
     ];
 
+    const isCurrentPath = (href: string) => pathname === href;
+
     return <div>
         {showNav && (
             <nav className=" top-0 left-0 w-full bg-gradient-to-r from-museum-ink to-museum-ink/80 shadow-lg z-30">
@@ -38,9 +40,13 @@ export default function Nav() {
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
-                                    <span className="text-gray-300 text-lg font-medium hover:text-white transition-colors duration-200 whitespace-nowrap">
+                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${
+                                        isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'
+                                    }`}>
                                         {link.text}
-                                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-200 group-hover:w-full"></span>
+                                        <span className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-200 ${
+                                            isCurrentPath(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                                        }`}></span>
                                     </span>
                                 </a>
                             ))}
@@ -73,7 +79,11 @@ export default function Nav() {
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-800 rounded-md whitespace-nowrap"
+                                    className={`block px-3 py-2 text-base font-medium rounded-md whitespace-nowrap ${
+                                        isCurrentPath(link.href)
+                                            ? 'text-white bg-gray-800'
+                                            : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                                    }`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     {link.text}
