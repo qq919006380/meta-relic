@@ -9,6 +9,14 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -24,6 +32,11 @@ export default function Home() {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+
+  const autoplayRef = useRef(
+    // 设置了 3000ms (3秒) 的轮播间隔 stopOnInteraction: false 确保用户交互后继续自动播放
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
 
   useEffect(() => {
     setIsLoaded(true);
@@ -489,28 +502,43 @@ export default function Home() {
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">数字藏品展示</h2>
             
-            {/* 添加NFT展示轮播 */}
-            <div className="relative overflow-hidden rounded-xl h-[60vh] max-h-[600px] my-12">
-              <div className="absolute inset-0 flex items-center">
-                <div className="flex space-x-8 animate-scroll">
+            {/* NFT展示轮播 */}
+            <div className="relative my-12">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                plugins={[autoplayRef.current]}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
                   {[1, 2, 3, 4, 5, 6, 7].map((num) => (
-                    <div key={num} className="relative flex-shrink-0 w-[300px] h-[400px] rounded-xl overflow-hidden group">
-                      <Image
-                        src={`/img/dogIp/IP${num}.png`}
-                        alt={`石狗数字藏品${num}`}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                        <div className="p-6 text-white">
-                          <h3 className="text-xl font-zhanku">{IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}</h3>
-                          <p className="text-sm mt-2 line-clamp-2">{IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}</p>
+                    <CarouselItem key={num} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                      <div className="relative h-[350px] rounded-xl overflow-hidden group">
+                        <Image
+                          src={`/img/dogIp/IP${num}.png`}
+                          alt={`石狗数字藏品${num}`}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                          <div className="p-6 text-white">
+                            <h3 className="text-xl font-zhanku">
+                              {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                            </h3>
+                            <p className="text-sm mt-2 line-clamp-2">
+                              {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </CarouselItem>
                   ))}
-                </div>
-              </div>
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex mx-2 bg-[#b8b097]"/>
+                <CarouselNext className="hidden md:flex mx-2 bg-[#b8b097]"/>
+              </Carousel>
             </div>
             
             <div className="text-center mt-8">
