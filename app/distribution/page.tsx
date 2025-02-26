@@ -1,7 +1,7 @@
 export default function Distribution() {
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8 text-center">石狗分布及置放</h1>
+            <h1 className="text-3xl font-zhanku mb-8 text-center">石狗分布及置放</h1>
             
             <section className="mb-8">
                 <p className="text-lg leading-relaxed mb-6">
@@ -10,7 +10,7 @@ export default function Distribution() {
             </section>
 
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">地域分布</h2>
+                <h2 className="text-2xl font-zhanku mb-4">地域分布</h2>
                 <p className="text-lg leading-relaxed mb-6">
                     在雷州半岛上，放眼古城门、村口、古道、巷口、门口、水口或古墓前，定会看到一尊尊或坐、或蹲、或伏，大小不一，形态各异的用玄武岩石雕刻而成的石狗。石狗遍布雷州各镇2500多条村庄，但不同时期的石狗分布区域还是有其特殊性。
                 </p>
@@ -20,14 +20,14 @@ export default function Distribution() {
             </section>
 
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">村庄分布</h2>
+                <h2 className="text-2xl font-zhanku mb-4">村庄分布</h2>
                 <p className="text-lg leading-relaxed mb-6">
                     在村庄里雷州石狗主要分布在乡村的村头、巷口、庙宇旁，以及房屋门前、水塘边。不同地域发现的石狗形态差异很大，区域间发展演变的序列特征比较明显，一般发现石狗的村庄建村年代都比较早，最迟也在清末民国时期。据不完全统计，雷州半岛遗留的石狗数万只。目前，雷州博物馆收集的石狗已有近1000只，大部分石狗散置乡野荒郊、村头巷尾，或掩埋地下或由村民自行保管或仍"原生态坚守"。
                 </p>
             </section>
 
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">文化传播</h2>
+                <h2 className="text-2xl font-zhanku mb-4">文化传播</h2>
                 <p className="text-lg leading-relaxed mb-6">
                     历史上民族部属的迁徙与商贸往来，各族民俗的文化传播，使雷州石狗文化对周边地区产生了深远的影响。蒋廷瑜《铜鼓史话》中提到"制造和使用云雷纹铜鼓的部族原是东汉时代的'乌浒人'，到两晋南北朝叫'俚人'或'俚僚'，到唐代'这些部族的绝大部分与汉族融合'成为壮族和汉族的一支，但也有一部分保留原来的民族特性，发展成为海南岛上的黎族'俚'、'黎'和'雷'的读音相近，也可以看到其中的密切关系"。
                 </p>
@@ -37,7 +37,7 @@ export default function Distribution() {
             </section>
 
             <section className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4">置放位置</h2>
+                <h2 className="text-2xl font-zhanku mb-4">置放位置</h2>
                 <p className="text-lg leading-relaxed">
                     从雷州石狗调查小组的普查材料看，唐朝前的雷州石狗主要摆放在公共祭祀地、祠庙以及聚居村落附近；宋元石狗的置放位置扩展到田野、鱼塘、宅门、渡口、桥梁、村场、街道等地；明清石狗置放位置除了在村口、路边、巷头、门口、墙壁、塘边、河畔、田洋、山坡、宗祠寺庙、坟前等地方，还扩展到了码头、商铺、干道，甚至作为船只的碇石。
                 </p>

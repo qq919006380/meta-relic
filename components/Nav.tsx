@@ -37,7 +37,7 @@ export default function Nav() {
                             </Link>
                         </div>
 
-                        <div className="hidden md:flex items-center space-x-6">
+                        <div className="hidden md:flex items-center space-x-6 font-zhanku">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
                                     <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'

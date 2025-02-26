@@ -234,7 +234,7 @@ export default function Home() {
       <div className="min-h-screen py-20 relative overflow-hidden">
         {/* 新增背景文化元素 */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          {/* 左侧装饰元素 - 文化纹样 */}
+          {/* 左侧装饰元素 - 文化纹样
           <motion.div
             className="absolute left-[2%] top-[10%] w-[60vw] h-[80vh]"
             initial={{ x: -100, opacity: 0 }}
@@ -247,22 +247,6 @@ export default function Home() {
               alt="文化纹样1"
               fill
               className="object-contain mix-blend-luminosity"
-            />
-          </motion.div>
-
-          {/* 右侧装饰元素 - 文化纹样
-          <motion.div
-            className="absolute right-[2%] top-1/3 w-[60vw] h-[80vh]"
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 0.2 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
-            viewport={{ margin: "-30%", once: true }}
-          >
-            <Image
-              src="/img/l12.png"
-              alt="文化纹样2"
-              fill
-              className="object-contain mix-blend-overlay blur-[1px]"
             />
           </motion.div> */}
         </div>

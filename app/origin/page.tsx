@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 export default function Origin() {
   return <div className="container mx-auto px-4 py-8 prose prose-stone max-w-4xl">
-    <h1 className="text-4xl font-bold mb-8">雷州石狗信仰源流</h1>
+    <h1 className="text-4xl mb-8 font-zhanku">雷州石狗信仰源流</h1>
 
     <section className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">图腾崇拜的起源</h2>
+      <h2 className="text-2xl mb-4 font-zhanku">图腾崇拜的起源</h2>
       <div className="flex flex-col md:flex-row gap-4 items-start mb-4">
         <Image 
           src="/img/realDog/1.png" 
@@ -26,7 +26,7 @@ export default function Origin() {
     </section>
 
     <section className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">多元文化的融合</h2>
+      <h2 className="text-2xl font-zhanku mb-4">多元文化的融合</h2>
       <div className="flex flex-col md:flex-row-reverse gap-4 items-start mb-4">
         <Image 
           src="/img/l1.png" 
@@ -47,7 +47,7 @@ export default function Origin() {
     </section>
 
     <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">自然崇拜与信仰演变</h2>
+      <h2 className="text-2xl font-zhanku mb-4">自然崇拜与信仰演变</h2>
       <p>
         雷州石狗崇拜的形成与当地独特的自然环境密不可分。作为世界第三大雷电频发区，雷州半岛的先民对雷电现象产生了强烈的敬畏之情。在古老的传说中，雷神派遣天狗吞食太阳以保护万物，因此"日食"现象被称为"天狗食日"，体现了先民对自然现象的独特解读。
       </p>
@@ -57,7 +57,7 @@ export default function Origin() {
     </section>
 
     <section className="mb-12">
-      <h2 className="text-2xl font-bold mb-4">文化传承与艺术价值</h2>
+      <h2 className="text-2xl font-zhanku mb-4">文化传承与艺术价值</h2>
       <p>
         雷州石狗是先民智慧的结晶，其造型既有实用功能，又蕴含着丰富的文化内涵。早期石狗以平头方脸、昂首朝天为特征，体现了古代"天人合一"的哲学思想。这种造型特征不仅展现了先民高超的雕刻技艺，更反映了他们对自然的敬畏与理解。
       </p>

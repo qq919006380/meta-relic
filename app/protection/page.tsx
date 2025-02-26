@@ -1,7 +1,7 @@
 export default function Protection() {
     return (
         <div className="max-w-4xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">雷州石狗保护</h1>
+            <h1 className="text-3xl font-zhanku mb-8">雷州石狗保护</h1>
             
             <div className="space-y-6">
                 <p>
@@ -12,7 +12,7 @@ export default function Protection() {
                     1995年9月20日，广东省民俗学家陈摩人一行莅雷进行民俗考察时说："如果把雷州石狗集中起来，建一座园林，堪称世界一绝。"
                 </p>
 
-                <h2 className="text-2xl font-semibold mt-8 mb-4">保护工作的开展</h2>
+                <h2 className="text-2xl font-zhanku mt-8 mb-4">保护工作的开展</h2>
                 <p>
                     事隔六年后的2001年6月，时任雷州市委常委、宣传部长的张鼎在宣传文化工作暨《雷州胜景》一书出版发行会上，提出要尽快征集保护雷州石狗。会后，他找到笔者（时任雷州市博物馆馆长），要求尽快征集保护雷州石狗。与此同时，负责文化文物工作的副市长张石、负责旅游工作的副市长陈才君、负责城建工作的副市长何健都十分关心征集保护石狗的工作2001年12月18日，笔者根据他们的建议，为雷州市文物管理委员会拟文，向雷州市人民政府提出《关于于征集雷州石狗的意见》。雷州市委市政府高度重视雷州石狗文化的保护工作，以雷府办函[2001]96号文《转发雷州市文物管理委员会关于征集雷州石狗意见的通知》，要求各镇人民政府、市府直属有关单位积极配合，把散落遗存于荒村野岭中的石狗征集起来，加强保护，建设一座雷州石狗文化园林；保护与研究雷州民俗石狗文化，打造石狗文化品牌，创建优秀历史文化旅游城市，发展雷州市文化旅游事业。
                 </p>
@@ -97,7 +97,7 @@ export default function Protection() {
                     2005年9月30日，广东省文化厅向国家文化部申报雷州石狗信仰为"国家非物质文化遗产代表作名录"。
                 </p>
 
-                <h2 className="text-2xl font-semibold mt-8 mb-4">重要成果</h2>
+                <h2 className="text-2xl font-zhanku mt-8 mb-4">重要成果</h2>
                 <p>
                     2007年12月，"雷州石狗信仰"被纳入国家非物质文化遗产代表名录。
                 </p>

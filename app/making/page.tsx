@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Making() {
     return (
         <article className="max-w-4xl mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-8">石狗雕制起始</h1>
+            <h1 className="text-3xl font-zhanku mb-8">石狗雕制起始</h1>
             
             <div className="flex flex-col md:flex-row md:gap-8 mb-8">
                 <Image 
