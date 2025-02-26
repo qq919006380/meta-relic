@@ -198,7 +198,7 @@ export default function Home() {
 
         {/* 主标题内容 - 反向视差 */}
         <motion.div
-          className="relative h-full flex items-center justify-center z-10"
+          className="relative p-4 h-full flex items-center justify-center z-10"
           style={{ y: textY, opacity }}
         >
           <div className="text-center space-y-8">
@@ -536,8 +536,8 @@ export default function Home() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex mx-2 bg-[#b8b097]"/>
-                <CarouselNext className="hidden md:flex mx-2 bg-[#b8b097]"/>
+                <CarouselPrevious className="hidden md:flex mx-2 bg-museum-sand"/>
+                <CarouselNext className="hidden md:flex mx-2 bg-museum-sand"/>
               </Carousel>
             </div>
             

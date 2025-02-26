@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
 export default function Nav() {
     const pathname = usePathname();   // 获取当前路径
@@ -23,9 +24,9 @@ export default function Nav() {
     return <div>
         {showNav && (
             <nav className=" top-0 left-0 w-full bg-gradient-to-r from-museum-ink to-museum-ink/80 shadow-lg z-30">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto">
                     <div className="flex justify-between items-center h-20">
-                        <div className="flex-shrink-0">
+                        <div className="flex-shrink-0 px-4">
                             <Link href="/">
                                 <Image
                                     src="/logo.png"
@@ -37,7 +38,7 @@ export default function Nav() {
                             </Link>
                         </div>
 
-                        <div className="hidden md:flex items-center space-x-6 font-zhanku">
+                        <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
                                     <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'
@@ -50,7 +51,7 @@ export default function Nav() {
                             ))}
                         </div>
 
-                        <div className="flex items-center">
+                        <div className="flex items-center px-4">
                             <Link href="/nft">
                                 <Button
                                     variant="default"
@@ -61,31 +62,26 @@ export default function Nav() {
                             </Link>
                         </div>
 
-                        <div className="md:hidden">
-                            <button
-                                className="text-gray-300 hover:text-white"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            >
-                                <Menu className="h-6 w-6" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'}`}>
-                        <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-900/95">
-                            {navLinks.map((link) => (
-                                <a
-                                    key={link.href}
-                                    href={link.href}
-                                    className={`block px-3 py-2 text-base font-medium rounded-md whitespace-nowrap ${isCurrentPath(link.href)
-                                            ? 'text-white bg-gray-800'
-                                            : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                                        }`}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    {link.text}
-                                </a>
-                            ))}
+                        <div className="md:hidden pr-4">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <button className="text-gray-300">
+                                        <Menu className="h-8 w-8" />
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="bg-museum-sand rounded-md shadow-lg mt-6">
+                                    {navLinks.map((link) => (
+                                        <DropdownMenuItem key={link.href} asChild>
+                                            <Link href={link.href} className={`block px-6 py-3 text-base font-medium rounded-md whitespace-nowrap ${isCurrentPath(link.href)
+                                                ? 'text-museum-sand bg-gradient-to-r from-museum-ink to-museum-ink/70'
+                                                : 'hover:!text-museum-sand hover:bg-gradient-to-r hover:!from-museum-ink hover:!to-museum-ink/70'
+                                            }`} onClick={() => setIsMenuOpen(false)}>
+                                                {link.text}
+                                            </Link>
+                                        </DropdownMenuItem>
+                                    ))}
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         </div>
                     </div>
                 </div>
