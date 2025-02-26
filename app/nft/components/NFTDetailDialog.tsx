@@ -113,7 +113,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
       <DialogTitle className="sr-only">
         {nft.name} - NFT Details
       </DialogTitle>
-      <DialogContent className="max-w-4xl p-0 gap-0 h-[90vh] md:h-auto bg-museum-sand border-museum-stone/30">
+      <DialogContent className="rounded-xl max-w-4xl p-4 gap-0 h-[92vh] md:h-auto bg-museum-sand border-museum-stone/30">
         <div className="grid grid-cols-1 md:grid-cols-2 h-full md:h-auto">
           {/* 左侧预览 */}
           <div className="relative md:m-0 m-auto aspect-square bg-museum-stone/10 h-[40vh] md:h-auto flex items-center justify-center">
