@@ -338,103 +338,84 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* 历史渊源部分 - 深色毛玻璃效果 */}
+          {/* 历史渊源部分 */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{
-              duration: 0.8,
-              ease: [0.645, 0.045, 0.355, 1]
-            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 text-center max-w-4xl mx-auto bg-black/10 backdrop-blur-xl 
-                       rounded-2xl p-12 border border-white/20 shadow-lg"
+            className="mt-32 text-center max-w-4xl mx-auto bg-black/10 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg"
           >
-            <motion.h2
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.6,
-                ease: [0.215, 0.610, 0.355, 1.000]
-              }}
-              className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent"
-            >
+            <h2 className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent">
               历史渊源
-            </motion.h2>
-            <div className="text-museum-slate leading-relaxed space-y-8 text-lg">
-              {[
-                "雷州是世界上第三大雷电频发区，古老传说中雷神常派遣天狗去食太阳，'日蚀'现象就被称为'天狗食日'。",
-                "先民对雷神的崇拜逐渐演变为对狗的强烈崇拜，形成了独特的石狗文化。",
-                "古雷州是俚、瑶、僮、侗、僚、黎等少数民族集居之地，亦称'南蛮'族。由于人们的原始蒙昧与社会生产力的低劣，无法解释自然现象，认为是天的意志或万物有灵的驱使，为求生存与发展，便依托百物之形为图腾化作精神力量。",
-                "早期的石狗造型以平头方脸、昂首朝天为特征，体现了古代'天人合一'的图腾意念。随着时代发展，石狗的造型逐渐统一为头部类狗躯部类狮的独特形态，展现了多民族文化交融的成果。"
-              ].map((text, index) => (
-                <motion.p
-                  key={index}
-                  initial={{
-                    opacity: 0,
-                    y: 20,
-                    scale: 0.98
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    y: 0,
-                    scale: 1
-                  }}
-                  transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
-                    ease: [0.215, 0.610, 0.355, 1.000]
-                  }}
-                  viewport={{ once: true }}
-                  className="leading-loose"
-                >
-                  {text}
-                </motion.p>
-              ))}
+            </h2>
+            
+            {/* 图文布局容器 */}
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {/* 左侧文字 */}
+              <div className="flex-1 text-left">
+                <div className="text-museum-slate leading-relaxed space-y-6">
+                  <p>雷州是世界上第三大雷电频发区，古老传说中雷神常派遣天狗去食太阳，'日蚀'现象就被称为'天狗食日'。</p>
+                  <p>先民对雷神的崇拜逐渐演变为对狗的强烈崇拜，形成了独特的石狗文化。</p>
+                  <p>古雷州是俚、瑶、僮、侗、僚、黎等少数民族集居之地，亦称'南蛮'族。由于人们的原始蒙昧与社会生产力的低劣，无法解释自然现象，认为是天的意志或万物有灵的驱使。</p>
+                </div>
+              </div>
+              
+              {/* 右侧图片 */}
+              <div className="md:w-64 flex-shrink-0">
+                <Image
+                  src="/img/realDog/1.png"
+                  alt="雷州石狗历史"
+                  width={256}
+                  height={320}
+                  className="rounded-lg shadow-lg object-cover"
+                />
+              </div>
             </div>
           </motion.div>
 
-          {/* 信仰起源部分 - 深色毛玻璃效果 */}
+          {/* 信仰起源部分 */}
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
-                       border border-white/20 shadow-lg"
+            className="mt-32 max-w-4xl mx-auto bg-black/10 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">信仰起源</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <h3 className="text-2xl font-zhanku text-museum-ink border-b border-museum-stone/20 pb-4">
-                  图腾演变
-                </h3>
-                <p className="text-museum-slate leading-relaxed">
-                  起初俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。
-                  这些部族的名字"狸、獠、獞、猺"都加犬旁，正是他们图腾的标志。
-                </p>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="space-y-6"
-              >
-                <h3 className="text-2xl font-zhanku text-museum-ink border-b border-museum-stone/20 pb-4">
-                  民族融合
-                </h3>
-                <p className="text-museum-slate leading-relaxed">
-                  俚僚人对雷神的崇拜以及对狗图腾的信奉，在生产生活过程中逐步被古越族文化所同化。
-                  因此，雷州石狗具有多兽之形的特征。
-                </p>
-              </motion.div>
+            
+            {/* 图文布局容器 */}
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              {/* 左侧图片 */}
+              <div className="md:w-64 flex-shrink-0">
+                <Image
+                  src="/img/realDog/2.png"
+                  alt="雷州石狗信仰"
+                  width={256}
+                  height={320}
+                  className="rounded-lg shadow-lg object-cover"
+                />
+              </div>
+              
+              {/* 右侧文字 */}
+              <div className="flex-1">
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-2xl font-zhanku text-museum-ink mb-4">图腾演变</h3>
+                    <p className="text-museum-slate leading-relaxed">
+                      起初俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。
+                      这些部族的名字"狸、獠、獞、猺"都加犬旁，正是他们图腾的标志。
+                    </p>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-zhanku text-museum-ink mb-4">民族融合</h3>
+                    <p className="text-museum-slate leading-relaxed">
+                      俚僚人对雷神的崇拜以及对狗图腾的信奉，在生产生活过程中逐步被古越族文化所同化。
+                      因此，雷州石狗具有多兽之形的特征。
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
