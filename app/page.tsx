@@ -117,12 +117,8 @@ export default function Home() {
             {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
               <HoverCard key={num}>
                 <HoverCardTrigger asChild>
-                  <motion.div
-                    className="relative w-16 h-24 md:w-24 md:h-32 opacity-50 hover:opacity-100 transition-opacity cursor-pointer"
-                    whileHover={{ y: -10, scale: 1.05, opacity: 1, transition: { duration: 0.5, ease: 'easeOut' } }}
-                    initial={{ y: 50, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ type: 'spring', stiffness: 120 }}
+                  <div
+                    className="relative w-16 h-24 md:w-24 md:h-32   transition-opacity cursor-pointer"
                   >
                     <Image
                       src={`/img/l${num}.png`}
@@ -130,7 +126,7 @@ export default function Home() {
                       fill
                       className="object-contain drop-shadow-lg"
                     />
-                  </motion.div>
+                  </div>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-[30rem] p-0 bg-museum-sand border-museum-stone shadow-lg">
                   <div className="flex">
@@ -144,19 +140,19 @@ export default function Home() {
                         className="object-contain h-full w-full rounded-l-md"
                       />
                     </div>
-                    
+
                     {/* 右侧文案区域 - 占据2/3宽度 */}
                     <div className="w-2/3 p-4 flex flex-col space-y-1">
                       {/* IP名称 */}
                       <h3 className="text-lg text-museum-ink font-zhanku">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                       </h3>
-                      
+
                       {/* IP介绍 */}
                       <p className="text-xs text-museum-slate">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
                       </p>
-                      
+
                       {/* 故事背景 */}
                       <div>
                         <h4 className="text-xs font-semibold text-museum-stone mt-2">故事背景</h4>
@@ -176,7 +172,7 @@ export default function Home() {
             className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-30 blur-[4px]"
             initial={{ y: 0 }}
             whileInView={{ y: 0 }}
-            transition={{ duration: 1}}
+            transition={{ duration: 1 }}
           />
         </div>
 
