@@ -3,25 +3,47 @@ import Image from 'next/image';
 export default function Origin() {
   return <div className="container mx-auto px-4 py-8 prose prose-stone max-w-4xl">
     <h1 className="text-4xl font-bold mb-8">雷州石狗信仰源流</h1>
-    <Image src="/img/origin/1.png" alt="雷州石狗信仰源流" width={1000} height={1000} />
-    <section className="mb-12">
+
+    <section className="mb-8">
       <h2 className="text-2xl font-bold mb-4">图腾崇拜的起源</h2>
-      <p>
-        雷州石狗源于古代百越族的狗图腾崇拜。在现存研究资料中，其起源可追溯至唐朝之前的古百越族居民。图腾文化是人类早期社会组织、风俗习惯和宗教信仰的重要体现，在雷州半岛这片土地上留下了深远的印记。
-      </p>
-      <p>
-        古雷州是俚、瑶、僮、侗、僚、黎等少数民族的聚居地，这里的先民们以其独特的智慧认知世界。由于生产力水平的限制，他们无法解释诸多自然现象，便将万物赋予灵性，以此寻求生存与发展的力量。在众多图腾物中，狗最终成为了这片土地上多个民族共同认同的象征。
-      </p>
+      <div className="flex flex-col md:flex-row gap-4 items-start mb-4">
+        <Image 
+          src="/img/realDog/1.png" 
+          alt="雷州石狗信仰源流" 
+          width={240} 
+          height={320} 
+          className="rounded-lg shadow-md mx-auto md:mx-0"
+        />
+        <div className="flex-1">
+          <p className="mb-3">
+            雷州石狗源于古代百越族的狗图腾崇拜。在现存研究资料中，其起源可追溯至唐朝之前的古百越族居民。图腾文化是人类早期社会组织、风俗习惯和宗教信仰的重要体现，在雷州半岛这片土地上留下了深远的印记。
+          </p>
+          <p>
+            古雷州是俚、瑶、僮、侗、僚、黎等少数民族的聚居地，这里的先民们以其独特的智慧认知世界。由于生产力水平的限制，他们无法解释诸多自然现象，便将万物赋予灵性，以此寻求生存与发展的力量。在众多图腾物中，狗最终成为了这片土地上多个民族共同认同的象征。
+          </p>
+        </div>
+      </div>
     </section>
 
-    <section className="mb-12">
+    <section className="mb-8">
       <h2 className="text-2xl font-bold mb-4">多元文化的融合</h2>
-      <p>
-        雷州土著民族以农耕守猎为生，因此选择了具有保护农作物和狩猎能力的动物作为图腾。最初，不同部族有着各自的图腾崇拜：俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。这些部族的名字都加上了"犬"字旁，正是其图腾信仰的写照。
-      </p>
-      <p>
-        随着生产方式的统一，这些部族逐渐以狗作为共同的图腾象征。值得注意的是，早期雷州石狗的造型融合了多种动物的特征，如猫的灵巧、青蛙的繁衍象征等。这种多元的形态特征，正是不同民族文化交融的见证。
-      </p>
+      <div className="flex flex-col md:flex-row-reverse gap-4 items-start mb-4">
+        <Image 
+          src="/img/l1.png" 
+          alt="雷州石狗信仰源流" 
+          width={200} 
+          height={260} 
+          className="rounded-lg shadow-md mx-auto md:mx-0"
+        />
+        <div className="flex-1">
+          <p className="mb-3">
+            雷州土著民族以农耕守猎为生，因此选择了具有保护农作物和狩猎能力的动物作为图腾。最初，不同部族有着各自的图腾崇拜：俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。这些部族的名字都加上了"犬"字旁，正是其图腾信仰的写照。
+          </p>
+          <p>
+            随着生产方式的统一，这些部族逐渐以狗作为共同的图腾象征。值得注意的是，早期雷州石狗的造型融合了多种动物的特征，如猫的灵巧、青蛙的繁衍象征等。这种多元的形态特征，正是不同民族文化交融的见证。
+          </p>
+        </div>
+      </div>
     </section>
 
     <section className="mb-12">

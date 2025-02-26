@@ -20,7 +20,7 @@ export default function Nav() {
 
     return <div>
         {showNav && (
-            <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-gray-900 to-gray-800 shadow-lg z-30">
+            <nav className=" top-0 left-0 w-full bg-gradient-to-r from-museum-ink to-museum-ink/80 shadow-lg z-30">
                 <div className="container mx-auto px-4">
                     <div className="flex justify-between items-center h-20">
                         <div className="flex-shrink-0">
