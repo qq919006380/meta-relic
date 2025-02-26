@@ -118,7 +118,8 @@ export default function Home() {
               <HoverCard key={num} openDelay={0} closeDelay={100}>
                 <HoverCardTrigger asChild>
                   <div
-                    className="relative w-16 h-24 md:w-24 md:h-32 transition-opacity cursor-pointer"
+                    className="relative w-16 h-24 md:w-24 md:h-32 transition-all duration-300 cursor-pointer
+                              hover:scale-110 hover:-translate-y-2"
                     role="button"
                     tabIndex={0}
                     aria-label={`查看石狗IP ${IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}`}
@@ -129,11 +130,12 @@ export default function Home() {
                       src={`/img/l${num}.png`}
                       alt="石狗"
                       fill
-                      className="object-contain drop-shadow-lg"
+                      className="object-contain drop-shadow-lg transition-all duration-300
+                                hover:drop-shadow-xl"
                     />
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 bg-museum-sand border-museum-stone shadow-lg">
+                <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 bg-museum-sand border-museum-ink shadow-lg">
                   <div className="flex flex-col sm:flex-row">
                     {/* 左侧图片区域 - 垂直居中 */}
                     <div className="w-full sm:w-1/3 flex items-center justify-center rounded-lg bg-white m-2">
@@ -192,19 +194,19 @@ export default function Home() {
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="text-8xl font-bold mb-8 text-museum-ink"
+              className="text-6xl md:text-8xl font-bold mb-4 text-museum-ink"
             >
               Meta Relic
             </motion.h1>
 
-            {/* 副标题 */}
+            {/* 副标题 - 更加突出价值主张 */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-xl font-serif font-bold text-museum-ink/80"
+              className="text-xl md:text-2xl font-serif font-bold text-museum-ink/80 max-w-2xl mx-auto"
             >
-              探索雷州石狗文化的数字艺术传承
+              数字技术与传统文化的完美融合，让千年雷州石狗文化焕发新生
             </motion.div>
 
             {/* 开始探索按钮 */}
@@ -270,7 +272,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.645, 0.045, 0.355, 1] }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8"
           >
             {[
               {
@@ -489,6 +491,52 @@ export default function Home() {
                   <p className="text-museum-slate leading-relaxed">{item.content}</p>
                 </motion.div>
               ))}
+            </div>
+          </motion.div>
+
+          {/* 在文化价值部分后添加NFT展示区域 */}
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                       border border-white/20 shadow-lg"
+          >
+            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">数字藏品展示</h2>
+            
+            {/* 添加NFT展示轮播 */}
+            <div className="relative overflow-hidden rounded-xl h-[60vh] max-h-[600px] my-12">
+              <div className="absolute inset-0 flex items-center">
+                <div className="flex space-x-8 animate-scroll">
+                  {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                    <div key={num} className="relative flex-shrink-0 w-[300px] h-[400px] rounded-xl overflow-hidden group">
+                      <Image
+                        src={`/img/dogIp/IP${num}.png`}
+                        alt={`石狗数字藏品${num}`}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                        <div className="p-6 text-white">
+                          <h3 className="text-xl font-zhanku">{IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}</h3>
+                          <p className="text-sm mt-2 line-clamp-2">{IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center mt-8">
+              <Link
+                href="/nft"
+                className="inline-block px-8 py-4 bg-museum-ink/80 text-museum-sand rounded-lg 
+                         hover:bg-museum-stone transition-all duration-300 transform hover:scale-105"
+              >
+                探索全部藏品
+              </Link>
             </div>
           </motion.div>
         </div>
