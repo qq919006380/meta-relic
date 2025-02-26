@@ -40,13 +40,11 @@ export default function Nav() {
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
-                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${
-                                        isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'
-                                    }`}>
+                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'
+                                        }`}>
                                         {link.text}
-                                        <span className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-200 ${
-                                            isCurrentPath(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
-                                        }`}></span>
+                                        <span className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-200 ${isCurrentPath(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                                            }`}></span>
                                     </span>
                                 </a>
                             ))}
@@ -54,17 +52,17 @@ export default function Nav() {
 
                         <div className="flex items-center">
                             <Link href="/nft">
-                                <Button 
-                                    variant="default" 
+                                <Button
+                                    variant="default"
                                     className="bg-museum-sand text-museum-ink hover:bg-museum-ink hover:text-museum-sand"
                                 >
-                                    进入 NFT
+                                    专属定制
                                 </Button>
                             </Link>
                         </div>
 
                         <div className="md:hidden">
-                            <button 
+                            <button
                                 className="text-gray-300 hover:text-white"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                             >
@@ -79,11 +77,10 @@ export default function Nav() {
                                 <a
                                     key={link.href}
                                     href={link.href}
-                                    className={`block px-3 py-2 text-base font-medium rounded-md whitespace-nowrap ${
-                                        isCurrentPath(link.href)
+                                    className={`block px-3 py-2 text-base font-medium rounded-md whitespace-nowrap ${isCurrentPath(link.href)
                                             ? 'text-white bg-gray-800'
                                             : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                                    }`}
+                                        }`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     {link.text}

@@ -7,7 +7,7 @@ export default function Making() {
             
             <div className="flex flex-col md:flex-row md:gap-8 mb-8">
                 <Image 
-                    src="/img/realDog/1.png" 
+                    src="/img/realDog/3.png" 
                     alt="雷州石狗信仰源流" 
                     width={240} 
                     height={320} 
