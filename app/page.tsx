@@ -115,10 +115,15 @@ export default function Home() {
           <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20">
             {/* 移动端显示3个，桌面端显示7个 */}
             {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
-              <HoverCard key={num}>
+              <HoverCard key={num} openDelay={0} closeDelay={100}>
                 <HoverCardTrigger asChild>
                   <div
-                    className="relative w-16 h-24 md:w-24 md:h-32    transition-opacity cursor-pointer"
+                    className="relative w-16 h-24 md:w-24 md:h-32 transition-opacity cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`查看石狗IP ${IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}`}
+                    // 添加触摸和键盘事件支持
+                    onTouchStart={(e) => e.currentTarget.click()}
                   >
                     <Image
                       src={`/img/l${num}.png`}
@@ -128,21 +133,21 @@ export default function Home() {
                     />
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-[30rem] p-0 bg-museum-sand border-museum-stone shadow-lg">
-                  <div className="flex">
+                <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 bg-museum-sand border-museum-stone shadow-lg">
+                  <div className="flex flex-col sm:flex-row">
                     {/* 左侧图片区域 - 垂直居中 */}
-                    <div className="w-1/3 flex items-center justify-center rounded-lg bg-white m-2">
+                    <div className="w-full sm:w-1/3 flex items-center justify-center rounded-lg bg-white m-2">
                       <Image
                         src={`/img/dogIp/IP${num}.png`}
                         alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                         width={150}
                         height={200}
-                        className="object-contain h-full w-full rounded-lg shadow-xl  p-2 py-2"
+                        className="object-contain h-full w-full rounded-lg shadow-xl p-2 py-2"
                       />
                     </div>
 
                     {/* 右侧文案区域 - 占据2/3宽度 */}
-                    <div className="w-2/3 p-4 flex flex-col space-y-1">
+                    <div className="w-full sm:w-2/3 p-4 flex flex-col space-y-1">
                       {/* IP名称 */}
                       <h3 className="text-lg text-museum-ink font-zhanku">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}

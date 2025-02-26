@@ -163,13 +163,13 @@ export default function NFTPage() {
                   <div className="flex justify-center gap-2">
                     <button
                       onClick={() => setSelectedDetailNFT(nft)}
-                      className="px-3 py-1 text-sm bg-museum-stone/80 text-museum-sand rounded hover:bg-museum-stone"
+                      className="px-3 py-1 text-sm bg-museum-ink text-museum-sand rounded hover:bg-museum-stone"
                     >
                       搭配
                     </button>
                     <button
                       onClick={() => setSelectedIntroNFT(nft)}
-                      className="px-3 py-1 text-sm bg-museum-stone/80 text-museum-sand rounded hover:bg-museum-stone"
+                      className="px-3 py-1 text-sm bg-museum-ink text-museum-sand rounded hover:bg-museum-stone"
                     >
                       详情
                     </button>
