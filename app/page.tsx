@@ -138,32 +138,32 @@ export default function Home() {
                 <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 bg-museum-sand border-museum-ink shadow-lg">
                   <div className="flex flex-col sm:flex-row">
                     {/* 左侧图片区域 - 垂直居中 */}
-                    <div className="w-full sm:w-1/3 flex items-center justify-center rounded-lg bg-white m-2">
+                    <div className="w-full sm:w-1/3 flex items-center justify-center rounded-lg bg-white sm:m-2">
                       <Image
                         src={`/img/dogIp/IP${num}.png`}
                         alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                         width={150}
                         height={200}
-                        className="object-contain h-full w-full rounded-lg shadow-xl p-2 py-2"
+                        className="object-contain h-[150px] sm:h-full w-full rounded-lg shadow-xl p-2"
                       />
                     </div>
 
-                    {/* 右侧文案区域 - 占据2/3宽度 */}
-                    <div className="w-full sm:w-2/3 p-4 flex flex-col space-y-1">
+                    {/* 右侧文案区域 - 占据2/3宽度，在移动端占满宽度 */}
+                    <div className="w-full sm:w-2/3 p-3 sm:p-4 flex flex-col space-y-1">
                       {/* IP名称 */}
-                      <h3 className="text-lg text-museum-ink font-zhanku">
+                      <h3 className="text-base sm:text-lg text-museum-ink font-zhanku">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                       </h3>
 
                       {/* IP介绍 */}
-                      <p className="text-xs text-museum-slate">
+                      <p className="text-xs text-museum-slate line-clamp-3 sm:line-clamp-none">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
                       </p>
 
-                      {/* 故事背景 */}
-                      <div>
-                        <h4 className="text-xs font-semibold text-museum-stone mt-2">故事背景</h4>
-                        <p className="text-xs text-museum-slate">
+                      {/* 故事背景 - 在移动端可以隐藏或缩短 */}
+                      <div className="mt-1 sm:mt-2">
+                        <h4 className="text-xs font-semibold text-museum-stone">故事背景</h4>
+                        <p className="text-xs text-museum-slate line-clamp-2 sm:line-clamp-none">
                           {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipBg}
                         </p>
                       </div>
