@@ -170,29 +170,24 @@ export default function Home() {
           <div className="text-center space-y-8">
             {/* 英文标题 */}
             <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              className="relative text-6xl md:text-8xl font-bold mb-4 font-['Orbitron']"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.8, type: 'spring' }}
+              className="relative text-6xl md:text-8xl font-bold mb-4 font-['Cinzel']"
             >
-              {/* 背景光晕 */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[rgb(184,115,51)]/10 to-[rgb(255,215,0)]/10 
-                            blur-xl animate-pulse" />
-              
-              {/* 文字主体 */}
-              <span className="relative bg-gradient-to-r from-[rgba(255,217,0,0.77)] to-[rgb(184,115,51)] 
-                             bg-clip-text text-transparent 
-                             animate-textflow">
-                META RELIC
+              <span className="relative inline-block">
+                {/* 浮雕阴影 */}
+                <span className="absolute inset-0 text-[rgb(47,53,66)] 
+                       [text-shadow:_2px_2px_0_rgb(139,69,19),4px_4px_0_rgb(184,115,51)]">
+                  META RELIC
+                </span>
+                {/* 金属渐变 */}
+                <span className="relative bg-gradient-to-b from-[rgb(255,215,0)] to-[rgb(139,69,19)] 
+                       bg-clip-text text-transparent
+                       [text-shadow:_1px_1px_2px_rgba(255,215,0,0.4)]">
+                  META RELIC
+                </span>
               </span>
-              
-              {/* 流动光带 */}
-              <motion.div 
-                className="absolute -bottom-4 h-1 bg-gradient-to-r from-transparent via-[rgb(255,215,0)] to-transparent"
-                initial={{ width: 0, left: '50%' }}
-                animate={{ width: '100%', left: 0 }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
             </motion.h1>
 
             {/* 副标题 */}
@@ -201,9 +196,15 @@ export default function Home() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
               className="text-xl md:text-2xl font-serif font-bold text-[rgb(184,115,51)] 
-                         max-w-2xl mx-auto"
+                         mx-auto md:whitespace-nowrap"
             >
-              数字技术与传统文化的完美融合，让千年雷州石狗文化焕发新生
+              <div className="md:inline-block">
+                数字科技赋能传统
+                <span className="hidden md:inline">·</span>
+              </div>
+              <div className="md:inline-block">
+                千年石狗焕发新生
+              </div>
             </motion.div>
 
             {/* 开始探索按钮 */}
@@ -422,11 +423,11 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+            className="mt-32 max-w-4xl mx-auto rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
                        border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
-            <div className="space-y-8 text-museum-slate max-w-4xl mx-auto">
+            <div className="article-content space-y-8 text-museum-slate max-w-4xl mx-auto">
               {[
                 "古雷州百越族中的俚、僚、僮人都是黄帝的亲族，他们从黄河中下游南迁至岭海之滨，一部分移徙雷州成为雷州先民。",
                 "关于对雷的崇拜、盛大的祭雷仪式，史料记载比比皆是。最著名的莫过于明代小说家冯梦龙在《警世通言》中把盛大的祭雷仪式'雷州换鼓'与广德埋藏、钱塘江潮、登州海市并列为'天下四绝'。",

@@ -76,12 +76,12 @@ export default function Nav() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-screen bg-[rgb(251,248,241)] shadow-lg mt-6 
                                                      border-t-2 border-[rgb(184,115,51)]/20">
-                                    <div className="px-4 py-6 space-y-4">
+                                    <div className="space-y-4">
                                         {navLinks.map((link) => (
-                                            <DropdownMenuItem key={link.href} asChild>
+                                            <DropdownMenuItem key={link.href} className="flex justify-center" asChild>
                                                 <Link 
                                                     href={link.href} 
-                                                    className={`block px-6 py-4 text-lg font-medium rounded-lg
+                                                    className={`block px-6 py-4 text-base font-medium rounded-lg
                                                               transition-all duration-300 ${
                                                         isCurrentPath(link.href)
                                                             ? 'text-[rgb(251,248,241)] bg-gradient-to-r from-[rgb(139,69,19)] to-[rgb(184,115,51)]'
