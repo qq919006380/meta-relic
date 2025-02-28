@@ -60,72 +60,29 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative bg-museum-sand">
       {/* Hero Section */}
-      <div className="h-screen relative overflow-hidden">
+      <div className="h-screen relative overflow-hidden bg-gradient-to-b from-[rgb(251,248,241)] to-[rgb(245,240,230)]">
         {/* 背景文化元素层 */}
         <div className="absolute inset-0">
-          {/* 背景图片 - 调整透明度和混合模式 */}
+          {/* 背景图片 - 调整混合模式和透明度 */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center z-10"
-            style={{ opacity: 0.15 }} // 降低透明度
+            style={{ opacity: 0.12 }}
           >
             <Image
               src="/playbill/home.png"
               alt="文化元素"
               fill
-              className="object-cover mix-blend-soft-light" // 添加混合模式
+              className="object-cover mix-blend-multiply"
             />
           </motion.div>
 
-          {/* 博物馆主图
-          <motion.div
-            className="absolute right-[8%] -translate-x-1/2 bottom-[40vh] w-[30vw] h-[40vh] z-20"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 0.3, scale: 1 }}
-            transition={{ duration: 1.2 }}
-            whileHover={{ y: -10, scale: 1.05, opacity: 0.6, transition: { duration: 0.2, ease: 'easeOut' } }}
-          >
-            <Image
-              src="/img/l10.png"
-              alt="雷州博物馆"
-              fill
-              className="object-contain mix-blend-luminosity"
-            />
-          </motion.div> */}
-
-          {/* 左侧骑楼元素
-          <motion.div
-            className="absolute left-[5%] bottom-[35vh] w-[15vw] h-[20vh] z-20"
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 0.4 }}
-            transition={{ duration: 0.8 }}
-            whileHover={{ y: -10, scale: 1.05, opacity: 0.8, transition: { duration: 0.2, ease: 'easeOut' } }}
-          >
-            <Image
-              src="/img/l8.png"
-              alt="雷州骑楼"
-              fill
-              className="object-contain drop-shadow-[5px_5px_10px_rgba(0,0,0,0.2)]"
-            />
-          </motion.div> */}
-
-          {/* 新增三元塔元素
-          <motion.div
-            className="absolute right-[15%] bottom-[33vh] w-[10vw] h-[25vh] z-20"
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 0.6 }}
-            transition={{ duration: 0.8 }}
-            whileHover={{ y: -10, scale: 1.05, opacity: 0.8, transition: { duration: 0.2, ease: 'easeOut' } }}
-          >
-            <Image
-              src="/img/l11.png"
-              alt="雷州三元塔"
-              fill
-              className="object-contain mix-blend-overlay"
-            />
-          </motion.div> */}
-
           {/* 底部装饰石狗群 */}
-          <div className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20">
+          <motion.div 
+            className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             {/* 移动端显示3个，桌面端显示7个 */}
             {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
               <HoverCard key={num} openDelay={0} closeDelay={100}>
@@ -148,35 +105,43 @@ export default function Home() {
                     />
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 bg-museum-sand border-museum-ink shadow-lg">
-                  <div className="flex flex-col sm:flex-row">
-                    {/* 左侧图片区域 - 垂直居中 */}
-                    <div className="w-full sm:w-1/3 flex items-center justify-center rounded-lg bg-white sm:m-2">
-                      <Image
-                        src={`/img/dogIp/IP${num}.png`}
-                        alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
-                        width={150}
-                        height={200}
-                        className="object-contain h-[150px] sm:h-full w-full rounded-lg shadow-xl p-2"
-                      />
+                <HoverCardContent className="w-[30rem] max-w-[90vw] p-0 
+                                   bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
+                                   border-2 border-[rgb(184,115,51)] rounded-xl shadow-xl
+                                   transform transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row overflow-hidden">
+                    {/* 左侧图片区域 */}
+                    <div className="w-full sm:w-1/3 p-4 bg-gradient-to-br from-[rgb(139,69,19)]/5 to-[rgb(184,115,51)]/5 
+                              flex items-center justify-center">
+                      <div className="relative aspect-[3/4] w-full max-w-[150px] rounded-lg overflow-hidden 
+                                    shadow-lg hover:shadow-xl transition-all duration-300">
+                        <Image
+                          src={`/img/dogIp/IP${num}.png`}
+                          alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                          fill
+                          className="object-contain md:object-cover transform hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
                     </div>
 
-                    {/* 右侧文案区域 - 占据2/3宽度，在移动端占满宽度 */}
-                    <div className="w-full sm:w-2/3 p-3 sm:p-4 flex flex-col space-y-1">
+                    {/* 右侧文案区域 */}
+                    <div className="w-full sm:w-2/3 p-6 flex flex-col space-y-3">
                       {/* IP名称 */}
-                      <h3 className="text-base sm:text-lg text-museum-ink font-zhanku">
+                      <h3 className="text-2xl font-zhanku text-[rgb(139,69,19)]
+                                   border-b-2 border-[rgb(255,215,0)] pb-2">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
                       </h3>
 
                       {/* IP介绍 */}
-                      <p className="text-xs text-museum-slate line-clamp-3 sm:line-clamp-none">
+                      <p className="text-sm text-[rgb(47,53,66)] leading-relaxed">
                         {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
                       </p>
 
-                      {/* 故事背景 - 在移动端可以隐藏或缩短 */}
-                      <div className="mt-1 sm:mt-2">
-                        <h4 className="text-xs font-semibold text-museum-stone">故事背景</h4>
-                        <p className="text-xs text-museum-slate line-clamp-2 sm:line-clamp-none">
+                      {/* 故事背景 */}
+                      <div className="mt-2">
+                        <h4 className="text-sm font-bold text-[rgb(184,115,51)] mb-2">故事背景</h4>
+                        <p className="text-xs text-[rgb(47,53,66)] leading-relaxed
+                                  bg-[rgb(255,215,0)]/5 p-3 rounded-lg">
                           {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipBg}
                         </p>
                       </div>
@@ -185,18 +150,19 @@ export default function Home() {
                 </HoverCardContent>
               </HoverCard>
             ))}
-          </div>
+          </motion.div>
 
-          {/* 底部装饰纹样 - 调整透明度和模糊度 */}
+          {/* 更新底部装饰纹样 */}
           <motion.div
-            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] opacity-20 blur-[2px]"
+            className="absolute bottom-0 left-0 w-full h-[20vh] bg-[url('/img/l13.png')] 
+                       opacity-15 blur-[1px] mix-blend-multiply"
             initial={{ y: 0 }}
             whileInView={{ y: 0 }}
             transition={{ duration: 1 }}
           />
         </div>
 
-        {/* 主标题内容 - 反向视差 */}
+        {/* 主标题内容样式更新 */}
         <motion.div
           className="relative p-4 h-full flex items-center justify-center z-10"
           style={{ y: textY, opacity }}
@@ -204,20 +170,38 @@ export default function Home() {
           <div className="text-center space-y-8">
             {/* 英文标题 */}
             <motion.h1
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="text-6xl md:text-8xl font-bold mb-4 text-museum-ink"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="relative text-6xl md:text-8xl font-bold mb-4 font-['Orbitron']"
             >
-              Meta Relic
+              {/* 背景光晕 */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[rgb(184,115,51)]/10 to-[rgb(255,215,0)]/10 
+                            blur-xl animate-pulse" />
+              
+              {/* 文字主体 */}
+              <span className="relative bg-gradient-to-r from-[rgba(255,217,0,0.77)] to-[rgb(184,115,51)] 
+                             bg-clip-text text-transparent 
+                             animate-textflow">
+                META RELIC
+              </span>
+              
+              {/* 流动光带 */}
+              <motion.div 
+                className="absolute -bottom-4 h-1 bg-gradient-to-r from-transparent via-[rgb(255,215,0)] to-transparent"
+                initial={{ width: 0, left: '50%' }}
+                animate={{ width: '100%', left: 0 }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
             </motion.h1>
 
-            {/* 副标题 - 更加突出价值主张 */}
+            {/* 副标题 */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
-              className="text-xl md:text-2xl font-serif font-bold text-museum-ink/80 max-w-2xl mx-auto"
+              className="text-xl md:text-2xl font-serif font-bold text-[rgb(184,115,51)] 
+                         max-w-2xl mx-auto"
             >
               数字技术与传统文化的完美融合，让千年雷州石狗文化焕发新生
             </motion.div>
@@ -229,12 +213,13 @@ export default function Home() {
               transition={{ delay: 0.6 }}
               className="relative z-40 pb-4"
             >
-              {/* 按钮容器增加防护间距 */}
-
               <Link
                 href="/nft"
-                className="inline-block px-8 py-4 bg-museum-ink/80 text-museum-sand rounded-lg 
-                         hover:bg-museum-stone transition-all duration-300 transform hover:scale-105"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-[rgb(139,69,19)] 
+                         to-[rgb(184,115,51)] text-[rgb(251,248,241)] rounded-lg 
+                         hover:from-[rgb(184,115,51)] hover:to-[rgb(139,69,19)]
+                         transition-all duration-300 transform hover:scale-105
+                         shadow-lg hover:shadow-xl"
               >
                 开始探索
               </Link>
@@ -243,8 +228,9 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* 文化介绍部分 */}
-      <div className="min-h-screen py-20 relative overflow-hidden">
+      {/* 文化介绍部分样式更新 */}
+      <div className="min-h-screen py-20 relative overflow-hidden 
+                      bg-gradient-to-b from-[rgb(245,240,230)] to-[rgb(251,248,241)]">
         {/* 新增背景文化元素 */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           {/* 左侧装饰元素 - 文化纹样
@@ -312,7 +298,8 @@ export default function Home() {
                 }}
                 className="bg-white/10 backdrop-blur-md p-6 rounded-lg 
                            hover:bg-white/15 cursor-pointer transition-all
-                           border border-white/20 shadow-xl"
+                           border border-[rgb(184,115,51)]/20 shadow-xl
+                           hover:border-[rgb(255,215,0)]/30"
               >
                 <motion.h3
                   initial={{ opacity: 0, x: -20 }}
@@ -348,7 +335,10 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 text-center max-w-4xl mx-auto bg-black/10 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg"
+            className="mt-32 text-center max-w-4xl mx-auto 
+                       bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
+                       rounded-2xl p-12 border border-[rgb(184,115,51)]/20 
+                       shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <h2 className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent">
               历史渊源
@@ -358,7 +348,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* 左侧文字 */}
               <div className="flex-1 text-left">
-                <div className="text-museum-slate leading-relaxed space-y-6">
+                <div className="article-content text-museum-slate leading-relaxed space-y-6">
                   <p>雷州是世界上第三大雷电频发区，古老传说中雷神常派遣天狗去食太阳，'日蚀'现象就被称为'天狗食日'。</p>
                   <p>先民对雷神的崇拜逐渐演变为对狗的强烈崇拜，形成了独特的石狗文化。</p>
                   <p>古雷州是俚、瑶、僮、侗、僚、黎等少数民族集居之地，亦称'南蛮'族。由于人们的原始蒙昧与社会生产力的低劣，无法解释自然现象，认为是天的意志或万物有灵的驱使。</p>
@@ -367,13 +357,16 @@ export default function Home() {
               
               {/* 右侧图片 */}
               <div className="md:w-64 flex-shrink-0">
-                <Image
-                  src="/img/realDog/1.png"
-                  alt="雷州石狗历史"
-                  width={256}
-                  height={320}
-                  className="rounded-lg shadow-lg object-cover"
-                />
+                <div className="bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 
+                        rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
+                  <Image
+                    src="/img/realDog/1.png"
+                    alt="雷州石狗历史"
+                    width={400}
+                    height={500}
+                    className="rounded-lg object-cover w-full h-full transform scale-125 transition-all duration-300"
+                  />
+                </div>
               </div>
             </div>
           </motion.div>
@@ -391,7 +384,7 @@ export default function Home() {
             {/* 图文布局容器 */}
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* 左侧图片 */}
-              <div className="md:w-64 flex-shrink-0">
+              <div className="md:w-64 flex-shrink-0 rounded-lg shadow-lg bg-gradient-to-br from-[black]/20 to-[black/10]/10">
                 <Image
                   src="/img/realDog/2.png"
                   alt="雷州石狗信仰"
@@ -480,9 +473,12 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="space-y-6 p-8 rounded-xl bg-white/5 backdrop-blur-lg
-                             hover:bg-white/10 transition-all duration-300 
-                             border border-white/20 shadow-lg"
+                  className="space-y-6 p-8 rounded-xl 
+                             bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
+                             hover:from-[rgb(245,240,230)] hover:to-[rgb(251,248,241)]
+                             transition-all duration-300 
+                             border border-[rgb(184,115,51)]/20 shadow-lg
+                             hover:border-[rgb(255,215,0)]/30"
                 >
                   <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
                   <p className="text-museum-slate leading-relaxed">{item.content}</p>
@@ -515,7 +511,10 @@ export default function Home() {
                 <CarouselContent className="-ml-2 md:-ml-4">
                   {[1, 2, 3, 4, 5, 6, 7].map((num) => (
                     <CarouselItem key={num} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
-                      <div className="relative h-[350px] rounded-xl overflow-hidden group">
+                      <div className="relative h-[350px] rounded-2xl overflow-hidden group
+                                    border-4 border-[rgb(184,115,51)] shadow-[0_0_15px_rgba(184,115,51,0.3)]
+                                    hover:shadow-[0_0_20px_rgba(255,215,0,0.4)]
+                                    transition-all duration-300">
                         <Image
                           src={`/img/dogIp/IP${num}.png`}
                           alt={`石狗数字藏品${num}`}

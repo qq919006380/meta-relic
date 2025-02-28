@@ -57,6 +57,12 @@ export default {
 					slate: '#737574',      // 深灰
 					ink: '#110E09',        // 墨黑
 				},
+				'stone-primary': '#2A2826',  // 深玄武岩色
+				'terra': '#96351E',          // 赭石色
+				'bronze': '#B87A45',         // 古铜色
+				'slate-custom': '#4A6670',   // 青瓦色
+				'gold': '#F9C22E',           // 明黄色
+				'jade': '#1B4B43',           // 翡翠绿
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -65,7 +71,10 @@ export default {
 			},
 			fontFamily: {
 				'zhanku': ['ZhanKuKuHei', 'sans-serif']
-			}
+			},
+			backgroundColor: {
+				'gradient-culture': 'linear-gradient(135deg, rgba(42,40,38,0.03) 0%, rgba(150,53,30,0.05) 100%)',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],

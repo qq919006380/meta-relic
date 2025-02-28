@@ -3,7 +3,7 @@ import { useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
@@ -11,6 +11,7 @@ export default function Nav() {
     const pathname = usePathname();   // 获取当前路径
     const showNav = !pathname.startsWith('/nft'); // 如果路径以 '/nft' 开头，则不显示导航栏
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const navLinks = [
         { href: '/origin', text: '石狗信仰起源' },
@@ -63,23 +64,39 @@ export default function Nav() {
                         </div>
 
                         <div className="md:hidden pr-4">
-                            <DropdownMenu>
+                            <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                                 <DropdownMenuTrigger asChild>
-                                    <button className="text-gray-300">
-                                        <Menu className="h-8 w-8" />
+                                    <button className="text-[rgb(251,248,241)] transition-all duration-300">
+                                        {isOpen ? (
+                                            <X className="h-8 w-8 transform rotate-0 transition-transform duration-300" />
+                                        ) : (
+                                            <Menu className="h-8 w-8 transform rotate-0 transition-transform duration-300" />
+                                        )}
                                     </button>
                                 </DropdownMenuTrigger>
-                                <DropdownMenuContent className="bg-museum-sand rounded-md shadow-lg mt-6">
-                                    {navLinks.map((link) => (
-                                        <DropdownMenuItem key={link.href} asChild>
-                                            <Link href={link.href} className={`block px-6 py-3 text-base font-medium rounded-md whitespace-nowrap ${isCurrentPath(link.href)
-                                                ? 'text-museum-sand bg-gradient-to-r from-museum-ink to-museum-ink/70'
-                                                : 'hover:!text-museum-sand hover:bg-gradient-to-r hover:!from-museum-ink hover:!to-museum-ink/70'
-                                            }`} onClick={() => setIsMenuOpen(false)}>
-                                                {link.text}
-                                            </Link>
-                                        </DropdownMenuItem>
-                                    ))}
+                                <DropdownMenuContent className="w-screen bg-[rgb(251,248,241)] shadow-lg mt-6 
+                                                     border-t-2 border-[rgb(184,115,51)]/20">
+                                    <div className="px-4 py-6 space-y-4">
+                                        {navLinks.map((link) => (
+                                            <DropdownMenuItem key={link.href} asChild>
+                                                <Link 
+                                                    href={link.href} 
+                                                    className={`block px-6 py-4 text-lg font-medium rounded-lg
+                                                              transition-all duration-300 ${
+                                                        isCurrentPath(link.href)
+                                                            ? 'text-[rgb(251,248,241)] bg-gradient-to-r from-[rgb(139,69,19)] to-[rgb(184,115,51)]'
+                                                        : 'text-[rgb(139,69,19)] hover:bg-[rgb(184,115,51)]/10'
+                                                    }`} 
+                                                    onClick={() => {
+                                                        setIsOpen(false);
+                                                        setIsMenuOpen(false);
+                                                    }}
+                                                >
+                                                    {link.text}
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        ))}
+                                    </div>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>

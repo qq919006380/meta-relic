@@ -2,8 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* 主色系 - 以青铜器为灵感 */
+  --color-bronze-primary: 184, 115, 51;    /* #B87333 古铜主色 */
+  --color-bronze-light: 205, 127, 50;      /* #CD7F32 浅铜色 */
+  --color-bronze-dark: 139, 69, 19;        /* #8B4513 深铜色 */
+  
+  /* 辅色系 - 传统文化元素 */
+  --color-jade-green: 0, 168, 107;         /* #00A86B 翡翠绿 */
+  --color-vermilion: 227, 66, 52;          /* #E34234 朱砂红 */
+  --color-ink: 47, 53, 66;                 /* #2F3542 墨色 */
+  
+  /* 点缀色 - 装饰元素 */
+  --color-gold: 255, 215, 0;               /* #FFD700 金色 */
+  --color-silver: 192, 192, 192;           /* #C0C0C0 银色 */
+  
+  /* 背景色系 */
+  --color-bg-primary: 251, 248, 241;       /* #FBF8F1 米白色 */
+  --color-bg-secondary: 245, 240, 230;     /* #F5F0E6 浅褐色 */
+  
+  /* 文字色系 */
+  --color-text-primary: 47, 53, 66;        /* #2F3542 主文本 */
+  --color-text-secondary: 86, 90, 92;      /* #565A5C 次要文本 */
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(
+    135deg,
+    rgb(var(--color-bg-primary)) 0%,
+    rgb(var(--color-bg-secondary)) 100%
+  );
+  color: rgb(var(--color-text-primary));
 }
 
 @layer base {
@@ -78,8 +108,6 @@ body {
   font-style: normal;
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -87,4 +115,143 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* 新增通用卡片样式 */
+.culture-card {
+  background: rgba(var(--color-bronze-primary), 0.02);
+  border: 1px solid rgba(var(--color-bronze-light), 0.2);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.culture-card:hover {
+  background: rgba(var(--color-bronze-primary), 0.05);
+  border-color: rgba(var(--color-bronze-light), 0.4);
+  transform: translateY(-2px);
+}
+
+/* 新增标题样式 */
+.culture-title {
+  color: rgb(var(--color-bronze-dark));
+  font-family: 'ZhanKuKuHei', sans-serif;
+  position: relative;
+}
+
+.culture-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 4rem;
+  height: 2px;
+  background: rgb(var(--color-gold));
+}
+
+/* 主要内容卡片样式 */
+.content-card {
+  background: rgba(var(--color-bronze-primary), 0.05);
+  border: 1px solid rgba(var(--color-bronze-light), 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(var(--color-bronze-dark), 0.1);
+  transition: all 0.3s ease;
+}
+
+.content-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(var(--color-bronze-dark), 0.15);
+  border-color: rgba(var(--color-gold), 0.3);
+}
+
+/* 标题样式 */
+.heading-primary {
+  color: rgb(var(--color-bronze-dark));
+  font-family: 'ZhanKuKuHei', sans-serif;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.heading-primary::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--color-bronze-primary)),
+    rgb(var(--color-gold))
+  );
+}
+
+/* 按钮样式 */
+.button-primary {
+  background: rgb(var(--color-bronze-primary));
+  color: rgb(var(--color-bg-primary));
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.button-primary:hover {
+  background: rgb(var(--color-bronze-dark));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(var(--color-bronze-dark), 0.2);
+}
+
+/* 强调文本样式 */
+.text-accent {
+  color: rgb(var(--color-vermilion));
+  font-weight: 600;
+}
+
+/* 装饰元素样式 */
+.decorative-border {
+  border: 2px solid rgba(var(--color-gold), 0.3);
+  position: relative;
+}
+
+.decorative-border::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px solid rgba(var(--color-silver), 0.2);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* 添加文章段落样式 */
+.article-content p {
+    text-indent: 2em;
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+    color: rgb(var(--color-text-primary));
+}
+
+.article-content h1, 
+.article-content h2 {
+    color: rgb(var(--color-bronze-dark));
+    font-family: 'ZhanKuKuHei', sans-serif;
+    position: relative;
+    margin-bottom: 1.5em;
+}
+
+.article-content h1::after,
+.article-content h2::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        rgb(var(--color-bronze-primary)),
+        rgb(var(--color-gold))
+    );
 }

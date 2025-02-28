@@ -96,8 +96,8 @@ export default function NFTPage() {
   }
 
   return (
-    <div className="min-h-screen bg-museum-sand text-museum-cream flex flex-col">
-      <nav className="bg-museum-stone/60 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-stone-primary/5 to-terra/10">
+      <nav className="bg-stone-primary/80 p-4">
         <div className="container mx-auto">
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
             <Link href="/" className="flex justify-center">
@@ -111,7 +111,7 @@ export default function NFTPage() {
             </Link>
 
             <div className="flex-1 flex flex-wrap justify-center gap-2 items-center">
-              <div className='text-museum-slate'>搜索</div>
+              <div className='text-[#eeebea]'>筛选</div>
               {NFT_TAGS.map((tagName) => {
                 const isSelected = filters.编号?.split(',').includes(tagName);
                 const tagCount = metadata.filter(nft => nft.name.includes(tagName)).length;
@@ -133,15 +133,17 @@ export default function NFTPage() {
         </div>
       </nav>
 
-      <div className="flex-1 container mx-auto px-4">
+      <div className="container mx-auto px-4 py-8">
         <p className="text-museum-slate text-sm mb-2 text-right">
-          {filters.编号 ? '搜索结果' : '总共'}：{filteredNFTs.length} 个
+          {filters.编号 ? '筛选结果' : '总共'}：{filteredNFTs.length} 个
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
-          {filteredNFTs.map((nft, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filteredNFTs.map((nft) => (
             <div
               key={nft.name}
-              className="bg-museum-slate/30 rounded-lg overflow-hidden hover:bg-museum-stone/40 transition-transform"
+              className="bg-bronze/10 rounded-lg overflow-hidden
+                hover:bg-bronze/20 transition-all duration-300
+                hover:shadow-lg hover:shadow-terra/20"
             >
               <div className="relative aspect-square">
                 {NFT_TRAIT_LAYERS.map(({ trait, zIndex }) => {

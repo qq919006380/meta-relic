@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -29,7 +28,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-museum-sand/80`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        style={{
+          background: `linear-gradient(135deg, rgba(42,40,38,0.03) 0%, rgba(150,53,30,0.05) 100%)`
+        }}
       >
         <Nav />
         {children}
