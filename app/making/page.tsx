@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Making() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 xl:px-32">
                 <h1 className="text-4xl font-zhanku text-[rgb(139,69,19)] mb-12 text-center">
                     石狗雕制起始
                 </h1>
@@ -20,7 +20,7 @@ export default function Making() {
                             <div className="w-full md:w-64 flex-shrink-0 mx-auto md:mx-0 mb-8">
                                 <div className="bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 
                                     rounded-lg shadow-lg hover:shadow-xl transition-all duration-300
-                                    max-w-[300px] md:max-w-none mx-auto">
+                                    max-w-[230px] md:max-w-none mx-auto">
                                     <Image
                                         src="/img/realDog/3.png"
                                         alt="雷州石狗历史"

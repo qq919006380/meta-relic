@@ -77,7 +77,7 @@ export default function Home() {
           </motion.div>
 
           {/* 底部装饰石狗群 */}
-          <motion.div 
+          <motion.div
             className="absolute bottom-0 w-full h-40 flex justify-center space-x-2 md:space-x-10 z-20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -110,9 +110,33 @@ export default function Home() {
                                    border-2 border-[rgb(184,115,51)] rounded-xl shadow-xl
                                    transform transition-all duration-300">
                   <div className="flex flex-col sm:flex-row overflow-hidden">
-                    {/* 左侧图片区域 */}
-                    <div className="w-full sm:w-1/3 p-4 bg-gradient-to-br from-[rgb(139,69,19)]/5 to-[rgb(184,115,51)]/5 
-                              flex items-center justify-center">
+                    {/* 移动端：图片+文案行 */}
+                    <div className="sm:hidden flex flex-row p-4 border-b border-[rgb(184,115,51)]/20">
+                      {/* 图片区域 */}
+                      <div className="w-1/3 pr-2">
+                        <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
+                          <Image
+                            src={`/img/dogIp/IP${num}.png`}
+                            alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+
+                      {/* 文案区域 */}
+                      <div className="w-2/3 pl-2 flex flex-col justify-center">
+                        <h3 className="text-lg font-zhanku text-[rgb(139,69,19)] mb-2">
+                          {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                        </h3>
+                        <p className="text-xs text-[rgb(47,53,66)] leading-tight line-clamp-4">
+                          {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* 桌面端左侧图片区域（保持原样） */}
+                    <div className="hidden sm:flex sm:items-center w-1/3 p-4 bg-gradient-to-br from-[rgb(139,69,19)]/5 to-[rgb(184,115,51)]/5">
                       <div className="relative aspect-[3/4] w-full max-w-[150px] rounded-lg overflow-hidden 
                                     shadow-lg hover:shadow-xl transition-all duration-300">
                         <Image
@@ -124,21 +148,33 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* 右侧文案区域 */}
-                    <div className="w-full sm:w-2/3 p-6 flex flex-col space-y-3">
-                      {/* IP名称 */}
-                      <h3 className="text-2xl font-zhanku text-[rgb(139,69,19)]
-                                   border-b-2 border-[rgb(255,215,0)] pb-2">
-                        {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
-                      </h3>
+                    {/* 右侧内容区域 */}
+                    <div className="w-full sm:w-2/3">
+                      {/* 桌面端文案 */}
+                      <div className="hidden sm:block p-6 space-y-3">
+                        {/* IP名称 */}
+                        <h3 className="text-2xl font-zhanku text-[rgb(139,69,19)]
+                                     border-b-2 border-[rgb(255,215,0)] pb-2">
+                          {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
+                        </h3>
 
-                      {/* IP介绍 */}
-                      <p className="text-sm text-[rgb(47,53,66)] leading-relaxed">
-                        {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
-                      </p>
+                        {/* IP介绍 */}
+                        <p className="text-sm text-[rgb(47,53,66)] leading-relaxed">
+                          {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipIntro}
+                        </p>
 
-                      {/* 故事背景 */}
-                      <div className="mt-2">
+                        {/* 故事背景 */}
+                        <div className="mt-2">
+                          <h4 className="text-sm font-bold text-[rgb(184,115,51)] mb-2">故事背景</h4>
+                          <p className="text-xs text-[rgb(47,53,66)] leading-relaxed
+                                    bg-[rgb(255,215,0)]/5 p-3 rounded-lg">
+                            {IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipBg}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* 移动端故事背景 */}
+                      <div className="sm:hidden p-4">
                         <h4 className="text-sm font-bold text-[rgb(184,115,51)] mb-2">故事背景</h4>
                         <p className="text-xs text-[rgb(47,53,66)] leading-relaxed
                                   bg-[rgb(255,215,0)]/5 p-3 rounded-lg">
@@ -200,7 +236,7 @@ export default function Home() {
             >
               <div className="md:inline-block">
                 数字科技赋能传统
-                <span className="hidden md:inline">·</span>
+                <span className="hidden md:inline md:px-2 md:text-4xl">·</span>
               </div>
               <div className="md:inline-block">
                 千年石狗焕发新生
@@ -218,7 +254,6 @@ export default function Home() {
                 href="/nft"
                 className="inline-block px-8 py-4 bg-gradient-to-r from-[rgb(139,69,19)] 
                          to-[rgb(184,115,51)] text-[rgb(251,248,241)] rounded-lg 
-                         hover:from-[rgb(184,115,51)] hover:to-[rgb(139,69,19)]
                          transition-all duration-300 transform hover:scale-105
                          shadow-lg hover:shadow-xl"
               >
@@ -344,7 +379,7 @@ export default function Home() {
             <h2 className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent">
               历史渊源
             </h2>
-            
+
             {/* 图文布局容器 */}
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* 左侧文字 */}
@@ -355,7 +390,7 @@ export default function Home() {
                   <p>古雷州是俚、瑶、僮、侗、僚、黎等少数民族集居之地，亦称'南蛮'族。由于人们的原始蒙昧与社会生产力的低劣，无法解释自然现象，认为是天的意志或万物有灵的驱使。</p>
                 </div>
               </div>
-              
+
               {/* 右侧图片 */}
               <div className="md:w-64 flex-shrink-0">
                 <div className="bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 
@@ -381,7 +416,7 @@ export default function Home() {
             className="mt-32 max-w-4xl mx-auto bg-black/10 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">信仰起源</h2>
-            
+
             {/* 图文布局容器 */}
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* 左侧图片 */}
@@ -394,7 +429,7 @@ export default function Home() {
                   className="rounded-lg shadow-lg object-cover"
                 />
               </div>
-              
+
               {/* 右侧文字 */}
               <div className="flex-1">
                 <div className="space-y-8">
@@ -418,75 +453,105 @@ export default function Home() {
           </motion.div>
 
           {/* 文化传承部分 - 深色毛玻璃效果 */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 max-w-4xl mx-auto rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
-                       border border-white/20 shadow-lg"
-          >
-            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
-            <div className="article-content space-y-8 text-museum-slate max-w-4xl mx-auto">
-              {[
-                "古雷州百越族中的俚、僚、僮人都是黄帝的亲族，他们从黄河中下游南迁至岭海之滨，一部分移徙雷州成为雷州先民。",
-                "关于对雷的崇拜、盛大的祭雷仪式，史料记载比比皆是。最著名的莫过于明代小说家冯梦龙在《警世通言》中把盛大的祭雷仪式'雷州换鼓'与广德埋藏、钱塘江潮、登州海市并列为'天下四绝'。",
-                "天下一大奇观的雷州石狗，不仅表现了雷州先民精湛的雕刻工艺，还深刻反映了聚居在古雷州的少数民族和汉闽人共同以智慧和力量创造的辉煌历史。"
-              ].map((text, index) => (
-                <motion.p
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="leading-loose text-lg"
-                >
-                  {text}
-                </motion.p>
-              ))}
+          <div className="relative">
+            {/* 新增装饰图片 */}
+            <div className="absolute -right-32 md:-right-20 top-5 md:top-1/2 -translate-y-1/2 w-72 md:w-96 opacity-30
+                          -z-10 transition-opacity duration-300">
+              <Image
+                src="/img/l10.png"
+                alt="文化传承装饰"
+                width={400}
+                height={600}
+                className="w-full h-auto object-contain"
+              />
             </div>
-          </motion.div>
+
+            {/* 原有文化传承区块 */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative mt-32 max-w-4xl mx-auto rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                         border border-white/20 shadow-lg"
+            >
+              <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
+              <div className="article-content space-y-8 text-museum-slate max-w-4xl mx-auto">
+                {[
+                  "古雷州百越族中的俚、僚、僮人都是黄帝的亲族，他们从黄河中下游南迁至岭海之滨，一部分移徙雷州成为雷州先民。",
+                  "关于对雷的崇拜、盛大的祭雷仪式，史料记载比比皆是。最著名的莫过于明代小说家冯梦龙在《警世通言》中把盛大的祭雷仪式'雷州换鼓'与广德埋藏、钱塘江潮、登州海市并列为'天下四绝'。",
+                  "天下一大奇观的雷州石狗，不仅表现了雷州先民精湛的雕刻工艺，还深刻反映了聚居在古雷州的少数民族和汉闽人共同以智慧和力量创造的辉煌历史。"
+                ].map((text, index) => (
+                  <motion.p
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="leading-loose text-lg"
+                  >
+                    {text}
+                  </motion.p>
+                ))}
+              </div>
+            </motion.div>
+          </div>
 
           {/* 文化价值部分 - 深色毛玻璃效果 */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
-                       border border-white/20 shadow-lg"
-          >
-            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化价值</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {[
-                {
-                  title: "民族融合的见证",
-                  content: "雷州石狗文化见证了俚、瑶、僮、侗等少数民族的变迁与融合过程，展现了中国南方民族文化的多样性与包容性。"
-                },
-                {
-                  title: "精神文明的传承",
-                  content: "石狗不仅是图腾崇拜的产物，更承载着先民对自然的敬畏、对生活的期望，以及对文化传承的坚守。"
-                }
-              ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                  className="space-y-6 p-8 rounded-xl 
-                             bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
-                             hover:from-[rgb(245,240,230)] hover:to-[rgb(251,248,241)]
-                             transition-all duration-300 
-                             border border-[rgb(184,115,51)]/20 shadow-lg
-                             hover:border-[rgb(255,215,0)]/30"
-                >
-                  <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
-                  <p className="text-museum-slate leading-relaxed">{item.content}</p>
-                </motion.div>
-              ))}
+          <div className="relative">
+            {/* 新增装饰图片 */}
+            <div className="absolute -left-10 md:-left-28 -top-28 md:-top-[70%] w-52 md:w-96 opacity-30
+                          -z-10 transition-opacity duration-300">
+              <Image
+                src="/img/l11.png"
+                alt="文化价值装饰"
+                width={350}
+                height={500}
+                className="w-full h-auto object-contain"
+              />
             </div>
-          </motion.div>
+
+            {/* 原有文化价值区块 */}
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="relative  mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
+                         border border-white/20 shadow-lg"
+            >
+              <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化价值</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {[
+                  {
+                    title: "民族融合的见证",
+                    content: "雷州石狗文化见证了俚、瑶、僮、侗等少数民族的变迁与融合过程，展现了中国南方民族文化的多样性与包容性。"
+                  },
+                  {
+                    title: "精神文明的传承",
+                    content: "石狗不仅是图腾崇拜的产物，更承载着先民对自然的敬畏、对生活的期望，以及对文化传承的坚守。"
+                  }
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    className="space-y-6 p-8 rounded-xl 
+                               bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
+                               hover:from-[rgb(245,240,230)] hover:to-[rgb(251,248,241)]
+                               transition-all duration-300 
+                               border border-[rgb(184,115,51)]/20 shadow-lg
+                               hover:border-[rgb(255,215,0)]/30"
+                  >
+                    <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
+                    <p className="text-museum-slate leading-relaxed">{item.content}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
 
           {/* 在文化价值部分后添加NFT展示区域 */}
           <motion.div
@@ -498,7 +563,7 @@ export default function Home() {
                        border border-white/20 shadow-lg"
           >
             <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">数字藏品展示</h2>
-            
+
             {/* NFT展示轮播 */}
             <div className="relative my-12">
               <Carousel
@@ -536,16 +601,16 @@ export default function Home() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex mx-2 bg-museum-sand"/>
-                <CarouselNext className="hidden md:flex mx-2 bg-museum-sand"/>
+                <CarouselPrevious className="hidden md:flex mx-2 bg-museum-sand" />
+                <CarouselNext className="hidden md:flex mx-2 bg-museum-sand" />
               </Carousel>
             </div>
-            
+
             <div className="text-center mt-8">
               <Link
                 href="/nft"
-                className="inline-block px-8 py-4 bg-museum-ink/80 text-museum-sand rounded-lg 
-                         hover:bg-museum-stone transition-all duration-300 transform hover:scale-105"
+                className="inline-block px-8 py-4 bg-gradient-to-r from-[#45B1A3] to-[#4A4A4A] text-[#FFFFF0] rounded-lg 
+                         transition-all duration-300 transform hover:scale-105"
               >
                 探索全部藏品
               </Link>

@@ -1,7 +1,7 @@
 export default function Distribution() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 xl:px-32">
                 <h1 className="text-4xl font-zhanku text-[rgb(139,69,19)] mb-12 text-center">
                     石狗分布及置放
                 </h1>

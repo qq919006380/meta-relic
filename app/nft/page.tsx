@@ -98,7 +98,7 @@ export default function NFTPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-stone-primary/5 to-terra/10">
       <nav className="bg-stone-primary/80 p-4">
-        <div className="container mx-auto">
+        <div className="container mx-auto xl:px-32">
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
             <Link href="/" className="flex justify-center">
               <Image
@@ -133,7 +133,7 @@ export default function NFTPage() {
         </div>
       </nav>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 xl:px-32">
         <p className="text-museum-slate text-sm mb-2 text-right">
           {filters.编号 ? '筛选结果' : '总共'}：{filteredNFTs.length} 个
         </p>

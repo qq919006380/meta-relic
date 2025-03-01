@@ -24,8 +24,8 @@ export default function Nav() {
 
     return <div>
         {showNav && (
-            <nav className=" top-0 left-0 w-full bg-gradient-to-r from-museum-ink to-museum-ink/80 shadow-lg z-30">
-                <div className="container mx-auto">
+            <nav className="fixed top-0 left-0 w-full bg-gradient-to-r from-[#2d2019] to-[#3a2b23] shadow-lg z-30">
+                <div className="container mx-auto xl:px-32">
                     <div className="flex justify-between items-center h-20">
                         <div className="flex-shrink-0 px-4">
                             <Link href="/">
@@ -34,7 +34,7 @@ export default function Nav() {
                                     alt="Meta Relic Logo"
                                     width={150}
                                     height={87}
-                                    className="hover:opacity-90 transition-opacity"
+                                    className="hover:opacity-90 transition-opacity scale-90"
                                 />
                             </Link>
                         </div>
@@ -42,10 +42,16 @@ export default function Nav() {
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
-                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap ${isCurrentPath(link.href) ? 'text-white' : 'text-gray-300 hover:text-white'
+                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap 
+                            ${isCurrentPath(link.href)
+                                            ? 'text-[#f4eccf]'  // 选中状态使用金色
+                                            : 'text-[#eee3d6] hover:text-[#f4eccf]'  // 常态使用米灰，悬停转金
                                         }`}>
                                         {link.text}
-                                        <span className={`absolute -bottom-1 left-0 h-0.5 bg-white transition-all duration-200 ${isCurrentPath(link.href) ? 'w-full' : 'w-0 group-hover:w-full'
+                                        <span className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-200 
+                              ${isCurrentPath(link.href)
+                                                ? 'w-full bg-[#f4eccf]'  // 金色下划线
+                                                : 'w-0 bg-[#f4eccf] group-hover:w-full'  // 米灰渐显
                                             }`}></span>
                                     </span>
                                 </a>
@@ -56,7 +62,7 @@ export default function Nav() {
                             <Link href="/nft">
                                 <Button
                                     variant="default"
-                                    className="bg-museum-sand text-museum-ink hover:bg-museum-ink hover:text-museum-sand"
+                                    className="bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand"
                                 >
                                     专属定制
                                 </Button>
@@ -79,14 +85,13 @@ export default function Nav() {
                                     <div className="space-y-4">
                                         {navLinks.map((link) => (
                                             <DropdownMenuItem key={link.href} className="flex justify-center" asChild>
-                                                <Link 
-                                                    href={link.href} 
-                                                    className={`block px-6 py-4 text-base font-medium rounded-lg
-                                                              transition-all duration-300 ${
-                                                        isCurrentPath(link.href)
+                                                <Link
+                                                    href={link.href}
+                                                    className={`block py-4 text-base font-medium rounded-lg
+                                                              transition-all duration-300 ${isCurrentPath(link.href)
                                                             ? 'text-[rgb(251,248,241)] bg-gradient-to-r from-[rgb(139,69,19)] to-[rgb(184,115,51)]'
-                                                        : 'text-[rgb(139,69,19)] hover:bg-[rgb(184,115,51)]/10'
-                                                    }`} 
+                                                            : 'text-[rgb(139,69,19)] hover:bg-[rgb(184,115,51)]/10'
+                                                        }`}
                                                     onClick={() => {
                                                         setIsOpen(false);
                                                         setIsMenuOpen(false);

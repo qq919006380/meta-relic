@@ -28,7 +28,7 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
         <div className="relative">
           {/* 顶部标题 */}
           <div className="bg-museum-ink text-white h-[15%] sm:h-[27%] flex items-center">
-            <h2 className="text-3xl sm:text-6xl py-2 px-2 font-bold tracking-wider font-condensed flex flex-wrap sm:flex-nowrap justify-between w-full"
+            <h2 className="text-3xl sm:text-6xl py-2 px-4 font-bold tracking-wider font-condensed flex flex-wrap sm:flex-nowrap justify-between w-full"
               style={{
                 fontFamily: "'Oswald', sans-serif",
                 WebkitTextStroke: '3px white',
@@ -43,9 +43,9 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
           {/* 主要内容区域 - 移动端垂直布局，桌面端水平布局 */}
           <div className="relative p-4 pb-0">
             {/* 内容区域 - 移动端全宽，桌面端固定宽度 */}
-            <div className="w-full sm:w-[55%] mb-4 sm:mb-0 flex flex-col items-center sm:items-start">
+            <div className="w-full sm:w-[55%] sm:mb-0 flex flex-col items-center sm:items-start">
               {/* 中文标题 */}
-              <h1 className="text-3xl sm:text-5xl font-zhanku mb-1 text-museum-ink text-center sm:text-left">雷州石狗</h1>
+              <h1 className="text-4xl sm:text-5xl font-zhanku mb-1 text-museum-ink text-center sm:text-left">雷州石狗</h1>
 
               {/* 英文描述 */}
               <p className="text-[#593f15] font-bold mb-2 leading-relaxed font-serif text-[8px] sm:text-[10px] text-center sm:text-left">
@@ -56,11 +56,11 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
               </p>
 
               {/* NFT名称 */}
-              <h3 className="text-2xl sm:text-4xl font-zhanku mb-2 text-museum-ink text-center sm:text-left">姓名：{tags}</h3>
+              <h3 className="text-3xl sm:text-4xl font-zhanku mb-2 text-museum-ink text-center sm:text-left">姓名：{tags}</h3>
 
               {/* 成语展示 */}
               <div className="mb-4">
-                <div className="text-xl sm:text-3xl font-zhanku bg-museum-ink/100 text-[#a2855d] px-1 inline-block">
+                <div className="text-2xl sm:text-3xl font-zhanku bg-museum-ink/100 text-[#a2855d] px-1 inline-block">
                   {NFT_TAGS_MAP[firstTag as keyof typeof NFT_TAGS_MAP]}
                   <span className="mx-2"></span>
                   {NFT_TAGS_MAP[secondTag as keyof typeof NFT_TAGS_MAP]}
@@ -68,12 +68,12 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
               </div>
 
               {/* 底部成语 */}
-              <div className="flex flex-wrap gap-2 sm:gap-8 justify-center sm:justify-start text-center font-bold text-[#4b3107]"
+              <div className="flex flex-wrap gap-4 sm:gap-8 justify-center sm:justify-start text-center font-bold text-[#4b3107]"
                 style={{ fontFamily: "'Oswald', sans-serif" }}>
                 {BOTTOM_TAGS.map((tag) => (
                   <div key={tag.en}
                     className="border-[2px] rounded-[17px] border-[#a08d77] border-t-0 border-b-0 p-1 flex-shrink-0">
-                    <div className="text-[10px] sm:text-xs flex justify-center w-full">
+                    <div className="text-[12px] sm:text-xs flex justify-center w-full">
                       <span>{tag.cn}</span>
                     </div>
                     <div className="text-[8px] sm:text-[10px] flex justify-center w-full">

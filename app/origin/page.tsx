@@ -3,7 +3,7 @@ import Image from 'next/image';
 export default function Origin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 xl:px-32">
         <h1 className="text-4xl font-zhanku text-[rgb(139,69,19)] mb-12 text-center">
           雷州石狗信仰源流
         </h1>
@@ -27,13 +27,14 @@ export default function Origin() {
             <h2 className="text-2xl font-zhanku text-stone-primary mb-6">
               多元文化的融合
             </h2>
-            <div className="flex flex-col md:flex-row-reverse gap-6 items-start">
+            <div className="flex flex-col items-center md:flex-row-reverse gap-6"> 
               <Image 
                 src="/img/l1.png" 
                 alt="雷州石狗信仰源流" 
-                width={200} 
+                width={250} 
                 height={260} 
-                className="rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+                className="object-cover rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow duration-300
+                          bg-gradient-to-br from-[#a27960]/30 to-[#a27960]/10"
               />
               <div className="flex-1 text-slate-custom">
                 <p className="mb-3">
