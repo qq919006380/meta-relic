@@ -264,7 +264,7 @@ export default function Home() {
         </motion.div>
       </div>
 
-      {/* 文化介绍部分样式更新 */}
+      {/* 文化介绍部分 */}
       <div className="min-h-screen py-20 relative overflow-hidden 
                       bg-gradient-to-b from-[rgb(245,240,230)] to-[rgb(251,248,241)]">
         {/* 新增背景文化元素 */}
@@ -296,15 +296,21 @@ export default function Home() {
             {[
               {
                 title: "图腾起源",
-                content: "雷州石狗源于古代百越族的狗图腾崇拜。早期俚、瑶、僮、侗等少数民族都以不同动物为图腾，最终统一认同了狗作为最具代表性的图腾物。"
+                content: "雷州石狗源于古代百越族的狗图腾崇拜。早期俚、瑶、僮、侗等少数民族都以不同动物为图腾，最终统一认同了狗作为最具代表性的图腾物。",
+                bgColor: "from-[#c9a48e] to-[#b18b88]",
+                borderColor: "#8d765e"
               },
               {
                 title: "文化传承",
-                content: "作为'天人合一'的象征，石狗造型融合了多种动物特征，体现了雷州半岛多民族文化的交融演变，是先民智慧的见证。"
+                content: "作为'天人合一'的象征，石狗造型融合了多种动物特征，体现了雷州半岛多民族文化的交融演变，是先民智慧的见证。",
+                bgColor: "from-[#b99785] to-[#8d765e]",
+                borderColor: "#b18b88"
               },
               {
                 title: "数字永存",
-                content: "通过NFT技术，我们致力于保护和传播这份珍贵的文化遗产，让古老的石狗文化在数字时代焕发新生。"
+                content: "通过NFT技术，我们致力于保护和传播这份珍贵的文化遗产，让古老的石狗文化在数字时代焕发新生。",
+                bgColor: "from-[#bec3a9] to-[#8d765e]",
+                borderColor: "#b99785"
               }
             ].map((item, index) => (
               <motion.div
@@ -332,10 +338,14 @@ export default function Home() {
                     ease: "easeOut"
                   }
                 }}
-                className="bg-white/10 backdrop-blur-md p-6 rounded-lg 
-                           hover:bg-white/15 cursor-pointer transition-all
-                           border border-[rgb(184,115,51)]/20 shadow-xl
-                           hover:border-[rgb(255,215,0)]/30"
+                className={`
+                  p-6 rounded-lg cursor-pointer transition-all duration-300
+                  bg-gradient-to-br ${item.bgColor} bg-opacity-90
+                  hover:bg-opacity-100 backdrop-blur-md
+                  border-2 border-[${item.borderColor}]/30
+                  hover:border-[${item.borderColor}]/50
+                  shadow-lg hover:shadow-xl
+                `}
               >
                 <motion.h3
                   initial={{ opacity: 0, x: -20 }}
@@ -345,7 +355,7 @@ export default function Home() {
                     delay: index * 0.15 + 0.2,
                     ease: "easeOut"
                   }}
-                  className="font-zhanku text-2xl mb-4 text-museum-ink"
+                  className="font-zhanku text-2xl mb-4 text-white drop-shadow-md"
                 >
                   {item.title}
                 </motion.h3>
@@ -357,7 +367,8 @@ export default function Home() {
                     delay: index * 0.15 + 0.3,
                     ease: "easeOut"
                   }}
-                  className="text-museum-slate"
+                  className="text-[#f5f5f5] leading-relaxed text-opacity-90
+                             hover:text-opacity-100 transition-colors"
                 >
                   {item.content}
                 </motion.p>
@@ -372,19 +383,21 @@ export default function Home() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
             className="mt-32 text-center max-w-4xl mx-auto 
-                       bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
-                       rounded-2xl p-12 border border-[rgb(184,115,51)]/20 
+                       bg-gradient-to-br from-[#c9a48e]/20 to-[#b99785]/30
+                       rounded-2xl p-12 border-2 border-[#8d765e]/40 
                        shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <h2 className="font-zhanku text-5xl mb-12 text-museum-ink bg-gradient-to-r from-museum-ink to-museum-stone bg-clip-text text-transparent">
+            <h2 className="font-zhanku text-5xl mb-12 
+                           bg-gradient-to-r from-[#8d765e] to-[#695352] 
+                           bg-clip-text text-transparent">
               历史渊源
             </h2>
 
             {/* 图文布局容器 */}
             <div className="flex flex-col md:flex-row gap-8 items-start">
               {/* 左侧文字 */}
-              <div className="flex-1 text-left">
-                <div className="article-content text-museum-slate leading-relaxed space-y-6">
+              <div className="flex-1 text-left article-content">
+                <div className="text-museum-slate leading-relaxed space-y-6">
                   <p>雷州是世界上第三大雷电频发区，古老传说中雷神常派遣天狗去食太阳，'日蚀'现象就被称为'天狗食日'。</p>
                   <p>先民对雷神的崇拜逐渐演变为对狗的强烈崇拜，形成了独特的石狗文化。</p>
                   <p>古雷州是俚、瑶、僮、侗、僚、黎等少数民族集居之地，亦称'南蛮'族。由于人们的原始蒙昧与社会生产力的低劣，无法解释自然现象，认为是天的意志或万物有灵的驱使。</p>
@@ -392,7 +405,7 @@ export default function Home() {
               </div>
 
               {/* 右侧图片 */}
-              <div className="md:w-64 flex-shrink-0">
+              <div className="md:w-60 flex-shrink-0">
                 <div className="bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 
                         rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
                   <Image
@@ -413,9 +426,12 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mt-32 max-w-4xl mx-auto bg-black/10 backdrop-blur-xl rounded-2xl p-12 border border-white/20 shadow-lg"
+            className="mt-32 max-w-4xl mx-auto 
+                       bg-gradient-to-br from-[#bec3a9]/20 to-[#8d765e]/20
+                       backdrop-blur-xl rounded-2xl p-12 
+                       border-2 border-[#b99785]/30 shadow-lg"
           >
-            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">信仰起源</h2>
+            <h2 className="text-5xl font-zhanku mb-12 text-[#645343] text-center">信仰起源</h2>
 
             {/* 图文布局容器 */}
             <div className="flex flex-col md:flex-row gap-8 items-start">
@@ -434,14 +450,14 @@ export default function Home() {
               <div className="flex-1">
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-2xl font-zhanku text-museum-ink mb-4">图腾演变</h3>
+                    <h3 className="text-3xl font-zhanku text-[#76634f] mb-4">图腾演变</h3>
                     <p className="text-museum-slate leading-relaxed">
                       起初俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。
                       这些部族的名字"狸、獠、獞、猺"都加犬旁，正是他们图腾的标志。
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-zhanku text-museum-ink mb-4">民族融合</h3>
+                    <h3 className="text-3xl font-zhanku text-[#76634f] mb-4">民族融合</h3>
                     <p className="text-museum-slate leading-relaxed">
                       俚僚人对雷神的崇拜以及对狗图腾的信奉，在生产生活过程中逐步被古越族文化所同化。
                       因此，雷州石狗具有多兽之形的特征。
@@ -472,10 +488,11 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: "easeOut" }}
               viewport={{ once: true, margin: "-100px" }}
-              className="relative mt-32 max-w-4xl mx-auto rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
-                         border border-white/20 shadow-lg"
+              className="relative mt-32 max-w-4xl mx-auto rounded-2xl p-12 
+                         bg-gradient-to-br from-[#c9a48e]/20 to-[#b18b88]/20
+                         backdrop-blur-xl border-2 border-[#8d765e]/30 shadow-lg"
             >
-              <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化传承</h2>
+              <h2 className="text-5xl font-zhanku mb-12 text-[#72604c] text-center">文化传承</h2>
               <div className="article-content space-y-8 text-museum-slate max-w-4xl mx-auto">
                 {[
                   "古雷州百越族中的俚、僚、僮人都是黄帝的亲族，他们从黄河中下游南迁至岭海之滨，一部分移徙雷州成为雷州先民。",
@@ -520,7 +537,7 @@ export default function Home() {
               className="relative  mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
                          border border-white/20 shadow-lg"
             >
-              <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">文化价值</h2>
+              <h2 className="text-5xl font-zhanku mb-12 text-[#544738] text-center">文化价值</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {[
                   {
@@ -539,14 +556,12 @@ export default function Home() {
                     transition={{ duration: 0.8, delay: index * 0.2 }}
                     viewport={{ once: true }}
                     className="space-y-6 p-8 rounded-xl 
-                               bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]
-                               hover:from-[rgb(245,240,230)] hover:to-[rgb(251,248,241)]
+                               bg-gradient-to-br from-[#bec3a9]/30 to-[#b99785]/20
                                transition-all duration-300 
-                               border border-[rgb(184,115,51)]/20 shadow-lg
-                               hover:border-[rgb(255,215,0)]/30"
+                               border-2 border-[#8d765e]/30 shadow-lg"
                   >
-                    <h3 className="text-2xl font-zhanku text-museum-ink">{item.title}</h3>
-                    <p className="text-museum-slate leading-relaxed">{item.content}</p>
+                    <h3 className="text-3xl font-zhanku text-[#6c5b48]">{item.title}</h3>
+                    <p className="text-[#8d765e] leading-relaxed">{item.content}</p>
                   </motion.div>
                 ))}
               </div>
@@ -562,7 +577,7 @@ export default function Home() {
             className="mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
                        border border-white/20 shadow-lg"
           >
-            <h2 className="text-4xl font-zhanku mb-12 text-museum-ink text-center">数字藏品展示</h2>
+            <h2 className="text-5xl font-zhanku mb-12 text-[#6c5b48] text-center">数字藏品展示</h2>
 
             {/* NFT展示轮播 */}
             <div className="relative my-12">
@@ -601,8 +616,8 @@ export default function Home() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious className="hidden md:flex mx-2 bg-museum-sand" />
-                <CarouselNext className="hidden md:flex mx-2 bg-museum-sand" />
+                <CarouselPrevious className="hidden md:flex mx-2" />
+                <CarouselNext className="hidden md:flex mx-2" />
               </Carousel>
             </div>
 
