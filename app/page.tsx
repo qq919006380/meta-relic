@@ -209,20 +209,14 @@ export default function Home() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8, type: 'spring' }}
-              className="relative text-6xl md:text-8xl font-bold mb-4 font-['Cinzel']"
+              className="relative text-6xl md:text-8xl mb-4 font-['Righteous']"
+              data-shadow="META RELIC"
             >
-              <span className="relative inline-block">
-                {/* 浮雕阴影 */}
-                <span className="absolute inset-0 text-[rgb(47,53,66)] 
-                       [text-shadow:_2px_2px_0_rgb(139,69,19),4px_4px_0_rgb(184,115,51)]">
-                  META RELIC
-                </span>
-                {/* 金属渐变 */}
-                <span className="relative bg-gradient-to-b from-[rgb(255,215,0)] to-[rgb(139,69,19)] 
-                       bg-clip-text text-transparent
-                       [text-shadow:_1px_1px_2px_rgba(255,215,0,0.4)]">
-                  META RELIC
-                </span>
+              <span className="relative inline-block 
+                              bg-gradient-to-b from-[rgb(var(--color-gold))] to-[rgb(var(--color-bronze-dark))]
+                              bg-clip-text text-transparent"
+                style={{ textShadow: '0.03em 0.03em 0 rgb(251, 248, 241, 0.4)' }}>
+                META RELIC
               </span>
             </motion.h1>
 
@@ -450,14 +444,14 @@ export default function Home() {
               <div className="flex-1">
                 <div className="space-y-8">
                   <div>
-                    <h3 className="text-3xl font-zhanku text-[#76634f] mb-4">图腾演变</h3>
+                    <h3 className="md:text-3xl text-2xl font-zhanku text-[#76634f] mb-4">图腾演变</h3>
                     <p className="text-museum-slate leading-relaxed">
                       起初俚人以狸为图腾，僚人以獠为图腾，僮人以獞为图腾，傜人则以犬为图腾。
                       这些部族的名字"狸、獠、獞、猺"都加犬旁，正是他们图腾的标志。
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-3xl font-zhanku text-[#76634f] mb-4">民族融合</h3>
+                    <h3 className="md:text-3xl text-2xl font-zhanku text-[#76634f] mb-4">民族融合</h3>
                     <p className="text-museum-slate leading-relaxed">
                       俚僚人对雷神的崇拜以及对狗图腾的信奉，在生产生活过程中逐步被古越族文化所同化。
                       因此，雷州石狗具有多兽之形的特征。
@@ -560,7 +554,7 @@ export default function Home() {
                                transition-all duration-300 
                                border-2 border-[#8d765e]/30 shadow-lg"
                   >
-                    <h3 className="text-3xl font-zhanku text-[#6c5b48]">{item.title}</h3>
+                    <h3 className="text-2xl md:text-3xl font-zhanku text-[#6c5b48]">{item.title}</h3>
                     <p className="text-[#8d765e] leading-relaxed">{item.content}</p>
                   </motion.div>
                 ))}
@@ -577,7 +571,7 @@ export default function Home() {
             className="mt-32 mb-20 rounded-2xl p-12 bg-black/10 backdrop-blur-xl 
                        border border-white/20 shadow-lg"
           >
-            <h2 className="text-5xl font-zhanku mb-12 text-[#6c5b48] text-center">数字藏品展示</h2>
+            <h2 className="text-4xl md:text-5xl font-zhanku mb-12 text-[#6c5b48] text-center">数字藏品展示</h2>
 
             {/* NFT展示轮播 */}
             <div className="relative my-12">
@@ -624,8 +618,8 @@ export default function Home() {
             <div className="text-center mt-8">
               <Link
                 href="/nft"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-[#45B1A3] to-[#4A4A4A] text-[#FFFFF0] rounded-lg 
-                         transition-all duration-300 transform hover:scale-105"
+                className="inline-block px-8 py-4 bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand rounded-lg 
+                         border-2 border-[#674d3d] transition-all duration-300 transform hover:scale-105"
               >
                 探索全部藏品
               </Link>

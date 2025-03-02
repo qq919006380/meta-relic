@@ -70,7 +70,8 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			fontFamily: {
-				'zhanku': ['ZhanKuKuHei', 'sans-serif']
+				'zhanku': ['ZhanKuKuHei', 'sans-serif'],
+				'righteous': ['Righteous', 'sans-serif']
 			},
 			backgroundColor: {
 				'gradient-culture': 'linear-gradient(135deg, rgba(42,40,38,0.03) 0%, rgba(150,53,30,0.05) 100%)',

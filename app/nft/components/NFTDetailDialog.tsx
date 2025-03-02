@@ -145,8 +145,8 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
               <Button
                 size="sm"
                 onClick={handleExport}
-                className="bg-gradient-to-r from-[#45B1A3] to-[#4A4A4A] text-[#FFFFF0]"
-              >
+                className="bg-[#251b16] text-museum-sand rounded-lg"
+              > 
                 导出图片
               </Button>
             </div>
