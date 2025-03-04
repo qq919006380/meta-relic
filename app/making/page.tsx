@@ -17,21 +17,21 @@ export default function Making() {
                         </h2>
                         <div className="flex flex-col md:flex-row md:gap-8 mb-8">
                             {/* 左侧图片 */}
-                            <div className="w-full md:w-64 flex-shrink-0 mx-auto md:mx-0 mb-8">
+                            <div className="w-full md:w-1/2 flex-shrink-0 mx-auto md:mx-0 mb-8">
                                 <div className="bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 
                                     rounded-lg shadow-lg hover:shadow-xl transition-all duration-300
                                     max-w-[230px] md:max-w-none mx-auto">
                                     <Image
-                                        src="/img/realDog/3.png"
+                                        src="/img/realDog/5.png"
                                         alt="雷州石狗历史"
                                         width={300}
                                         height={400}
-                                        className="rounded-lg object-cover w-full h-full transform scale-125 
+                                        className="rounded-lg object-cover w-full h-full transform  scale-75
                                                  transition-all duration-300"
                                     />
                                 </div>
                             </div>
-                            <div className="prose text-[rgb(47,53,66)]">
+                            <div className="prose flex items-center md:w-1/2 text-[rgb(47,53,66)]">
                                 <p className="indent-8 leading-relaxed">
                                     推测雷州石狗最早出现的年代约在春秋时期。区域民族关系史的考古学研究，通过环南海的华南大陆、台湾、中南半岛、东南亚群岛地带相对集中分布的凸纽形块的整理分析，认为"凸纽形玦是新石器晚期至早期铁器时代出现于环南海地区的一类特殊的玦形佩饰，是反映该时空民族文化特殊性的重要物质文化因素之一。从考古学探索民族关系史的一般方法，得出的结论也与国内外学者已经关注的环南海甚至更大范围分布的有肩与有段石器、树皮布石拍等文化因素时空分布吻合"。从专家上述考古研究结果与雷州出土的新石器时期石器比较来看，新石器时期雷州已普遍使用石器，土著生产力的提高及民族文化的交流促进了信仰文化的发展，但初始雕制石狗是否出现于其时仍难以定论。
                                 </p>

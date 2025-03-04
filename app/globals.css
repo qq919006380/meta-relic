@@ -236,8 +236,14 @@ body {
 }
 
 /* 添加文章段落样式 */
-.article-content p {
+.article-content p{
     text-indent: 2em;
+    line-height: 1.8;
+    margin-bottom: 1.5em;
+    color: rgb(var(--color-text-primary));
+}
+
+.article-content ul{
     line-height: 1.8;
     margin-bottom: 1.5em;
     color: rgb(var(--color-text-primary));
@@ -293,4 +299,18 @@ body {
 @keyframes shad-anim {
   0% { background-position: 0 0 }  
   100% { background-position: 100% -100% }
+}
+
+/* 添加3D视图相关样式 */
+.loading-spinner {
+  border: 4px solid rgba(var(--color-bronze-primary), 0.1);
+  border-left-color: rgb(var(--color-bronze-primary));
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg) }
 }

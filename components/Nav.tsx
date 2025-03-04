@@ -3,7 +3,7 @@ import { useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X } from "lucide-react";
+import { Menu, X, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
@@ -18,6 +18,11 @@ export default function Nav() {
         { href: '/making', text: '石狗雕制起始' },
         { href: '/distribution', text: '石狗分布及置放' },
         { href: '/protection', text: '雷州石狗保护' },
+        { 
+            href: '/model-view', 
+            text: '3D模型', 
+            icon: <View className="inline-block mr-2 h-5 w-5" /> 
+        },
     ];
 
     const isCurrentPath = (href: string) => pathname === href;
@@ -42,6 +47,7 @@ export default function Nav() {
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
                                 <a key={link.href} href={link.href} className="group relative flex items-center">
+                                    {link.icon && link.icon}
                                     <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap 
                             ${isCurrentPath(link.href)
                                             ? 'text-[#f4eccf]'  // 选中状态使用金色
@@ -87,7 +93,7 @@ export default function Nav() {
                                             <DropdownMenuItem key={link.href} className="flex justify-center" asChild>
                                                 <Link
                                                     href={link.href}
-                                                    className={`block py-4 text-base font-medium rounded-lg
+                                                    className={`flex items-center py-4 text-base font-medium rounded-lg
                                                               transition-all duration-300 ${isCurrentPath(link.href)
                                                             ? 'text-[rgb(251,248,241)] bg-gradient-to-r from-[rgb(139,69,19)] to-[rgb(184,115,51)]'
                                                             : 'text-[rgb(139,69,19)] hover:bg-[rgb(184,115,51)]/10'
@@ -97,6 +103,7 @@ export default function Nav() {
                                                         setIsMenuOpen(false);
                                                     }}
                                                 >
+                                                    {link.icon && link.icon}
                                                     {link.text}
                                                 </Link>
                                             </DropdownMenuItem>

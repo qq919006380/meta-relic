@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Distribution() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-[rgb(251,248,241)] to-[rgb(245,240,230)]">
@@ -28,13 +30,25 @@ export default function Distribution() {
                         <h2 className="text-2xl font-zhanku text-[rgb(139,69,19)] mb-6">
                             地域分布
                         </h2>
-                        <div className="prose text-[rgb(47,53,66)]">
-                            <p className="indent-8 leading-relaxed">
-                                在雷州半岛上，放眼古城门、村口、古道、巷口、门口、水口或古墓前，定会看到一尊尊或坐、或蹲、或伏，大小不一，形态各异的用玄武岩石雕刻而成的石狗。石狗遍布雷州各镇2500多条村庄，但不同时期的石狗分布区域还是有其特殊性。
-                            </p>
-                            <p className="indent-8 leading-relaxed">
-                                俚人风格的雷州石狗，主要分布在英利、覃斗及"三家一水"（杨家、唐家、纪家、企水）。就广义的雷州地域而言，雷州石狗的分布以雷城为中心，划出一个半径为100公里的圆，其内均是民间石狗存在的地域，甚至包括茂名市的一些区域，从圆心往外，民间石狗的存在密度趋减。就现行政区域的湛江市而言，徐闻、麻章、遂溪这三个闽南语系较为盛行的县域民间石狗的存在次于雷州，但还是有一定数量，坡头、廉江、吴川等粤语语系地域民间石狗的存在较少。
-                            </p>
+                        <div className="flex flex-col md:flex-row gap-6 items-center">
+                            <div className="w-full md:w-1/3 bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 relative group overflow-hidden rounded-lg 
+                                          shadow-lg hover:shadow-xl transition-shadow">
+                                <Image
+                                    src="/img/realDog/3.png"
+                                    alt="地域分布示意图"
+                                    width={300}
+                                    height={400}
+                                    className="w-full h-80 object-cover scale-105 transform transition-transform duration-500"
+                                />
+                            </div>
+                            <div className="prose text-[rgb(47,53,66)] flex-1">
+                                <p className="indent-8 leading-relaxed">
+                                    在雷州半岛上，放眼古城门、村口、古道、巷口、门口、水口或古墓前，定会看到一尊尊或坐、或蹲、或伏，大小不一，形态各异的用玄武岩石雕刻而成的石狗。石狗遍布雷州各镇2500多条村庄，但不同时期的石狗分布区域还是有其特殊性。
+                                </p>
+                                <p className="indent-8 leading-relaxed">
+                                    俚人风格的雷州石狗，主要分布在英利、覃斗及"三家一水"（杨家、唐家、纪家、企水）。就广义的雷州地域而言，雷州石狗的分布以雷城为中心，划出一个半径为100公里的圆，其内均是民间石狗存在的地域，甚至包括茂名市的一些区域，从圆心往外，民间石狗的存在密度趋减。就现行政区域的湛江市而言，徐闻、麻章、遂溪这三个闽南语系较为盛行的县域民间石狗的存在次于雷州，但还是有一定数量，坡头、廉江、吴川等粤语语系地域民间石狗的存在较少。
+                                </p>
+                            </div>
                         </div>
                     </section>
 
@@ -55,17 +69,29 @@ export default function Distribution() {
                     {/* 文化传播 */}
                     <section className="bg-white/30 backdrop-blur-sm rounded-lg p-6 shadow-lg
                                     border border-[rgb(184,115,51)]/20 hover:border-[rgb(255,215,0)]/30
-                                    transition-all duration-300">
+                                    transition-all duration-300 mt-8">
                         <h2 className="text-2xl font-zhanku text-[rgb(139,69,19)] mb-6">
                             文化传播
                         </h2>
-                        <div className="prose text-[rgb(47,53,66)]">
-                            <p className="indent-8 leading-relaxed">
-                                历史上民族部属的迁徙与商贸往来，各族民俗的文化传播，使雷州石狗文化对周边地区产生了深远的影响。蒋廷瑜《铜鼓史话》中提到"制造和使用云雷纹铜鼓的部族原是东汉时代的'乌浒人'，到两晋南北朝叫'俚人'或'俚僚'，到唐代'这些部族的绝大部分与汉族融合'成为壮族和汉族的一支，但也有一部分保留原来的民族特性，发展成为海南岛上的黎族'俚'、'黎'和'雷'的读音相近，也可以看到其中的密切关系"。
-                            </p>
-                            <p className="indent-8 leading-relaxed">
-                                何光岳《南蛮源流史》写有"自汉至唐宋时，有一部分俚人自雷州半岛陆续南迁至海南岛，成为黎族的一分支，称加茂黎"；"俚人迁到海南后，成为当地最早用犁的农耕民族"。说明了俚僚人迁徙海南与越南时途径广西、云南等地时传播留下了雷文化，至今海南岛的北边地区琼海、儋州与广西云南东南地区有奉祀石狗的习俗，这些地区的石狗造型简单且形体小数量少。环北部湾地域的石狗文化遗存，反映着民族迁徙的亲缘关系以及商贸交往、文化交流与社会民俗的相互引力。
-                            </p>
+                        <div className="flex flex-col md:flex-row-reverse gap-6 items-center">
+                            <div className="w-full md:w-1/3 bg-gradient-to-br from-[rgb(139,69,19)]/10 to-[rgb(255,215,0)]/10 relative group overflow-hidden rounded-lg 
+                                          shadow-lg hover:shadow-xl transition-shadow">
+                                <Image
+                                    src="/img/realDog/4.png"
+                                    alt="文化传播示意图"
+                                    width={300}
+                                    height={400}
+                                    className="w-full h-80 object-cover scale-105 transform transition-transform duration-500"
+                                />
+                            </div>
+                            <div className="prose text-[rgb(47,53,66)] flex-1">
+                                <p className="indent-8 leading-relaxed">
+                                    历史上民族部属的迁徙与商贸往来，各族民俗的文化传播，使雷州石狗文化对周边地区产生了深远的影响。蒋廷瑜《铜鼓史话》中提到"制造和使用云雷纹铜鼓的部族原是东汉时代的'乌浒人'，到两晋南北朝叫'俚人'或'俚僚'，到唐代'这些部族的绝大部分与汉族融合'成为壮族和汉族的一支，但也有一部分保留原来的民族特性，发展成为海南岛上的黎族'俚'、'黎'和'雷'的读音相近，也可以看到其中的密切关系"。
+                                </p>
+                                <p className="indent-8 leading-relaxed">
+                                    何光岳《南蛮源流史》写有"自汉至唐宋时，有一部分俚人自雷州半岛陆续南迁至海南岛，成为黎族的一分支，称加茂黎"；"俚人迁到海南后，成为当地最早用犁的农耕民族"。说明了俚僚人迁徙海南与越南时途径广西、云南等地时传播留下了雷文化，至今海南岛的北边地区琼海、儋州与广西云南东南地区有奉祀石狗的习俗，这些地区的石狗造型简单且形体小数量少。环北部湾地域的石狗文化遗存，反映着民族迁徙的亲缘关系以及商贸交往、文化交流与社会民俗的相互引力。
+                                </p>
+                            </div>
                         </div>
                     </section>
 
