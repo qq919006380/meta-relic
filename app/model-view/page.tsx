@@ -1,160 +1,169 @@
 "use client";
 
-import React, { useRef, useState, Suspense, useEffect } from 'react';
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { OrbitControls, Html } from '@react-three/drei';
+import React, { Suspense, useEffect } from 'react';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls, Environment } from '@react-three/drei';
 import { FBXLoader } from 'three-stdlib';
 import * as THREE from 'three';
 
-interface PartMapping {
-  [key: string]: string;
-}
-
-// 详情组件
-function DetailPanel({ part, position }: { part: string; position: THREE.Vector3 }) {
-  const details = {
-    身体: "身体",
-    眼睛: "眼睛",
-    鼻子: "鼻子",
-    头: "头部",
-    配饰: "配饰"
-  };
-
-  return (
-    <Html position={position}>
-      <div className="bg-white p-2 rounded shadow-lg flex items-center gap-2">
-        <h3 className="text-lg font-bold">{part}</h3>
-        <span className="text-gray-600">-</span>
-        <p className="text-gray-800">{details[part as keyof typeof details]}</p>
-      </div>
-    </Html>
-  );
-}
-
-// 模型组件
+// 手动贴图模型组件
 function Model() {
-  const fbx = useLoader(FBXLoader, '/models/IP.fbx');
-  const model = useRef<THREE.Group>(null);
-  const [hoveredPart, setHoveredPart] = useState(null);
-  const [hoverPoint, setHoverPoint] = useState([0, 0, 0]);
-  const { camera, raycaster, mouse, scene } = useThree();
-
-  // 添加点击状态
-  const [clickedPart, setClickedPart] = useState(null);
-
-  // 映射模型的部分名称（这需要根据实际模型调整）
-  const partMapping: PartMapping = {
-    '眼睛': '眼睛',
-    '身体': '身体',
-    '鼻子': '鼻子',
-    '头': '头部',
-    '配饰': '装饰品'
-  };
-
-  // 确保模型加载后处理子对象和材质
+  // 加载FBX模型
+  const fbx = useLoader(FBXLoader, '/models/u.fbx');
+  
+  // 调整模型整体缩放和位置
+  fbx.scale.set(0.005, 0.005, 0.005);
+  fbx.position.set(0, -1, 0);
+  
+  // 手动加载贴图
   useEffect(() => {
-    if (fbx) {
-      // 调整模型整体缩放
-      fbx.scale.set(0.005, 0.005, 0.005); // 减小初始大小，根据实际需要调整数值
-
-      // 设置模型位置
-      fbx.position.set(0, -1, 0); // 调整Y轴位置，使模型居中
-
-      // 为每个mesh设置材质和颜色
-      fbx.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          // 为不同部位设置不同颜色
-          let color = new THREE.Color(0x808080); // 默认灰色
-          
-          if (child.name.includes('眼睛')) {
-            color = new THREE.Color(0x000000); // 黑色
-          } else if (child.name.includes('身体')) {
-            color = new THREE.Color(0xA0522D); // 棕色
-          } else if (child.name.includes('鼻子')) {
-            color = new THREE.Color(0x8B4513); // 深棕色
-          }
-
-          child.material = new THREE.MeshStandardMaterial({ 
-            color: color,
-            metalness: 0.3,
-            roughness: 0.7,
-            // 添加环境光遮蔽以增强细节
-            aoMapIntensity: 1,
-          });
-
-          // 添加阴影
-          child.castShadow = true;
-          child.receiveShadow = true;
-        }
-      });
-    }
-  }, [fbx]);
-
-  // 优化交互检测
-  useFrame(() => {
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(fbx.children, true); // 改为检测子对象
+    if (!fbx) return;
     
-    if (intersects.length > 0) {
-      const object = intersects[0].object;
-      const partName = object.name;
-      
-      // 调试输出模型部件名称
-      console.log('Detected part:', partName);
-      
-      // 更精确的匹配逻辑
-      const matchedPart = Object.entries(partMapping).find(([key]) => 
-        partName.toLowerCase().includes(key.toLowerCase())
-      );
-      
-      if (matchedPart) {
-        setHoveredPart(matchedPart[1]);
-        setHoverPoint(intersects[0].point.toArray().map((v, i) => 
-          i === 1 ? v + 0.2 : v // 调整Y轴偏移防止遮挡
-        ));
+    console.log('开始手动加载贴图...');
+    
+    // 创建纹理加载器
+    const textureLoader = new THREE.TextureLoader();
+    
+    // 加载所有贴图
+    const textures = {
+      body: textureLoader.load('/models/u.fbm/身体.jpg'),
+      head: textureLoader.load('/models/u.fbm/头部uv.jpg'),
+      eyes: textureLoader.load('/models/u.fbm/眼睛.jpg'),
+      nose: textureLoader.load('/models/u.fbm/鼻子.jpg'),
+      bell: textureLoader.load('/models/u.fbm/铃铛贴图.jpg')
+    };
+    
+    // 设置贴图颜色空间
+    Object.values(textures).forEach(texture => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+    });
+    
+    // 输出模型结构以便调试
+    console.log('模型结构:');
+    fbx.traverse(child => {
+      if (child instanceof THREE.Mesh) {
+        console.log('网格名称:', child.name);
       }
-    } else {
-      setHoveredPart(null);
-    }
-  });
-
-  return (
-    <group ref={model}>
-      <primitive object={fbx} />
-      {hoveredPart && (
-        <DetailPanel part={hoveredPart} position={hoverPoint} />
-      )}
-    </group>
-  );
+    });
+    
+    // 将贴图应用到模型
+    fbx.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        // 确保法线计算正确
+        child.geometry.computeVertexNormals();
+        
+        // 设置双面渲染，解决某些面反向问题
+        child.material.side = THREE.DoubleSide;
+        
+        // 设置阴影
+        child.castShadow = true;
+        child.receiveShadow = true;
+        
+        const meshName = child.name.toLowerCase();
+        
+        // 根据网格名称应用不同贴图
+        if (meshName.includes('body') || meshName.includes('身体')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.body,
+            roughness: 0.7,
+            metalness: 0.2,
+            side: THREE.DoubleSide,  // 双面渲染
+            transparent: false,      // 确保不透明
+            alphaTest: 0.5           // 处理半透明边缘
+          });
+        } 
+        else if (meshName.includes('head') || meshName.includes('头')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.head,
+            roughness: 0.7,
+            metalness: 0.2
+          });
+        }
+        else if (meshName.includes('eye') || meshName.includes('眼')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.eyes,
+            roughness: 0.5,
+            metalness: 0.3
+          });
+        }
+        else if (meshName.includes('nose') || meshName.includes('鼻')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.nose,
+            roughness: 0.6,
+            metalness: 0.2
+          });
+        }
+        else if (meshName.includes('bell') || meshName.includes('铃铛')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.bell,
+            roughness: 0.4,
+            metalness: 0.6
+          });
+        }
+        // 对于其他部分
+        else {
+          console.log('未匹配的网格:', child.name);
+          // 默认使用身体贴图
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.body,
+            roughness: 0.7,
+            metalness: 0.2
+          });
+        }
+        
+        console.log(`贴图应用到: ${child.name}`);
+      }
+    });
+    
+  }, [fbx]);
+  
+  return <primitive object={fbx} />;
 }
 
 export default function ModelViewPage() {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen bg-gradient-to-b from-amber-50 to-amber-100">
       <Canvas 
         camera={{ position: [0, 0, 5], fov: 45 }}
-        shadows // 启用阴影
+        shadows
       >
-        {/* 增强光照效果 */}
-        <ambientLight intensity={0.5} />
+        {/* 环境光照 */}
+        <ambientLight intensity={0.7} />
+        
+        {/* 定向光 */}
         <directionalLight
-          position={[10, 10, 5]}
-          intensity={1}
+          position={[5, 8, 3]}
+          intensity={1.2}
           castShadow
           shadow-mapSize-width={1024}
           shadow-mapSize-height={1024}
         />
-        <pointLight position={[-10, -10, -5]} intensity={0.5} />
+        
+        {/* 背光源增强轮廓感 */}
+        <directionalLight 
+          position={[-3, 2, -3]} 
+          intensity={0.6} 
+          color="#FFF1DB" 
+        />
+        
+        {/* 点光源 - 增加亮度 */}
+        <pointLight position={[-5, 5, -5]} intensity={1} />
+        
+        {/* 环境贴图 - 增加真实感 */}
+        <Environment preset="sunset" />
         
         <Suspense fallback={null}>
           <Model />
         </Suspense>
+        
         <OrbitControls 
           enablePan={true} 
           enableZoom={true} 
           enableRotate={true}
-          minDistance={2} // 限制最小缩放距离
-          maxDistance={10} // 限制最大缩放距离
+          minDistance={2}
+          maxDistance={10}
+          autoRotate={true}
+          autoRotateSpeed={0.5}
         />
       </Canvas>
     </div>
