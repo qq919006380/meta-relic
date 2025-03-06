@@ -46,6 +46,14 @@ function Model() {
       }
     });
     
+    // 在fbx.traverse之前添加
+    console.log('所有网格名称:');
+    fbx.traverse(child => {
+      if (child instanceof THREE.Mesh) {
+        console.log('完整网格名称:', child.name);
+      }
+    });
+    
     // 将贴图应用到模型
     fbx.traverse((child) => {
       if (child instanceof THREE.Mesh) {
