@@ -5,11 +5,20 @@ import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import { FBXLoader } from 'three-stdlib';
 import * as THREE from 'three';
-
+import Base from './components/Base';
+import Baseplate from './components/Baseplate';
+import Ground from './components/Ground';
+import DecorativePillar from './components/DecorativePillar';
+import MemorialArchway from './components/MemorialArchway';
+import Pavilion from './components/Pavilion';
+import StoneBridge from './components/StoneBridge';
+import Censer from './components/Censer';
+import Background from './components/Background';
+import Mountain from './components/Mountain';
 // 手动贴图模型组件
 function Model() {
   // 加载FBX模型
-  const fbx = useLoader(FBXLoader, '/models/u.fbx');
+  const fbx = useLoader(FBXLoader, '/models/IP1/IP1.fbx');
   
   // 调整模型整体缩放和位置
   fbx.scale.set(0.005, 0.005, 0.005);
@@ -26,11 +35,11 @@ function Model() {
     
     // 加载所有贴图
     const textures = {
-      body: textureLoader.load('/models/u.fbm/身体.jpg'),
-      head: textureLoader.load('/models/u.fbm/头部uv.jpg'),
-      eyes: textureLoader.load('/models/u.fbm/眼睛.jpg'),
-      nose: textureLoader.load('/models/u.fbm/鼻子.jpg'),
-      bell: textureLoader.load('/models/u.fbm/铃铛贴图.jpg')
+      body: textureLoader.load('/models/IP1/IP1.fbm/身体.png'),
+      head: textureLoader.load('/models/IP1/IP1.fbm/头部.png'),
+      eyes: textureLoader.load('/models/IP1/IP1.fbm/眼睛.png'),
+      nose: textureLoader.load('/models/IP1/IP1.fbm/鼻子.png'),
+      bell: textureLoader.load('/models/IP1/IP1.fbm/铃铛.png')
     };
     
     // 设置贴图颜色空间
@@ -133,322 +142,40 @@ function Scene() {
   return (
     <>
       {/* 传统风格底座 */}
-      <mesh position={[0, -1.02, 0]} receiveShadow>
-        <cylinderGeometry args={[2.2, 2.5, 0.15, 64]} />
-        <meshStandardMaterial 
-          color="#B87333" // 铜色
-          roughness={0.6}
-          metalness={0.4}
-          envMapIntensity={0.8}
-        />
-      </mesh>
+      <Base />
       
       {/* 装饰纹样底盘 */}
-      <mesh position={[0, -1, 0]} receiveShadow>
-        <cylinderGeometry args={[2, 2, 0.05, 64]} />
-        <meshStandardMaterial 
-          color="#CD7F32" // 浅铜色
-          roughness={0.5}
-          metalness={0.6}
-          envMapIntensity={1}
-        />
-      </mesh>
+      <Baseplate />
       
       {/* 地面 - 模拟古代地砖 */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -1.1, 0]} receiveShadow>
-        <planeGeometry args={[30, 30, 10, 10]} />
-        <meshStandardMaterial 
-          color="#F5F0E6" // 浅褐色背景
-          roughness={0.9}
-          metalness={0.1}
-          wireframe={false}
-        />
-      </mesh>
+      <Ground />
       
       {/* 传统装饰柱 - 东 */}
-      <group position={[6, -1, -2]}>
-        <mesh castShadow receiveShadow>
-          <cylinderGeometry args={[0.4, 0.5, 4, 16]} />
-          <meshStandardMaterial color="#8B4513" roughness={0.7} metalness={0.2} />
-        </mesh>
-        {/* 柱子顶部装饰 */}
-        <mesh position={[0, 2.1, 0]} castShadow>
-          <boxGeometry args={[1.2, 0.2, 1.2]} />
-          <meshStandardMaterial color="#FFD700" roughness={0.3} metalness={0.8} />
-        </mesh>
-      </group>
+      <DecorativePillar position={[6, -1, -2]} />
       
       {/* 传统装饰柱 - 西 */}
-      <group position={[-6, -1, -2]}>
-        <mesh castShadow receiveShadow>
-          <cylinderGeometry args={[0.4, 0.5, 4, 16]} />
-          <meshStandardMaterial color="#8B4513" roughness={0.7} metalness={0.2} />
-        </mesh>
-        {/* 柱子顶部装饰 */}
-        <mesh position={[0, 2.1, 0]} castShadow>
-          <boxGeometry args={[1.2, 0.2, 1.2]} />
-          <meshStandardMaterial color="#FFD700" roughness={0.3} metalness={0.8} />
-        </mesh>
-      </group>
-      
+      <DecorativePillar position={[-6, -1, -2]} />
+
       {/* 传统中式牌坊 - 背景 */}
-      <group position={[0, -1, -8]}>
-        {/* 牌坊底座 */}
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <boxGeometry args={[8, 0.5, 2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.2} />
-        </mesh>
-        
-        {/* 左侧柱子 */}
-        <mesh position={[-3.5, 2.5, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.8, 5, 0.8]} />
-          <meshStandardMaterial color="#A52A2A" roughness={0.7} metalness={0.1} />
-        </mesh>
-        
-        {/* 右侧柱子 */}
-        <mesh position={[3.5, 2.5, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.8, 5, 0.8]} />
-          <meshStandardMaterial color="#A52A2A" roughness={0.7} metalness={0.1} />
-        </mesh>
-        
-        {/* 横梁 */}
-        <mesh position={[0, 5.2, 0]} castShadow>
-          <boxGeometry args={[8, 0.6, 1]} />
-          <meshStandardMaterial color="#8B4513" roughness={0.6} metalness={0.2} />
-        </mesh>
-        
-        {/* 牌匾 */}
-        <mesh position={[0, 4.2, 0]} castShadow>
-          <boxGeometry args={[4, 1.2, 0.3]} />
-          <meshStandardMaterial color="#DAA520" roughness={0.4} metalness={0.6} />
-        </mesh>
-        
-        {/* 屋顶 */}
-        <group position={[0, 6, 0]}>
-          <mesh castShadow>
-            <boxGeometry args={[9, 0.2, 2]} />
-            <meshStandardMaterial color="#8B4513" roughness={0.7} metalness={0.2} />
-          </mesh>
-          <mesh position={[0, 0.6, 0]} castShadow>
-            <boxGeometry args={[9.5, 0.8, 2.5]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-          {/* 屋顶翘角 */}
-          <mesh position={[-4.5, 0.3, 0]} rotation={[0, 0, Math.PI/6]} castShadow>
-            <boxGeometry args={[1.5, 0.2, 2.5]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-          <mesh position={[4.5, 0.3, 0]} rotation={[0, 0, -Math.PI/6]} castShadow>
-            <boxGeometry args={[1.5, 0.2, 2.5]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-        </group>
-      </group>
+      <MemorialArchway />
       
       {/* 古代亭子 - 右侧 */}
-      <group position={[10, -1, -5]}>
-        {/* 亭子底座 */}
-        <mesh position={[0, 0, 0]} receiveShadow>
-          <cylinderGeometry args={[2, 2.2, 0.4, 8]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.2} />
-        </mesh>
-        
-        {/* 亭子柱子 */}
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
-          const angle = (i * Math.PI) / 4;
-          const x = 1.5 * Math.cos(angle);
-          const z = 1.5 * Math.sin(angle);
-          return (
-            <mesh key={i} position={[x, 1.5, z]} castShadow receiveShadow>
-              <cylinderGeometry args={[0.15, 0.15, 3, 8]} />
-              <meshStandardMaterial color="#A52A2A" roughness={0.7} metalness={0.1} />
-            </mesh>
-          );
-        })}
-        
-        {/* 亭子顶部 */}
-        <group position={[0, 3.2, 0]}>
-          {/* 底层屋顶 - 八角攒尖顶 */}
-          <mesh castShadow>
-            <cylinderGeometry args={[2.5, 2, 0.6, 8]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-          
-          {/* 屋檐翘角 - 8个方向 */}
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
-            const angle = (i * Math.PI) / 4;
-            const x = 2.3 * Math.cos(angle);
-            const z = 2.3 * Math.sin(angle);
-            return (
-              <mesh key={`eave-${i}`} position={[x, -0.2, z]} rotation={[0, -angle, Math.PI/8]} castShadow>
-                <boxGeometry args={[1, 0.2, 0.8]} />
-                <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-              </mesh>
-            );
-          })}
-          
-          {/* 中层屋顶 */}
-          <mesh position={[0, 0.5, 0]} castShadow>
-            <cylinderGeometry args={[1.7, 1.3, 0.5, 8]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-          
-          {/* 顶层屋顶 - 宝顶 */}
-          <mesh position={[0, 1, 0]} castShadow>
-            <coneGeometry args={[1, 1, 8]} />
-            <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-          </mesh>
-          
-          {/* 装饰飞檐 - 向上翘起的边缘 */}
-          {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => {
-            const angle = (i * Math.PI) / 4 + Math.PI/8;
-            const x = 1.5 * Math.cos(angle);
-            const z = 1.5 * Math.sin(angle);
-            return (
-              <mesh key={`ridge-${i}`} position={[x, 0.7, z]} rotation={[0, -angle, Math.PI/6]} castShadow>
-                <boxGeometry args={[0.7, 0.15, 0.3]} />
-                <meshStandardMaterial color="#2F4F4F" roughness={0.6} metalness={0.3} />
-              </mesh>
-            );
-          })}
-          
-          {/* 顶部宝珠装饰 */}
-          <group position={[0, 1.4, 0]}>
-            {/* 底座 */}
-            <mesh castShadow>
-              <cylinderGeometry args={[0.25, 0.3, 0.2, 8]} />
-              <meshStandardMaterial color="#CD7F32" roughness={0.4} metalness={0.6} />
-            </mesh>
-            {/* 宝珠 */}
-            <mesh position={[0, 0.3, 0]} castShadow>
-              <sphereGeometry args={[0.25, 16, 16]} />
-              <meshStandardMaterial color="#FFD700" roughness={0.3} metalness={0.8} />
-            </mesh>
-            {/* 尖顶 */}
-            <mesh position={[0, 0.6, 0]} castShadow>
-              <coneGeometry args={[0.1, 0.3, 8]} />
-              <meshStandardMaterial color="#FFD700" roughness={0.3} metalness={0.8} />
-            </mesh>
-          </group>
-        </group>
-      </group>
+      <Pavilion />
       
       {/* 古代石桥 - 左侧 */}
-      <group position={[-10, -1, -3]} rotation={[0, Math.PI/4, 0]}>
-        {/* 桥身 */}
-        <mesh position={[0, 0.5, 0]} castShadow receiveShadow>
-          <boxGeometry args={[6, 0.3, 1.5]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.9} metalness={0.1} />
-        </mesh>
-        
-        {/* 桥拱 */}
-        <mesh position={[0, 0, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[1.5, 1.5, 1.5, 16, 1, false, 0, Math.PI]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.9} metalness={0.1} />
-        </mesh>
-        
-        {/* 桥栏杆 */}
-        <mesh position={[-2.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[-2.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[-1.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[-1.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[-0.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[-0.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[0.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[0.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[1.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[1.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[2.5, 1, -0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-        <mesh position={[2.5, 1, 0.6]} castShadow>
-          <boxGeometry args={[0.2, 0.8, 0.2]} />
-          <meshStandardMaterial color="#7D6B5D" roughness={0.8} metalness={0.1} />
-        </mesh>
-      </group>
+      <StoneBridge />
       
       {/* 香炉 - 模型前方 */}
-      <group position={[0, -1, 3]}>
-        <mesh castShadow receiveShadow>
-          <cylinderGeometry args={[0.3, 0.4, 0.6, 16]} />
-          <meshStandardMaterial color="#B87333" roughness={0.4} metalness={0.7} />
-        </mesh>
-        {/* 炉盖 */}
-        <mesh position={[0, 0.4, 0]} castShadow>
-          <coneGeometry args={[0.3, 0.3, 16]} />
-          <meshStandardMaterial color="#B87333" roughness={0.4} metalness={0.7} />
-        </mesh>
-        {/* 香火效果 - 使用粒子或光效果模拟 */}
-        <pointLight position={[0, 0.7, 0]} intensity={0.6} color="#FF9E5E" distance={1.5} />
-      </group>
+      <Censer />
       
       {/* 远景背景 - 传统山水画风格 */}
-      <mesh position={[0, 0, -15]} rotation={[0, 0, 0]}>
-        <planeGeometry args={[40, 20]} />
-        <meshStandardMaterial 
-          color="#F5F0E6" 
-          side={THREE.DoubleSide}
-          roughness={1}
-          metalness={0}
-          opacity={0.8}
-          transparent={true}
-        />
-      </mesh>
+      <Background />
       
       {/* 远景山脉 - 左侧 */}
-      <mesh position={[-10, 2, -14]} rotation={[0, Math.PI/6, 0]}>
-        <coneGeometry args={[8, 7, 16, 1, true]} />
-        <meshStandardMaterial 
-          color="#8B4513" 
-          opacity={0.6}
-          transparent={true}
-          roughness={0.9}
-          metalness={0.1}
-        />
-      </mesh>
+      <Mountain position={[-10, 2, -14]} opacity={0.6} args={[8, 7, 16, 1, true]} />
       
       {/* 远景山脉 - 右侧 */}
-      <mesh position={[10, 1, -14]} rotation={[0, -Math.PI/6, 0]}>
-        <coneGeometry args={[10, 5, 16, 1, true]} />
-        <meshStandardMaterial 
-          color="#8B4513" 
-          opacity={0.5}
-          transparent={true}
-          roughness={0.9}
-          metalness={0.1}
-        />
-      </mesh>
+      <Mountain position={[10, 1, -14]} opacity={0.5} args={[10, 5, 16, 1, true]} />
       
       {/* 点缀小石狗装饰 - 左侧 */}
       <mesh position={[-3, -0.95, 2]} rotation={[0, Math.PI/4, 0]} scale={[0.3, 0.3, 0.3]} castShadow>
