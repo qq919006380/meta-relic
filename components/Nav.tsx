@@ -18,10 +18,10 @@ export default function Nav() {
         { href: '/making', text: '石狗雕制起始' },
         { href: '/distribution', text: '石狗分布及置放' },
         { href: '/protection', text: '雷州石狗保护' },
-        { 
-            href: '/model-view', 
-            text: '全景观赏', 
-            icon: <View className="inline-block h-5 w-5" /> 
+        {
+            href: '/model-view',
+            text: '全景观赏',
+            icon: <View className="inline-block h-5 w-5" />
         },
     ];
 
@@ -46,18 +46,9 @@ export default function Nav() {
 
                         {/* 电脑端导航栏 */}
                         <div className="hidden md:flex items-center space-x-6">
-                            {navLinks.map((link) => (
-                                link.href === '/model-view' ? (
-                                    <Link key={link.href} href={link.href} className="group relative">
-                                        <Button
-                                            variant="default"
-                                            className={`ml-4 bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand ring-1 ring-[#f4eccf]`}
-                                        >
-                                            {link.icon}
-                                            {link.text}
-                                        </Button>
-                                    </Link>
-                                ) : (
+                            {navLinks
+                                .filter(link => link.href !== '/model-view') // 过滤掉/model-view链接
+                                .map((link) => (
                                     <a key={link.href} href={link.href} className="group relative flex items-center">
                                         {link.icon && link.icon}
                                         <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap 
@@ -73,11 +64,19 @@ export default function Nav() {
                                                 }`}></span>
                                         </span>
                                     </a>
-                                )
-                            ))}
+                                ))}
                         </div>
 
                         <div className="flex items-center px-4">
+                            <Link href="/model-view" className="hidden mr-8 md:block">
+                                <Button
+                                    variant="default"
+                                    className="bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand ring-1 ring-[#f4eccf]"
+                                >
+                                    <View className="inline-block h-5 w-5" />
+                                    全景观赏
+                                </Button>
+                            </Link>
                             <Link href="/nft">
                                 <Button
                                     variant="default"
