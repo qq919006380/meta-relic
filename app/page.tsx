@@ -114,12 +114,11 @@ export default function Home() {
                     <div className="sm:hidden flex flex-row p-4 border-b border-[rgb(184,115,51)]/20">
                       {/* 图片区域 */}
                       <div className="w-1/3 pr-2">
-                        <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg">
-                          <Image
+                        <div className="relative aspect-[3/4] rounded-lg">
+                          <img
                             src={`/img/dogIp/IP${num}.png`}
                             alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
-                            fill
-                            className="object-cover"
+                            className="object-cover rounded-lg"
                           />
                         </div>
                       </div>
@@ -137,13 +136,11 @@ export default function Home() {
 
                     {/* 桌面端左侧图片区域（保持原样） */}
                     <div className="hidden sm:flex sm:items-center w-1/3 p-4 bg-gradient-to-br from-[rgb(139,69,19)]/5 to-[rgb(184,115,51)]/5">
-                      <div className="relative aspect-[3/4] w-full max-w-[150px] rounded-lg overflow-hidden 
-                                    shadow-lg hover:shadow-xl transition-all duration-300">
-                        <Image
+                      <div className="relative aspect-[3/4] w-full transition-all duration-300">
+                        <img
                           src={`/img/dogIp/IP${num}.png`}
                           alt={IP_TAGS[Math.min(num - 1, IP_TAGS.length - 1)].ipName}
-                          fill
-                          className="object-contain md:object-cover transform hover:scale-105 transition-transform duration-300"
+                          className="rounded-lg transform transition-transform duration-300"
                         />
                       </div>
                     </div>

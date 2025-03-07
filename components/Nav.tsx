@@ -3,7 +3,7 @@ import { useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, View } from "lucide-react";
+import { Menu, X, View, Shapes } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
@@ -20,8 +20,8 @@ export default function Nav() {
         { href: '/protection', text: '雷州石狗保护' },
         { 
             href: '/model-view', 
-            text: '3D模型', 
-            icon: <View className="inline-block mr-2 h-5 w-5" /> 
+            text: '全景观赏', 
+            icon: <View className="inline-block h-5 w-5" /> 
         },
     ];
 
@@ -44,23 +44,36 @@ export default function Nav() {
                             </Link>
                         </div>
 
+                        {/* 电脑端导航栏 */}
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks.map((link) => (
-                                <a key={link.href} href={link.href} className="group relative flex items-center">
-                                    {link.icon && link.icon}
-                                    <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap 
-                            ${isCurrentPath(link.href)
-                                            ? 'text-[#f4eccf]'  // 选中状态使用金色
-                                            : 'text-[#eee3d6] hover:text-[#f4eccf]'  // 常态使用米灰，悬停转金
-                                        }`}>
-                                        {link.text}
-                                        <span className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-200 
-                              ${isCurrentPath(link.href)
-                                                ? 'w-full bg-[#f4eccf]'  // 金色下划线
-                                                : 'w-0 bg-[#f4eccf] group-hover:w-full'  // 米灰渐显
-                                            }`}></span>
-                                    </span>
-                                </a>
+                                link.href === '/model-view' ? (
+                                    <Link key={link.href} href={link.href} className="group relative">
+                                        <Button
+                                            variant="default"
+                                            className={`ml-4 bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand ring-1 ring-[#f4eccf]`}
+                                        >
+                                            {link.icon}
+                                            {link.text}
+                                        </Button>
+                                    </Link>
+                                ) : (
+                                    <a key={link.href} href={link.href} className="group relative flex items-center">
+                                        {link.icon && link.icon}
+                                        <span className={`text-lg font-medium transition-colors duration-200 whitespace-nowrap 
+                                            ${isCurrentPath(link.href)
+                                                ? 'text-[#f4eccf]'
+                                                : 'text-[#eee3d6] hover:text-[#f4eccf]'
+                                            }`}>
+                                            {link.text}
+                                            <span className={`absolute -bottom-1 left-0 h-0.5 transition-all duration-200 
+                                                ${isCurrentPath(link.href)
+                                                    ? 'w-full bg-[#f4eccf]'
+                                                    : 'w-0 bg-[#f4eccf] group-hover:w-full'
+                                                }`}></span>
+                                        </span>
+                                    </a>
+                                )
                             ))}
                         </div>
 
@@ -68,13 +81,14 @@ export default function Nav() {
                             <Link href="/nft">
                                 <Button
                                     variant="default"
-                                    className="bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand"
+                                    className="bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand ring-1 ring-[#f4eccf]"
                                 >
+                                    <Shapes className="inline-block h-5 w-5" />
                                     专属定制
                                 </Button>
                             </Link>
                         </div>
-
+                        {/* 手机端导航栏 */}
                         <div className="md:hidden pr-4">
                             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                                 <DropdownMenuTrigger asChild>
