@@ -294,7 +294,8 @@ export default function ModelViewPage() {
         <pointLight position={[-2, 3, 2]} intensity={0.8} color="#FFD54F" />
         
         {/* 环境贴图 - 使用中国传统风格环境 */}
-        <Environment preset="sunset" />
+        {/* <Environment preset="sunset" /> */}
+        <Environment files="/models/venice_sunset_1k.hdr" />
         
         {/* 轻雾效果 - 增加传统山水画氛围 */}
         <fog attach="fog" args={["#FBF8F1", 15, 30]} />
