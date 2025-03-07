@@ -1,6 +1,6 @@
 "use client";
 
-export default function TreeRight() {
+export default function Cloud() {
     return (
         <>
             {/* 云雾效果 - 远景装饰 */}

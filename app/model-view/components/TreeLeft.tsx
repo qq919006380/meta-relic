@@ -1,6 +1,6 @@
 "use client";
 
-export default function TreeRight() {
+export default function TreeLeft() {
     return (
         <>
             {/* 传统松树群 - 左前方 */}
