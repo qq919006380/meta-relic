@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import { FBXLoader } from 'three-stdlib';
@@ -24,46 +24,76 @@ import Cloud from './components/Cloud';
 import MountainBg from './components/MountainBg';
 import CloudPattern from './components/CloudPattern';
 import LandscapeStone from './components/LandscapeStone';
+
+// 定义可用的模型
+const AVAILABLE_MODELS = [
+  { id: 'IP1', name: '石狗一号' },
+  { id: 'IP2', name: '石狗二号' },
+  { id: 'IP3', name: '石狗三号' },
+  { id: 'IP4', name: '石狗四号' },
+  { id: 'IP5', name: '石狗五号' },
+  { id: 'IP6', name: '石狗六号' },
+  { id: 'IP7', name: '石狗七号' },
+  { id: 'IP8', name: '石狗八号' },
+];
+
+// 添加类型定义
+type ModelMapping = Record<string, Record<string, string>>;
+
+// 在贴图应用逻辑前添加名称映射
+const MODEL_NAME_MAPPING: ModelMapping = {
+  'IP3': {
+    '第三个ip004': '铃铛',
+    '第三个ip': '身体',
+    '第三个ip005': '眼睛',
+    '第三个ip006': '鼻子',
+    '第三个ip003': '头部'
+  },
+  'IP4': {
+    '嘴巴': '头部'
+  },
+  'IP6': {
+    '6号': '身体'
+  },
+  'IP8': {
+    'polySurface20':'头部',
+    'polySurface19':'身体',
+  }
+};
+
 // 手动贴图模型组件
-function Model() {
+function Model({ modelId }: { modelId: string }) {
   // 加载FBX模型
-  const fbx = useLoader(FBXLoader, '/models/IP1/IP1.fbx');
-  
+  const fbx = useLoader(FBXLoader, `/models/${modelId}/${modelId}.fbx`);
+
   // 调整模型整体缩放和位置
   fbx.scale.set(0.005, 0.005, 0.005);
   fbx.position.set(0, -1, 0);
-  
+
   // 手动加载贴图
   useEffect(() => {
     if (!fbx) return;
-    
-    console.log('开始手动加载贴图...');
-    
+
+    console.log(`开始加载 ${modelId} 的贴图...`);
+
     // 创建纹理加载器
     const textureLoader = new THREE.TextureLoader();
-    
-    // 加载所有贴图
+
+    // 加载所有贴图 - 根据模型ID动态确定路径
     const textures = {
-      body: textureLoader.load('/models/IP1/IP1.fbm/身体.png'),
-      head: textureLoader.load('/models/IP1/IP1.fbm/头部.png'),
-      eyes: textureLoader.load('/models/IP1/IP1.fbm/眼睛.png'),
-      nose: textureLoader.load('/models/IP1/IP1.fbm/鼻子.png'),
-      bell: textureLoader.load('/models/IP1/IP1.fbm/铃铛.png')
+      body: textureLoader.load(`/models/${modelId}/${modelId}.fbm/身体.png`),
+      head: textureLoader.load(`/models/${modelId}/${modelId}.fbm/头部.png`),
+      eyes: textureLoader.load(`/models/${modelId}/${modelId}.fbm/眼睛.png`),
+      nose: textureLoader.load(`/models/${modelId}/${modelId}.fbm/鼻子.png`),
+      bell: textureLoader.load(`/models/${modelId}/${modelId}.fbm/铃铛.png`),
+      line: textureLoader.load(`/models/${modelId}/${modelId}.fbm/法线贴图.png`),
     };
-    
+
     // 设置贴图颜色空间
     Object.values(textures).forEach(texture => {
       texture.colorSpace = THREE.SRGBColorSpace;
     });
-    
-    // 输出模型结构以便调试
-    console.log('模型结构:');
-    fbx.traverse(child => {
-      if (child instanceof THREE.Mesh) {
-        console.log('网格名称:', child.name);
-      }
-    });
-    
+
     // 在fbx.traverse之前添加
     console.log('所有网格名称:');
     fbx.traverse(child => {
@@ -71,22 +101,42 @@ function Model() {
         console.log('完整网格名称:', child.name);
       }
     });
-    
+
+    // 更可靠的检测方式
+    fbx.traverse(child => {
+      if ((child as any).isMesh) { // 替代 instanceof 检查
+        console.log('网格类型:', child.type);
+        console.log('网格名称:', child.name || '<未命名>');
+        console.log('子级深度:', child.id);
+      }
+    });
+
+    // 添加统计计数器
+    let meshCount = 0;
+    fbx.traverse(child => {
+      if ((child as any).isMesh) meshCount++;
+    });
+    console.log(`共检测到 ${meshCount} 个网格`);
+
+
+
     // 将贴图应用到模型
     fbx.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         // 确保法线计算正确
         child.geometry.computeVertexNormals();
-        
+
         // 设置双面渲染，解决某些面反向问题
         child.material.side = THREE.DoubleSide;
-        
+
         // 设置阴影
         child.castShadow = true;
         child.receiveShadow = true;
-        
-        const meshName = child.name.toLowerCase();
-        
+
+        // 获取映射后的部件名称
+        const mappedName = MODEL_NAME_MAPPING[modelId]?.[child.name] || child.name;
+        const meshName = mappedName.toLowerCase();
+
         // 根据网格名称应用不同贴图
         if (meshName.includes('body') || meshName.includes('身体')) {
           child.material = new THREE.MeshStandardMaterial({
@@ -97,7 +147,7 @@ function Model() {
             transparent: false,      // 确保不透明
             alphaTest: 0.5           // 处理半透明边缘
           });
-        } 
+        }
         else if (meshName.includes('head') || meshName.includes('头')) {
           child.material = new THREE.MeshStandardMaterial({
             map: textures.head,
@@ -126,6 +176,13 @@ function Model() {
             metalness: 0.6
           });
         }
+        else if (meshName.includes('line') || meshName.includes('法线')) {
+          child.material = new THREE.MeshStandardMaterial({
+            map: textures.line,
+            roughness: 0.4,
+            metalness: 0.6
+          });
+        }
         // 对于其他部分
         else {
           console.log('未匹配的网格:', child.name);
@@ -136,14 +193,36 @@ function Model() {
             metalness: 0.2
           });
         }
-        
+
         console.log(`贴图应用到: ${child.name}`);
       }
     });
-    
-  }, [fbx]);
-  
+
+  }, [fbx, modelId]);
+
   return <primitive object={fbx} />;
+}
+
+// 模型选择器UI组件
+function ModelSelector({ currentModel, onChange }: { currentModel: string, onChange: (modelId: string) => void }) {
+  return (
+    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10
+                   bg-white/80 backdrop-blur-md rounded-full px-4 py-2 
+                   shadow-lg flex gap-2 overflow-x-auto max-w-3xl">
+      {AVAILABLE_MODELS.map(model => (
+        <button
+          key={model.id}
+          onClick={() => onChange(model.id)}
+          className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
+                    ${currentModel === model.id
+              ? 'bg-[#3a2b23] text-white'
+              : 'bg-white/50 text-[#3a2b23] hover:bg-[#3a2b23]/10'}`}
+        >
+          {model.name}
+        </button>
+      ))}
+    </div>
+  );
 }
 
 // 添加一个场景组件，包含地面和环境元素
@@ -152,70 +231,70 @@ function Scene() {
     <>
       {/* 传统风格底座 */}
       <Base />
-      
+
       {/* 装饰纹样底盘 */}
       <Baseplate />
-      
+
       {/* 地面 - 模拟古代地砖 */}
       <Ground />
-      
+
       {/* 传统装饰柱 - 东 */}
       <DecorativePillar position={[6, -1, -2]} />
-      
+
       {/* 传统装饰柱 - 西 */}
       <DecorativePillar position={[-6, -1, -2]} />
 
       {/* 传统中式牌坊 - 背景 */}
       <MemorialArchway />
-      
+
       {/* 古代亭子 - 右侧 */}
       <Pavilion />
-      
+
       {/* 古代石桥 - 左侧 */}
       <StoneBridge />
-      
+
       {/* 香炉 - 模型前方 */}
       <Censer />
-      
+
       {/* 远景背景 - 传统山水画风格 */}
       <Background />
-      
+
       {/* 远景山脉 - 左侧 */}
       <Mountain position={[-10, 2, -14]} opacity={0.6} args={[8, 7, 16, 1, true]} />
-      
+
       {/* 远景山脉 - 右侧 */}
       <Mountain position={[10, 1, -14]} opacity={0.5} args={[10, 5, 16, 1, true]} />
-      
+
       {/* 点缀小石狗装饰 - 左侧 */}
       <StoneDog position={[-3, -0.95, 2]} />
-      
+
       {/* 点缀小石狗装饰 - 右侧 */}
       <StoneDog position={[3, -0.95, 2]} />
-      
+
       {/* 添加远处的塔楼 - 远景点缀 */}
-      <Tower/>
-      
+      <Tower />
+
       {/* 传统松树群 - 右前方 */}
-      <TreeRight/>
-      
+      <TreeRight />
+
       {/* 传统松树群 - 左前方 */}
-      <TreeLeft/>
-      
+      <TreeLeft />
+
       {/* 传统灯笼 - 成对放置 */}
-      <Lantern/>
-      
+      <Lantern />
+
       {/* 云雾效果 - 远景装饰 */}
-      <Cloud/>
-      
+      <Cloud />
+
       {/* 更多远景山脉 - 层叠效果 */}
-      <MountainBg/>
-      
+      <MountainBg />
+
       {/* 装饰云纹图案 - 地面上 */}
-      <CloudPattern/>
-      
+      <CloudPattern />
+
       {/* 景观石 - 右侧装饰 */}
       <LandscapeStone position1={[6, -1, 6]} position2={[0.8, 0.6, 0.3]} position3={[-0.5, 0.3, 0.5]} args1={[1.2]} args2={[0.7]} args3={[0.6]} />
-      
+
       {/* 景观石 - 左侧装饰 */}
       <LandscapeStone position1={[-6, -1, 6]} position2={[0.6, 0.7, -0.2]} position3={[-0.7, 0.4, 0.3]} args1={[1]} args2={[0.6]} args3={[0.5]} />
     </>
@@ -223,15 +302,24 @@ function Scene() {
 }
 
 export default function ModelViewPage() {
+  // 添加状态来跟踪当前选择的模型
+  const [currentModel, setCurrentModel] = useState('IP8');
+
   return (
     <div className="w-full h-screen bg-gradient-to-b from-[#FBF8F1] to-[#F5F0E6]">
-      <Canvas 
+      {/* 添加模型选择器 */}
+      <ModelSelector
+        currentModel={currentModel}
+        onChange={setCurrentModel}
+      />
+
+      <Canvas
         camera={{ position: [0, 0, 5], fov: 45 }}
         shadows
       >
         {/* 柔和环境光 */}
         <ambientLight intensity={0.4} color="#FFF1DB" />
-        
+
         {/* 主光源 - 模拟傍晚阳光 */}
         <directionalLight
           position={[5, 8, 3]}
@@ -246,32 +334,32 @@ export default function ModelViewPage() {
           shadow-camera-top={10}
           shadow-camera-bottom={-10}
         />
-        
+
         {/* 侧光源 - 增强轮廓感 */}
-        <directionalLight 
-          position={[-3, 2, -3]} 
-          intensity={0.7} 
-          color="#E1BEE7" 
+        <directionalLight
+          position={[-3, 2, -3]}
+          intensity={0.7}
+          color="#E1BEE7"
         />
-        
+
         {/* 点光源 - 增强模型关键部位亮度 */}
         <pointLight position={[-2, 3, 2]} intensity={0.8} color="#FFD54F" />
-        
+
         {/* 环境贴图 - 使用中国传统风格环境 */}
         {/* <Environment preset="sunset" /> */}
         <Environment files="/models/venice_sunset_1k.hdr" />
-        
+
         {/* 轻雾效果 - 增加传统山水画氛围 */}
         <fog attach="fog" args={["#FBF8F1", 15, 30]} />
-        
+
         <Suspense fallback={null}>
           <Scene />
-          <Model />
+          <Model modelId={currentModel} />
         </Suspense>
-        
-        <OrbitControls 
-          enablePan={true} 
-          enableZoom={true} 
+
+        <OrbitControls
+          enablePan={true}
+          enableZoom={true}
           enableRotate={true}
           minDistance={2}
           maxDistance={10}
