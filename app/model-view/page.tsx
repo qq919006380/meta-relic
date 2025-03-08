@@ -4,6 +4,13 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
 import { FBXLoader } from 'three-stdlib';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import * as THREE from 'three';
 import Base from './components/Base';
 import Baseplate from './components/Baseplate';
@@ -56,8 +63,8 @@ const MODEL_NAME_MAPPING: ModelMapping = {
     '6号': '身体'
   },
   'IP8': {
-    'polySurface20':'头部',
-    'polySurface19':'身体',
+    'polySurface20': '头部',
+    'polySurface19': '身体',
   }
 };
 
@@ -206,22 +213,60 @@ function Model({ modelId }: { modelId: string }) {
 // 模型选择器UI组件
 function ModelSelector({ currentModel, onChange }: { currentModel: string, onChange: (modelId: string) => void }) {
   return (
-    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10
-                   bg-white/80 backdrop-blur-md rounded-full px-4 py-2 
-                   shadow-lg flex gap-2 overflow-x-auto max-w-3xl">
-      {AVAILABLE_MODELS.map(model => (
-        <button
-          key={model.id}
-          onClick={() => onChange(model.id)}
-          className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors
-                    ${currentModel === model.id
-              ? 'bg-[#3a2b23] text-white'
-              : 'bg-white/50 text-[#3a2b23] hover:bg-[#3a2b23]/10'}`}
-        >
-          {model.name}
-        </button>
-      ))}
-    </div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 
+                   md:bg-white/80 md:backdrop-blur-md rounded-full px-4 py-2 max-w-[90vw]">
+        {/* 移动端下拉菜单 - 只在移动端显示 */}
+        <div className="block md:hidden">
+          <Select value={currentModel} onValueChange={onChange}>
+            <SelectTrigger
+              className="w-full p-6 bg-white/80 backdrop-blur-lg border-[1.5px] border-[#3a2b23]/15
+               text-[#3a2b23] text-base font-medium rounded-[1.5rem] shadow-lg
+               transition-all duration-200
+               [&>span]:truncate [&>svg]:text-[#3a2b23]/50"
+            >
+              <SelectValue
+                placeholder="选择模型"
+                className="placeholder:text-[#3a2b23]/60"
+              />
+            </SelectTrigger>
+            <SelectContent
+              position="popper"
+              side="bottom"
+              className="bg-white/90 backdrop-blur-xl rounded-xl border border-[#3a2b23]/15
+               shadow-lg max-h-[50vh] overflow-y-auto py-2 px-2
+               animate-in fade-in slide-in-from-top-2"
+            >
+              {AVAILABLE_MODELS.map(model => (
+                <SelectItem
+                  key={model.id}
+                  value={model.id}
+                  className="data-[state=active]:bg-[#3a2b23]/8 data-[state=checked]:bg-[#3a2b23]/15
+                   text-[#3a2b23]/90 text-sm px-6 py-2 hover:bg-[#3a2b23]/5 rounded-xl
+                   transition-colors duration-150 border-b border-[#3a2b23]/5 last:border-0"
+                >
+                  {model.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* 桌面端按钮组 - 只在桌面端显示 */}
+        <div className="hidden md:flex gap-2 overflow-x-auto scrollbar-hide">
+          {AVAILABLE_MODELS.map(model => (
+            <button
+              key={model.id}
+              onClick={() => onChange(model.id)}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap
+                      ${currentModel === model.id
+                  ? 'bg-[#3a2b23] text-white'
+                  : 'bg-white/50 text-[#3a2b23] hover:bg-[#3a2b23]/10'}`}
+            >
+              {model.name}
+            </button>
+          ))}
+        </div>
+      </div>
   );
 }
 
