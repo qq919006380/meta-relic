@@ -34,14 +34,14 @@ import LandscapeStone from './components/LandscapeStone';
 
 // 定义可用的模型
 const AVAILABLE_MODELS = [
-  { id: 'IP1', name: '石狗一号' },
-  { id: 'IP2', name: '石狗二号' },
-  { id: 'IP3', name: '石狗三号' },
-  { id: 'IP4', name: '石狗四号' },
-  { id: 'IP5', name: '石狗五号' },
-  { id: 'IP6', name: '石狗六号' },
-  { id: 'IP7', name: '石狗七号' },
-  { id: 'IP8', name: '石狗八号' },
+  { id: 'IP1', name: '守护石狗' },
+  // { id: 'IP2', name: '石狗二号' },
+  { id: 'IP3', name: '勤劳石狗' },
+  { id: 'IP4', name: '忠诚石狗' },
+  // { id: 'IP5', name: '石狗五号' },
+  // { id: 'IP6', name: '石狗六号' },
+  { id: 'IP7', name: '勇敢石狗' },
+  // { id: 'IP8', name: '石狗八号' },
 ];
 
 // 添加类型定义
@@ -348,7 +348,7 @@ function Scene() {
 
 export default function ModelViewPage() {
   // 添加状态来跟踪当前选择的模型
-  const [currentModel, setCurrentModel] = useState('IP8');
+  const [currentModel, setCurrentModel] = useState('IP1');
 
   return (
     <div className="w-full h-screen bg-gradient-to-b from-[#FBF8F1] to-[#F5F0E6]">
