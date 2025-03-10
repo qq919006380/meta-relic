@@ -128,7 +128,7 @@ function Mountain({ position, scale = 1 }: { position: [number, number, number];
 // 水池效果组件
 function WishingPool() {
   const { scene } = useThree();
-  const waterRef = useRef<Water>();
+  const waterRef = useRef<Water | null>(null);
   
   useEffect(() => {
     const waterGeometry = new THREE.CircleGeometry(3, 32);
@@ -283,7 +283,7 @@ function FloatingWishes() {
 }
 
 // 简化的场景组件
-function WishPoolScene({ onCoinThrow }) {
+function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
   return (
     <>
       {/* 天空和环境 */}
