@@ -67,11 +67,11 @@ async function callDeepSeekAPI(messages: any[]) {
       },
       body: JSON.stringify({ messages }),
     });
-    
+
     if (!response.ok) {
       throw new Error('API request failed');
     }
-    
+
     const data = await response.json();
     return data;
   } catch (error) {
@@ -137,45 +137,371 @@ function Mountain({ position, scale = 1 }: { position: [number, number, number];
   );
 }
 
-// 水池效果组件
-function WishingPool() {
-  const { scene } = useThree();
-  const waterRef = useRef<THREE.Mesh | null>(null);
+// 寺庙组件
+function Temple({ position = [0, 0, -15], scale = 1 }) {
+  return (
+    <group position={position} scale={[scale, scale, scale]}>
+      {/* 寺庙台基 - 更宽更大的基座 */}
+      <mesh position={[0, 0, 0]} receiveShadow castShadow>
+        <boxGeometry args={[16, 0.5, 12]} />
+        <meshStandardMaterial color="#d9d0c1" roughness={0.8} />
+      </mesh>
 
-  useEffect(() => {
-    // 使用普通的Three.js材质代替Water组件，确保可见性
-    const waterGeometry = new THREE.CircleGeometry(4, 32);
-    const waterMaterial = new THREE.MeshStandardMaterial({
-      color: '#4FA4FF',
-      transparent: true,
-      opacity: 0.8,
-      roughness: 0.1,
-      metalness: 0.2,
-    });
+      {/* 第二层台基 */}
+      <mesh position={[0, 0.5, 0]} receiveShadow castShadow>
+        <boxGeometry args={[14, 0.4, 10]} />
+        <meshStandardMaterial color="#c9bfb0" roughness={0.7} />
+      </mesh>
 
-    const water = new THREE.Mesh(waterGeometry, waterMaterial);
-    water.rotation.x = -Math.PI / 2;
-    water.position.y = -0.6;
+      {/* 正门台阶 */}
+      <mesh position={[0, 0.3, 5.2]} receiveShadow castShadow>
+        <boxGeometry args={[8, 0.6, 2.5]} />
+        <meshStandardMaterial color="#c9bfb0" roughness={0.7} />
+      </mesh>
 
-    waterRef.current = water;
-    scene.add(water);
+      {/* 主殿 */}
+      <mesh position={[0, 2.2, 0]} receiveShadow castShadow>
+        <boxGeometry args={[12, 3, 8]} />
+        <meshStandardMaterial color="#a0522d" roughness={0.6} />
+      </mesh>
 
-    return () => {
-      scene.remove(water);
-      waterGeometry.dispose();
-      waterMaterial.dispose();
-    };
-  }, [scene]);
+      {/* 传统中式屋顶 - 主体 */}
+      <group position={[0, 3.8, 0]}>
+        {/* 主屋顶 */}
+        <mesh position={[0, 0.4, 0]} receiveShadow castShadow>
+          <boxGeometry args={[13, 0.4, 9]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
 
-  // 添加水面波动效果
-  useFrame(({ clock }) => {
-    if (waterRef.current) {
-      const material = waterRef.current.material as THREE.MeshStandardMaterial;
-      material.displacementScale = Math.sin(clock.getElapsedTime()) * 0.05;
-    }
-  });
+        {/* 屋顶上部 - 弯曲效果 */}
+        <mesh position={[0, 0.9, 0]} receiveShadow castShadow>
+          <boxGeometry args={[12, 0.6, 8]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
 
-  return null;
+        {/* 屋顶尖顶 */}
+        <mesh position={[0, 1.4, 0]} receiveShadow castShadow>
+          <boxGeometry args={[10, 0.6, 6]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+
+        {/* 翘角效果 - 前方 */}
+        <mesh position={[0, 1, 4.2]} rotation={[0.3, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[10, 0.3, 1.5]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+
+        {/* 翘角效果 - 后方 */}
+        <mesh position={[0, 1, -4.2]} rotation={[-0.3, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[10, 0.3, 1.5]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+
+        {/* 翘角效果 - 左侧 */}
+        <mesh position={[6.2, 1, 0]} rotation={[0, 0, 0.3]} receiveShadow castShadow>
+          <boxGeometry args={[1.5, 0.3, 6]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+
+        {/* 翘角效果 - 右侧 */}
+        <mesh position={[-6.2, 1, 0]} rotation={[0, 0, -0.3]} receiveShadow castShadow>
+          <boxGeometry args={[1.5, 0.3, 6]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+      </group>
+
+      {/* 屋顶装饰 - 中央正脊 */}
+      <mesh position={[0, 5.4, 0]} receiveShadow castShadow>
+        <boxGeometry args={[12, 0.5, 0.5]} />
+        <meshStandardMaterial color="#FFD700" metalness={0.6} roughness={0.4} />
+      </mesh>
+
+      {/* 屋顶装饰 - 琉璃瓦效果 */}
+      {[...Array(5)].map((_, i) => (
+        <mesh key={i} position={[0, 5.7, -3 + i * 1.5]} receiveShadow castShadow>
+          <sphereGeometry args={[0.4, 8, 8]} />
+          <meshStandardMaterial color="#FFD700" metalness={0.8} roughness={0.2} />
+        </mesh>
+      ))}
+
+      {/* 宝顶 */}
+      <group position={[0, 5.9, 0]}>
+        <mesh receiveShadow castShadow>
+          <cylinderGeometry args={[0.5, 0.6, 0.8, 8]} />
+          <meshStandardMaterial color="#FFD700" metalness={0.8} roughness={0.3} />
+        </mesh>
+        <mesh position={[0, 0.8, 0]} receiveShadow castShadow>
+          <coneGeometry args={[0.4, 1, 8]} />
+          <meshStandardMaterial color="#FFD700" metalness={0.8} roughness={0.2} />
+        </mesh>
+      </group>
+
+      {/* 前柱子 - 8根柱子 */}
+      {[-5, -3, 3, 5].map((x, i) => (
+        <group key={i}>
+          {/* 前排柱子 */}
+          <mesh position={[x, 2, 4]} receiveShadow castShadow>
+            <cylinderGeometry args={[0.35, 0.4, 3.4, 8]} />
+            <meshStandardMaterial color="#8d6e63" roughness={0.6} />
+          </mesh>
+          {/* 后排柱子 */}
+          <mesh position={[x, 2, -4]} receiveShadow castShadow>
+            <cylinderGeometry args={[0.35, 0.4, 3.4, 8]} />
+            <meshStandardMaterial color="#8d6e63" roughness={0.6} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 门 - 改用中式红色大门 */}
+      <group position={[0, 1.8, 4.01]}>
+        {/* 门框 */}
+        <mesh receiveShadow castShadow>
+          <boxGeometry args={[4.1, 3.2, 0.3]} />
+          <meshStandardMaterial color="#5c3a21" roughness={0.8} />
+        </mesh>
+        {/* 左门扇 */}
+        <mesh position={[-1, 0, 0.2]} receiveShadow castShadow>
+          <boxGeometry args={[1.8, 3, 0.1]} />
+          <meshStandardMaterial color="#b71c1c" roughness={0.7} />
+        </mesh>
+        {/* 右门扇 */}
+        <mesh position={[1, 0, 0.2]} receiveShadow castShadow>
+          <boxGeometry args={[1.8, 3, 0.1]} />
+          <meshStandardMaterial color="#b71c1c" roughness={0.7} />
+        </mesh>
+        {/* 门环装饰 */}
+        {[-1, 1].map((x, i) => (
+          <mesh key={i} position={[x, 0, 0.3]} receiveShadow castShadow>
+            <torusGeometry args={[0.3, 0.05, 16, 16]} />
+            <meshStandardMaterial color="#FFD700" metalness={0.8} roughness={0.2} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* 窗户 - 传统中式花窗 */}
+      {[-4, 4].map((x, i) => (
+        <group key={i} position={[x, 2.2, 4.01]}>
+          {/* 窗框 */}
+          <mesh receiveShadow castShadow>
+            <boxGeometry args={[1.8, 1.8, 0.1]} />
+            <meshStandardMaterial color="#5c3a21" roughness={0.7} />
+          </mesh>
+          {/* 窗格 - 横向 */}
+          {[0.4, 0, -0.4].map((y, j) => (
+            <mesh key={j} position={[0, y, 0.06]} receiveShadow castShadow>
+              <boxGeometry args={[1.7, 0.1, 0.02]} />
+              <meshStandardMaterial color="#8d6e63" roughness={0.5} />
+            </mesh>
+          ))}
+          {/* 窗格 - 纵向 */}
+          {[0.4, 0, -0.4].map((x, j) => (
+            <mesh key={j + 3} position={[x, 0, 0.06]} receiveShadow castShadow>
+              <boxGeometry args={[0.1, 1.7, 0.02]} />
+              <meshStandardMaterial color="#8d6e63" roughness={0.5} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* 石狮子 */}
+      {[-5, 5].map((x, i) => (
+        <group key={i} position={[x, 0.9, 5]}>
+          {/* 狮子身体 */}
+          <mesh receiveShadow castShadow>
+            <boxGeometry args={[1, 1, 1.6]} />
+            <meshStandardMaterial color="#917c6f" roughness={0.8} />
+          </mesh>
+          {/* 狮子头 */}
+          <mesh position={[0, 0.5, 0.6]} receiveShadow castShadow>
+            <boxGeometry args={[0.9, 0.9, 0.9]} />
+            <meshStandardMaterial color="#917c6f" roughness={0.8} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 香炉 */}
+      <group position={[0, 1.2, 6]}>
+        <mesh receiveShadow castShadow>
+          <cylinderGeometry args={[0.8, 0.6, 1.2, 16]} />
+          <meshStandardMaterial color="#5c5c5c" roughness={0.3} metalness={0.8} />
+        </mesh>
+        {/* 香炉盖 */}
+        <mesh position={[0, 0.8, 0]} receiveShadow castShadow>
+          <coneGeometry args={[0.6, 0.5, 16]} />
+          <meshStandardMaterial color="#5c5c5c" roughness={0.3} metalness={0.7} />
+        </mesh>
+        {/* 香 */}
+        {[...Array(5)].map((_, i) => (
+          <mesh key={i} position={[(i - 2) * 0.2, 1.2, 0]} rotation={[0.1 * (i - 2), 0, 0]} receiveShadow castShadow>
+            <cylinderGeometry args={[0.02, 0.02, 1, 8]} />
+            <meshStandardMaterial color="#a1887f" roughness={0.8} />
+          </mesh>
+        ))}
+        {/* 烟雾 */}
+        <group position={[0, 1.8, 0]}>
+          {[...Array(4)].map((_, i) => (
+            <mesh key={i} position={[0, i * 0.2, 0]} receiveShadow={false}>
+              <sphereGeometry args={[0.25 + i * 0.1, 8, 8]} />
+              <meshStandardMaterial
+                color="#e0e0e0"
+                transparent
+                opacity={0.4 - i * 0.1}
+                roughness={1}
+              />
+            </mesh>
+          ))}
+        </group>
+      </group>
+
+      {/* 神龛/佛像 */}
+      <group position={[0, 2, -3]}>
+        {/* 底座 */}
+        <mesh position={[0, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[3, 0.5, 1.5]} />
+          <meshStandardMaterial color="#8B4513" roughness={0.7} />
+        </mesh>
+        {/* 佛像轮廓 */}
+        <mesh position={[0, 1.3, 0]} receiveShadow castShadow>
+          <boxGeometry args={[1.5, 2, 0.8]} />
+          <meshStandardMaterial color="#FFD700" metalness={0.6} roughness={0.4} />
+        </mesh>
+      </group>
+      {/* 灯笼  */}
+      {[-6, 6].map((x, i) => (
+        <group key={i} position={[x, 3, 4.5]}>
+          <mesh receiveShadow castShadow>
+            <cylinderGeometry args={[0.4, 0.4, 1, 8]} />
+            <meshStandardMaterial color="#b71c1c" roughness={0.7} emissive="#ff5252" emissiveIntensity={0.3} />
+          </mesh>
+          <mesh position={[0, -0.6, 0]} receiveShadow castShadow>
+            <boxGeometry args={[0.1, 0.2, 0.1]} />
+            <meshStandardMaterial color="#FFD700" metalness={0.7} roughness={0.3} />
+          </mesh>
+          <mesh position={[0, 0.6, 0]} receiveShadow castShadow>
+            <boxGeometry args={[0.2, 0.1, 0.2]} />
+            <meshStandardMaterial color="#5c3a21" roughness={0.7} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* 围栏/栏杆 */}
+      <group position={[0, 0.9, 0]}>
+        {/* 前栏杆 */}
+        <mesh position={[0, 0, 4.8]} receiveShadow castShadow>
+          <boxGeometry args={[12, 0.1, 0.1]} />
+          <meshStandardMaterial color="#a0522d" roughness={0.7} />
+        </mesh>
+
+        {/* 后栏杆 */}
+        <mesh position={[0, 0, -4.8]} receiveShadow castShadow>
+          <boxGeometry args={[12, 0.1, 0.1]} />
+          <meshStandardMaterial color="#a0522d" roughness={0.7} />
+        </mesh>
+
+        {/* 左栏杆 */}
+        <mesh position={[5.8, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[0.1, 0.1, 10]} />
+          <meshStandardMaterial color="#a0522d" roughness={0.7} />
+        </mesh>
+
+        {/* 右栏杆 */}
+        <mesh position={[-5.8, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[0.1, 0.1, 10]} />
+          <meshStandardMaterial color="#a0522d" roughness={0.7} />
+        </mesh>
+
+        {/* 栏杆柱子 - 周围分布 */}
+        {[...Array(10)].map((_, i) => (
+          <mesh key={i} position={[-5.8 + i * 1.3, -0.1, 4.8]} receiveShadow castShadow>
+            <boxGeometry args={[0.15, 0.8, 0.15]} />
+            <meshStandardMaterial color="#a0522d" roughness={0.7} />
+          </mesh>
+        ))}
+
+        {/* 后栏杆柱子 */}
+        {[...Array(10)].map((_, i) => (
+          <mesh key={i + 10} position={[-5.8 + i * 1.3, -0.1, -4.8]} receiveShadow castShadow>
+            <boxGeometry args={[0.15, 0.8, 0.15]} />
+            <meshStandardMaterial color="#a0522d" roughness={0.7} />
+          </mesh>
+        ))}
+
+        {/* 左右栏杆柱子 */}
+        {[...Array(8)].map((_, i) => (
+          <group key={i + 20}>
+            <mesh position={[5.8, -0.1, -4.8 + i * 1.25]} receiveShadow castShadow>
+              <boxGeometry args={[0.15, 0.8, 0.15]} />
+              <meshStandardMaterial color="#a0522d" roughness={0.7} />
+            </mesh>
+            <mesh position={[-5.8, -0.1, -4.8 + i * 1.25]} receiveShadow castShadow>
+              <boxGeometry args={[0.15, 0.8, 0.15]} />
+              <meshStandardMaterial color="#a0522d" roughness={0.7} />
+            </mesh>
+          </group>
+        ))}
+      </group>
+
+      {/* 牌匾 */}
+      <group position={[0, 4, 4.8]}>
+        <mesh receiveShadow castShadow>
+          <boxGeometry args={[4, 1, 0.2]} />
+          <meshStandardMaterial color="#5c3a21" roughness={0.7} />
+        </mesh>
+        {/* 牌匾装饰边框 */}
+        <mesh position={[0, 0, 0.05]} receiveShadow castShadow>
+          <boxGeometry args={[3.8, 0.8, 0.05]} />
+          <meshStandardMaterial color="#FFD700" metalness={0.4} roughness={0.6} />
+        </mesh>
+      </group>
+
+      {/* 屋檐下的雕花装饰 */}
+      <group position={[0, 3.75, 0]}>
+        {/* 前檐装饰 */}
+        <mesh position={[0, 0, 4.5]} receiveShadow castShadow>
+          <boxGeometry args={[12, 0.3, 0.6]} />
+          <meshStandardMaterial color="#8d6e63" roughness={0.7} />
+        </mesh>
+        {/* 后檐装饰 */}
+        <mesh position={[0, 0, -4.5]} receiveShadow castShadow>
+          <boxGeometry args={[12, 0.3, 0.6]} />
+          <meshStandardMaterial color="#8d6e63" roughness={0.7} />
+        </mesh>
+        {/* 左右檐装饰 */}
+        <mesh position={[6, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[0.6, 0.3, 10]} />
+          <meshStandardMaterial color="#8d6e63" roughness={0.7} />
+        </mesh>
+        <mesh position={[-6, 0, 0]} receiveShadow castShadow>
+          <boxGeometry args={[0.6, 0.3, 10]} />
+          <meshStandardMaterial color="#8d6e63" roughness={0.7} />
+        </mesh>
+      </group>
+
+      {/* 石阶路径 */}
+      <mesh position={[0, -0.1, 12]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[6, 6]} />
+        <meshStandardMaterial color="#c9bfb0" roughness={0.8} />
+      </mesh>
+
+      {/* 香火钱箱 */}
+      <mesh position={[2, 1, 6]} receiveShadow castShadow>
+        <boxGeometry args={[1, 0.7, 0.7]} />
+        <meshStandardMaterial color="#5c3a21" roughness={0.6} />
+      </mesh>
+
+      {/* 内部地板纹理 - 红色地砖 */}
+      <mesh position={[0, 0.96, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[11.5, 7.5]} />
+        <meshStandardMaterial color="#6d4c41" roughness={0.7} />
+      </mesh>
+
+      {/* 装饰性藻井(天花板) */}
+      <mesh position={[0, 3.7, 0]} rotation={[Math.PI / 2, 0, 0]} receiveShadow castShadow>
+        <circleGeometry args={[3, 16]} />
+        <meshStandardMaterial color="#FFD700" metalness={0.5} roughness={0.5} />
+      </mesh>
+    </group>
+  );
 }
 
 // 许愿币组件
@@ -257,37 +583,292 @@ function SimpleStoneDog({ position, rotation }: SimpleStoneDogProps) {
   );
 }
 
-// 漂浮的纸条/愿望
-function FloatingWishes({ poolDepth = -0.6 }: { poolDepth?: number }) {
+// 蝴蝶
+function Butterfly({ position }: { position: [number, number, number] }) {
+  const meshRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    if (meshRef.current) {
+      // 蝴蝶飞舞动画
+      meshRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() * 2) * 0.1;
+      meshRef.current.rotation.y = Math.sin(clock.getElapsedTime()) * 0.2;
+    }
+  });
+
   return (
-    <>
-      {[...Array(15)].map((_, i) => {
-        const x = (Math.random() - 0.5) * 5;
-        const z = (Math.random() - 0.5) * 5;
-        const y = poolDepth + Math.random() * 0.1;
-        const rotation = Math.random() * Math.PI * 2;
+    <group ref={meshRef} position={position}>
+      {/* 蝴蝶翅膀 */}
+      <mesh castShadow>
+        <boxGeometry args={[0.2, 0.01, 0.3]} />
+        <meshStandardMaterial color="#4169E1" transparent opacity={0.6} />
+      </mesh>
+      <mesh castShadow rotation={[0, 0, Math.PI / 4]}>
+        <boxGeometry args={[0.2, 0.01, 0.3]} />
+        <meshStandardMaterial color="#4169E1" transparent opacity={0.6} />
+      </mesh>
+    </group>
+  );
+}
+
+// 花瓣
+function FloatingPetal({ position }: { position: [number, number, number] }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame(({ clock }) => {
+    if (meshRef.current) {
+      // 花瓣飘落动画
+      meshRef.current.position.y = position[1] + Math.sin(clock.getElapsedTime() + position[0]) * 0.1;
+      meshRef.current.position.x = position[0] + Math.cos(clock.getElapsedTime() * 0.5) * 0.1;
+      meshRef.current.rotation.x = clock.getElapsedTime() * 0.2;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={position} rotation={[0, 0, Math.PI / 4]} castShadow>
+      <planeGeometry args={[0.1, 0.1]} />
+      <meshStandardMaterial color="#FFB7C5" side={THREE.DoubleSide} transparent opacity={0.8} />
+    </mesh>
+  );
+}
+
+// 莲花组件
+function LotusFlower({ position = [0, 0, 0], scale = 1, rotation = 0, bloomLevel = 1 }) {
+  // 基础颜色
+  const petalColor = "#f8bbd0";
+  const centerColor = "#fdd835";
+  const stemColor = "#2e7d32";
+  const leafColor = "#1b5e20";
+
+  return (
+    <group position={position} rotation={[0, rotation, 0]} scale={[scale, scale, scale]}>
+      {/* 莲茎 */}
+      <mesh position={[0, -0.1, 0]} castShadow>
+        <cylinderGeometry args={[0.03, 0.05, 0.3, 8]} />
+        <meshStandardMaterial color={stemColor} roughness={0.8} />
+      </mesh>
+
+      {/* 莲花底座 */}
+      <mesh position={[0, 0.05, 0]} castShadow>
+        <cylinderGeometry args={[0.12, 0.08, 0.08, 8]} />
+        <meshStandardMaterial color="#43a047" roughness={0.7} />
+      </mesh>
+
+      {/* 花瓣 - 第一层（底层） */}
+      {[...Array(8)].map((_, i) => {
+        const angle = (i / 8) * Math.PI * 2;
+        const radius = 0.22;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
 
         return (
-          <Float
-            key={i}
-            speed={1}
-            rotationIntensity={1}
-            floatIntensity={0.5}
-            position={[x, y, z]}
-          >
-            <mesh rotation={[-Math.PI / 2, 0, rotation]}>
-              <planeGeometry args={[0.3, 0.3]} />
+          <group key={`petal1-${i}`} position={[x, 0, z]} rotation={[0.3, angle, 0]}>
+            <mesh castShadow>
+              <coneGeometry args={[0.12, 0.25, 5, 1, true]} />
               <meshStandardMaterial
-                color="#f5e6cc"
-                transparent
-                opacity={0.8}
+                color={petalColor}
+                roughness={0.6}
                 side={THREE.DoubleSide}
+                emissive={petalColor}
+                emissiveIntensity={0.05}
               />
             </mesh>
-          </Float>
+          </group>
         );
       })}
-    </>
+
+      {/* 花瓣 - 第二层（中层） - 仅在bloom级别 >= 1时显示 */}
+      {bloomLevel >= 1 && [...Array(8)].map((_, i) => {
+        const angle = ((i / 8) * Math.PI * 2) + (Math.PI / 8);
+        const radius = 0.15;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+
+        return (
+          <group key={`petal2-${i}`} position={[x, 0.08, z]} rotation={[0.1, angle, 0]}>
+            <mesh castShadow>
+              <coneGeometry args={[0.1, 0.22, 5, 1, true]} />
+              <meshStandardMaterial
+                color={petalColor}
+                roughness={0.6}
+                side={THREE.DoubleSide}
+                emissive={petalColor}
+                emissiveIntensity={0.08}
+              />
+            </mesh>
+          </group>
+        );
+      })}
+
+      {/* 花瓣 - 第三层（内层） - 仅在bloom级别 >= 2时显示 */}
+      {bloomLevel >= 2 && [...Array(5)].map((_, i) => {
+        const angle = ((i / 5) * Math.PI * 2);
+        const radius = 0.08;
+        const x = Math.cos(angle) * radius;
+        const z = Math.sin(angle) * radius;
+
+        return (
+          <group key={`petal3-${i}`} position={[x, 0.15, z]} rotation={[0, angle, 0]}>
+            <mesh castShadow>
+              <coneGeometry args={[0.07, 0.18, 5, 1, true]} />
+              <meshStandardMaterial
+                color={petalColor}
+                roughness={0.6}
+                side={THREE.DoubleSide}
+                emissive={petalColor}
+                emissiveIntensity={0.1}
+              />
+            </mesh>
+          </group>
+        );
+      })}
+
+      {/* 莲蓬中心 */}
+      <mesh position={[0, 0.15, 0]} castShadow>
+        <sphereGeometry args={[0.08, 8, 8, 0, Math.PI * 2, 0, Math.PI / 2]} />
+        <meshStandardMaterial color={centerColor} roughness={0.7} />
+      </mesh>
+
+      {/* 莲蓬中心的装饰点 */}
+      {[...Array(12)].map((_, i) => {
+        const phi = Math.acos(-1 + (2 * i) / 12);
+        const theta = Math.sqrt(12 * Math.PI) * phi;
+        const x = 0.06 * Math.cos(theta) * Math.sin(phi);
+        const y = 0.16 + (0.06 * Math.cos(phi));
+        const z = 0.06 * Math.sin(theta) * Math.sin(phi);
+
+        return (
+          <mesh key={`seed-${i}`} position={[x, y, z]} castShadow>
+            <sphereGeometry args={[0.01, 4, 4]} />
+            <meshStandardMaterial color="#bf360c" roughness={0.7} />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+// 莲叶组件
+function LotusLeaf({ position = [0, 0, 0], scale = 1, rotation = 0 }) {
+  const leafColor = "#1b5e20";
+
+  return (
+    <group position={position} rotation={[0, rotation, 0]} scale={[scale, scale, scale]}>
+      {/* 叶柄 */}
+      <mesh position={[0, -0.1, -0.15]} rotation={[Math.PI / 8, 0, 0]} castShadow>
+        <cylinderGeometry args={[0.03, 0.05, 0.4, 8]} />
+        <meshStandardMaterial color="#2e7d32" roughness={0.8} />
+      </mesh>
+
+      {/* 叶片 - 使用圆盘几何体和材质的双面属性表示 */}
+      <mesh position={[0, 0.05, 0]} rotation={[Math.PI / 2 - 0.2, 0, 0]} castShadow>
+        <circleGeometry args={[0.35, 16]} />
+        <meshStandardMaterial
+          color={leafColor}
+          roughness={0.7}
+          side={THREE.DoubleSide}
+          flatShading={true}
+        />
+      </mesh>
+
+      {/* 叶片纹理 - 用线条表示叶脉 */}
+      {[...Array(5)].map((_, i) => {
+        const angle = (i / 5) * Math.PI;
+        return (
+          <mesh
+            key={`vein-${i}`}
+            position={[Math.cos(angle) * 0.15, 0.051, Math.sin(angle) * 0.15]}
+            rotation={[Math.PI / 2 - 0.2, 0, angle]}
+            castShadow
+          >
+            <boxGeometry args={[0.3, 0.005, 0.005]} />
+            <meshStandardMaterial color="#0d3311" roughness={0.8} />
+          </mesh>
+        );
+      })}
+
+      {/* 叶片边缘褶皱效果 */}
+      <mesh position={[0, 0.052, 0]} rotation={[Math.PI / 2 - 0.2, 0, 0]} castShadow>
+        <ringGeometry args={[0.32, 0.35, 16, 8]} />
+        <meshStandardMaterial
+          color="#144a14"
+          roughness={0.7}
+          side={THREE.DoubleSide}
+          transparent={true}
+          opacity={0.7}
+        />
+      </mesh>
+
+      {/* 叶片上的水珠 */}
+      {[...Array(3)].map((_, i) => {
+        const r = Math.random() * 0.2;
+        const theta = Math.random() * Math.PI * 2;
+        const x = r * Math.cos(theta);
+        const z = r * Math.sin(theta);
+        return (
+          <mesh key={`waterdrop-${i}`} position={[x, 0.07, z]} castShadow>
+            <sphereGeometry args={[0.02 + Math.random() * 0.01, 8, 8]} />
+            <meshPhysicalMaterial
+              color="#ffffff"
+              roughness={0}
+              metalness={0}
+              transmission={1}
+              thickness={0.3}
+              clearcoat={1}
+              clearcoatRoughness={0}
+            />
+          </mesh>
+        );
+      })}
+    </group>
+  );
+}
+
+// 莲花组 - 组合多个莲花和叶子
+function LotusGroup({ position = [0, 0, 0] }) {
+  return (
+    <group position={position}>
+      {/* 莲花 - 不同的开放程度和旋转角度 */}
+      <LotusFlower
+        position={[0.3, 0.6, 0.2]}
+        scale={0.9}
+        rotation={Math.PI / 6}
+        bloomLevel={2}
+      />
+      <LotusFlower
+        position={[-0.5, 0.6, -0.3]}
+        scale={0.8}
+        rotation={Math.PI / 3}
+        bloomLevel={1}
+      />
+      <LotusFlower
+        position={[0.1, 0.6, -0.7]}
+        scale={1.1}
+        rotation={Math.PI / 2}
+        bloomLevel={2}
+      />
+
+      {/* 莲叶 - 不同的大小和旋转角度 */}
+      <LotusLeaf
+        position={[-0.3, 0.6, 0.1]}
+        scale={1.2}
+        rotation={Math.PI / 4}
+      />
+      <LotusLeaf
+        position={[0.6, 0.6, -0.4]}
+        scale={1.4}
+        rotation={Math.PI / 2}
+      />
+      <LotusLeaf
+        position={[-0.7, 0.6, -0.6]}
+        scale={1.3}
+        rotation={-Math.PI / 3}
+      />
+      <LotusLeaf
+        position={[0.4, 0.6, 0.7]}
+        scale={1.1}
+        rotation={-Math.PI / 6}
+      />
+    </group>
   );
 }
 
@@ -342,8 +923,9 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
     ))
     , []);
 
+  // 修改静态硬币的位置和材质
   const coins = React.useMemo(() =>
-    [...Array(50)].map((_, i) => {
+    [...Array(100)].map((_, i) => {
       const radius = Math.random() * 3.5;
       const angle = Math.random() * Math.PI * 2;
       const x = Math.cos(angle) * radius;
@@ -354,8 +936,8 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
       return (
         <mesh
           key={i}
-          position={[x, -0.65, z]}
-          rotation={[-Math.PI / 2, 0, rotation]}
+          position={[x, 0.4, z]} // 提高位置，使其更接近水面
+          rotation={[0, 0, rotation]}
           scale={[scale, scale, scale]}
           castShadow
           receiveShadow
@@ -365,21 +947,22 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
             color={Math.random() > 0.3 ? "#FFD700" : "#E6BE8A"}
             metalness={0.9}
             roughness={0.1}
-            emissive={Math.random() > 0.7 ? "#FFD700" : "#000000"}
-            emissiveIntensity={0.2}
+            emissive={Math.random() > 0.5 ? "#FFD700" : "#000000"} // 增加发光硬币的比例
+            emissiveIntensity={0.4} // 增强发光强度
           />
         </mesh>
       );
     })
     , []);
 
+  // 修改漂浮愿望的位置和材质
   const wishes = React.useMemo(() =>
-    [...Array(15)].map((_, i) => {
+    [...Array(50)].map((_, i) => {
       const radius = Math.random() * 3.5;
       const angle = Math.random() * Math.PI * 2;
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
-      const y = -0.55 + Math.random() * 0.1;
+      // const y = -0.5 + Math.random() * 0.1; // 提高位置
       const rotation = Math.random() * Math.PI * 2;
 
       return (
@@ -387,18 +970,18 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
           key={i}
           speed={1}
           rotationIntensity={1}
-          floatIntensity={0.5}
-          position={[x, y, z]}
+          floatIntensity={0.8} // 增强浮动效果
+          position={[x, 0.6, z]}
         >
           <mesh rotation={[-Math.PI / 2, 0, rotation]} castShadow>
             <planeGeometry args={[0.3, 0.3]} />
             <meshStandardMaterial
               color="#f5e6cc"
               transparent
-              opacity={0.9}
+              opacity={0.95} // 提高不透明度
               side={THREE.DoubleSide}
               emissive="#f5e6cc"
-              emissiveIntensity={0.1}
+              emissiveIntensity={0.3} // 增强发光效果
             />
           </mesh>
         </Float>
@@ -406,11 +989,39 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
     })
     , []);
 
+  // 蝴蝶
+  const butterfly = React.useMemo(() => {
+    [...Array(5)].map((_, i) => (
+      <Butterfly
+        key={`butterfly-${i}`}
+        position={[
+          Math.sin(i * Math.PI * 0.4) * 6,
+          1.5 + Math.random(),
+          Math.cos(i * Math.PI * 0.4) * 6
+        ]}
+      />
+    ))
+  }, [])
+
+  // 花瓣
+  const petal = React.useMemo(() => {
+    [...Array(20)].map((_, i) => (
+      <FloatingPetal
+        key={`petal-${i}`}
+        position={[
+          (Math.random() - 0.5) * 12,
+          2 + Math.random() * 2,
+          (Math.random() - 0.5) * 12
+        ]}
+      />
+    ))
+  }, [])
+
   return (
     <>
       {/* 天空和环境 */}
       <Environment files="/models/venice_sunset_1k.hdr" />
-      <fog attach="fog" args={['#FBF8F1', 15, 30]} />
+      {/* <fog attach="fog" args={['#FBF8F1', 15, 30]} /> */}
 
       {/* 地面 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]} receiveShadow>
@@ -428,57 +1039,121 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
       {rocks}
       {grasses}
 
+      {/* 添加寺庙 - 放在许愿池后面 */}
+      <Temple position={[0, -0.1, -15]} scale={1.2} />
+
       {/* 许愿池外围 - 凸起的边缘 */}
       <mesh position={[0, 0.1, 0]} receiveShadow>
-        <cylinderGeometry args={[5, 5.5, 0.2, 32]} />
+        <cylinderGeometry args={[6, 6.5, 0.2, 32]} />
         <meshStandardMaterial color="#9C8C7C" roughness={0.7} />
       </mesh>
 
-      {/* 许愿池中间部分 - 凹陷效果 */}
-      <mesh position={[0, -0.3, 0]} receiveShadow>
-        <cylinderGeometry args={[4.5, 4.5, 0.8, 32, 1, false]} />
-        <meshStandardMaterial color="#8B7355" roughness={0.7} />
-      </mesh>
-
-      {/* 许愿池内部 - 凹陷底部 */}
-      <mesh position={[0, -0.7, 0]} receiveShadow>
-        <cylinderGeometry args={[4, 4.5, 0.2, 32]} />
+      {/* 方形许愿池 */}
+      {/* 池底 */}
+      <mesh position={[0, -0.4, 0]} receiveShadow>
+        <boxGeometry args={[8, 0.2, 8]} />
         <meshStandardMaterial color="#7A6246" roughness={0.8} />
       </mesh>
 
-      {/* 水面 - 确保可见 */}
-      <WishingPool />
+      {/* 池壁 - 四个边缘 */}
+      {/* 前边缘 */}
+      <mesh position={[0, 0, 4]} receiveShadow>
+        <boxGeometry args={[8, 3, 0.4]} />
+        <meshStandardMaterial color="#9C8C7C" roughness={0.7} />
+      </mesh>
+      {/* 后边缘 */}
+      <mesh position={[0, 0, -4]} receiveShadow>
+        <boxGeometry args={[8, 3, 0.4]} />
+        <meshStandardMaterial color="#9C8C7C" roughness={0.7} />
+      </mesh>
+      {/* 左边缘 */}
+      <mesh position={[-4, 0, 0]} receiveShadow>
+        <boxGeometry args={[0.4, 3, 8]} />
+        <meshStandardMaterial color="#9C8C7C" roughness={0.7} />
+      </mesh>
+      {/* 右边缘 */}
+      <mesh position={[4, 0, 0]} receiveShadow>
+        <boxGeometry args={[0.4, 3, 8]} />
+        <meshStandardMaterial color="#9C8C7C" roughness={0.7} />
+      </mesh>
+
+      {/* 四个角落的石狗和石柱 */}
+      {[
+        { position: [3.8, 1, 3.8], rotation: Math.PI * 0.25 },    // 右前（朝东南）
+        { position: [-3.8, 1, 3.8], rotation: -Math.PI * 0.25 },   // 左前（朝西南）
+        { position: [-3.8, 1, -3.8], rotation: -Math.PI * 0.75 }, // 左后（朝西北）
+        { position: [3.8, 1, -3.8], rotation: Math.PI * 0.75 }   // 右后（朝东北）
+      ].map((config, i) => (
+        <group key={i}>
+          {/* 石狗 */}
+          <SimpleStoneDog position={config.position} rotation={config.rotation} />
+
+          {/* 装饰柱 */}
+          <group position={config.position} rotation={[0, config.rotation + Math.PI / 4, 0]}>
+            <mesh castShadow>
+              <boxGeometry args={[0.4, 1.5, 0.4]} />
+              <meshStandardMaterial color="#8B7355" roughness={0.7} />
+            </mesh>
+            <mesh position={[0, 0.85, 0]} castShadow>
+              <boxGeometry args={[0.6, 0.2, 0.6]} />
+              <meshStandardMaterial color="#A0522D" roughness={0.6} />
+            </mesh>
+            <mesh position={[0, 1, 0]} castShadow>
+              <sphereGeometry args={[0.2, 16, 16]} />
+              <meshStandardMaterial color="#CD853F" metalness={0.5} roughness={0.5} />
+            </mesh>
+          </group>
+        </group>
+      ))}
+
+      {/* 水面 - 调整为方形 */}
+      <mesh position={[0, 0.6, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[7.6, 7.6]} />
+        <meshPhysicalMaterial
+          color="#4FA4FF"
+          transparent={true}
+          opacity={0.9}
+          roughness={0.1}
+          metalness={0.2}
+          clearcoat={1.0}
+          clearcoatRoughness={0.1}
+        />
+      </mesh>
+
+      {/* 添加莲花组 - 在水面上分布几组 */}
+      <LotusGroup position={[-2.5, 0, -2.5]} />
+      <LotusGroup position={[2.5, 0, 2.5]} />
+      <LotusGroup position={[-2.5, 0, 2.5]} />
+      <LotusGroup position={[2.5, 0, -2.5]} />
+
+      {/* 单独添加几朵莲花和莲叶，增加变化 */}
+      <LotusFlower position={[0, 0.6, 0]} scale={1.2} bloomLevel={2} />
+      <LotusLeaf position={[1, 0.6, 0]} scale={1.5} rotation={Math.PI / 4} />
+      <LotusLeaf position={[-1, 0.6, 0]} scale={1.3} rotation={-Math.PI / 4} />
+      <LotusLeaf position={[0, 0.6, 1.5]} scale={1.4} rotation={Math.PI} />
 
       {/* 使用缓存的硬币和纸条 */}
       {coins}
       {wishes}
+      {butterfly}
+      {petal}
 
-      {/* 四个石狗 */}
-      <SimpleStoneDog position={[3.2, 0, 0]} rotation={-Math.PI / 2} />
-      <SimpleStoneDog position={[0, 0, -3.2]} rotation={Math.PI} />
-      <SimpleStoneDog position={[-3.2, 0, 0]} rotation={Math.PI / 2} />
-      <SimpleStoneDog position={[0, 0, 3.2]} rotation={0} />
 
-      {/* 角落装饰柱 */}
-      {[0, Math.PI / 2, Math.PI, -Math.PI / 2].map((rotation, i) => (
-        <group key={i} position={[Math.sin(rotation) * 4.5, 0, Math.cos(rotation) * 4.5]} rotation={[0, rotation + Math.PI / 4, 0]}>
-          <mesh castShadow>
-            <boxGeometry args={[0.4, 1.5, 0.4]} />
-            <meshStandardMaterial color="#8B7355" roughness={0.7} />
-          </mesh>
-          <mesh position={[0, 0.85, 0]} castShadow>
-            <boxGeometry args={[0.6, 0.2, 0.6]} />
-            <meshStandardMaterial color="#A0522D" roughness={0.6} />
-          </mesh>
-          <mesh position={[0, 1, 0]} castShadow>
-            <sphereGeometry args={[0.2, 16, 16]} />
-            <meshStandardMaterial color="#CD853F" metalness={0.5} roughness={0.5} />
-          </mesh>
-        </group>
-      ))}
+      {/* 增强环境光效果 */}
+      <ambientLight intensity={0.5} color="#FFF1DB" />
+      <directionalLight
+        position={[5, 8, 3]}
+        intensity={1.4}
+        color="#FFE0B2"
+        castShadow
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+      />
 
-      {/* 添加池底照明，增强可见度 */}
-      <pointLight position={[0, -0.4, 0]} intensity={0.8} color="#FFD54F" distance={5} />
+      {/* 添加点光源制造氛围 */}
+      <pointLight position={[0, 3, 0]} intensity={1.5} color="#FFD54F" distance={15} />
+      <pointLight position={[8, 2, 8]} intensity={1} color="#FFA07A" distance={10} />
+      <pointLight position={[-8, 2, -8]} intensity={1} color="#FFA07A" distance={10} />
     </>
   );
 }
@@ -502,7 +1177,7 @@ export default function WishPoolPage() {
   const [isLoading, setIsLoading] = useState(false);
   // 添加API调用标记，防止重复调用
   const isApiCallingRef = useRef(false);
-  
+
   // 设置愿望上限
   const WISH_LIMIT = 20;
 
@@ -559,11 +1234,11 @@ export default function WishPoolPage() {
     // 防止重复调用API
     if (isApiCallingRef.current) return;
     isApiCallingRef.current = true;
-    
+
     setShowCoin(false);
     setIsWishComplete(true);
     setIsLoading(true); // 开始加载
-    
+
     // 准备新愿望对象，但暂不添加到列表
     const newWish = {
       id: Date.now(),
@@ -574,14 +1249,14 @@ export default function WishPoolPage() {
       date: new Date().toLocaleDateString('zh-CN'),
       response: '' // 新增属性用于存储API响应
     };
-    
+
     // 调用API获取个性化响应
     try {
       const messages = [
         { role: "system", content: "你是一位古老的石狗守护神，负责守护人们的愿望。请用简短优美的语言回应这个愿望，不超过30个字。语气要温暖、神秘且充满希望。" },
         { role: "user", content: `我的愿望是：${wishRef.current}，我选择了${selectedDog.name}作为守护者。` }
       ];
-      
+
       const response = await callDeepSeekAPI(messages);
       if (response && response.content) {
         newWish.response = response.content;
@@ -592,16 +1267,16 @@ export default function WishPoolPage() {
         newWish.response = defaultResponse;
         setWishResponse(defaultResponse);
       }
-      
+
       // API调用成功后，检查是否有重复愿望，然后添加到列表
       setCompletedWishes(prev => {
         // 检查是否已经存在相同内容的愿望
-        const exists = prev.some(wish => 
-          wish.wish === newWish.wish && 
+        const exists = prev.some(wish =>
+          wish.wish === newWish.wish &&
           wish.dogId === newWish.dogId
         );
         if (exists) return prev;
-        
+
         // 触发添加动画
         if (sidebarRef.current) {
           const rect = sidebarRef.current.getBoundingClientRect();
@@ -612,23 +1287,23 @@ export default function WishPoolPage() {
           setShowAddAnimation(true);
           setTimeout(() => setShowAddAnimation(false), 1000);
         }
-        
+
         // 自动显示侧边栏
         setShowWishList(true);
-        
+
         return [newWish, ...prev];
       });
-      
+
     } catch (error) {
       console.error('获取愿望响应失败:', error);
       const defaultResponse = `您的心愿已投入许愿池，由${selectedDog.name}守护。`;
       newWish.response = defaultResponse;
       setWishResponse(defaultResponse);
-      
+
       // 即使API调用失败，也添加愿望到列表
       setCompletedWishes(prev => {
-        const exists = prev.some(wish => 
-          wish.wish === newWish.wish && 
+        const exists = prev.some(wish =>
+          wish.wish === newWish.wish &&
           wish.dogId === newWish.dogId
         );
         if (exists) return prev;
@@ -673,7 +1348,7 @@ export default function WishPoolPage() {
     <div className="w-full h-screen relative bg-gradient-to-b from-[#FBF8F1] to-[#F5F0E6] overflow-hidden">
       {/* 3D 场景 */}
       <Canvas
-        camera={{ position: [0, 2, 8], fov: 45 }}
+        camera={{ position: [5, 5, 10], fov: 45 }}
         shadows
         className="absolute inset-0"
       >
@@ -712,7 +1387,7 @@ export default function WishPoolPage() {
           enablePan={false}
           enableZoom={true}
           minDistance={3}
-          maxDistance={15}
+          maxDistance={35}
           maxPolarAngle={Math.PI / 2 - 0.1}
           autoRotate={!isDialogOpen}
           autoRotateSpeed={0.2}
@@ -720,9 +1395,9 @@ export default function WishPoolPage() {
       </Canvas>
 
       {/* 侧边愿望列表 */}
-      <motion.div 
+      <motion.div
         ref={sidebarRef}
-        className="fixed top-20 right-0 h-full w-full md:w-80 bg-white/90 backdrop-blur-md shadow-lg z-10 overflow-hidden"
+        className="fixed top-15 right-0 bottom-0 h-[92vh] w-full md:w-80 bg-white/90 backdrop-blur-md shadow-lg z-10 overflow-hidden"
         initial={{ x: '100%' }}
         animate={{ x: showWishList ? '0%' : '100%' }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -730,7 +1405,7 @@ export default function WishPoolPage() {
         <div className="p-6 space-y-4 h-full flex flex-col">
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-zhanku text-[#3a2b23]">我的愿望</h3>
-            <button 
+            <button
               onClick={toggleWishList}
               className="w-8 h-8 flex items-center justify-center rounded-full bg-[#8B4513]/10 text-[#8B4513] hover:bg-[#8B4513]/20 transition-colors"
             >
@@ -739,12 +1414,12 @@ export default function WishPoolPage() {
               </svg>
             </button>
           </div>
-          
+
           <div className="flex items-center justify-between bg-[#f8f5f0] px-3 py-2 rounded-lg">
             <span className="text-[#5d4037] font-medium">愿望总数</span>
             <span className="text-[#8B4513] font-bold">{completedWishes.length}/{WISH_LIMIT}</span>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
             <div className="space-y-3">
               {completedWishes.length === 0 ? (
@@ -818,7 +1493,7 @@ export default function WishPoolPage() {
       )}
 
       {/* 界面元素 */}
-      <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-between p-6">
+      <div className="absolute top-16 inset-0 pointer-events-none flex flex-col items-center justify-between p-6">
         {/* 顶部标题 */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -902,20 +1577,20 @@ export default function WishPoolPage() {
         {showAddAnimation && (
           <motion.div
             className="fixed z-50 pointer-events-none"
-            initial={{ 
-              opacity: 1, 
+            initial={{
+              opacity: 1,
               scale: 1,
               x: window.innerWidth / 2,
               y: window.innerHeight / 2
             }}
-            animate={{ 
+            animate={{
               opacity: [1, 1, 0],
               scale: [1, 1.2, 0.8],
               x: animationPosition.x,
               y: animationPosition.y
             }}
             exit={{ opacity: 0 }}
-            transition={{ 
+            transition={{
               duration: 0.8,
               times: [0, 0.6, 1]
             }}
