@@ -1,9 +1,8 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from 'react';
-import { Canvas, useLoader } from '@react-three/fiber';
+import React, { Suspense, useState, useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
-import { FBXLoader } from 'three-stdlib';
 import {
   Select,
   SelectContent,
@@ -11,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import * as THREE from 'three';
 import Base from './components/Base';
 import Baseplate from './components/Baseplate';
 import Ground from './components/Ground';
@@ -33,6 +31,7 @@ import CloudPattern from './components/CloudPattern';
 import LandscapeStone from './components/LandscapeStone';
 import ViewTower from './components/ViewTower';
 import Museum from './components/Museum';
+import ModelFactory from './components/models/ModelFactory';
 
 // 定义可用的模型
 const AVAILABLE_MODELS = [
@@ -46,174 +45,33 @@ const AVAILABLE_MODELS = [
   // { id: 'IP8', name: '石狗八号' },
 ];
 
-// 添加类型定义
-type ModelMapping = Record<string, Record<string, string>>;
-
-// 在贴图应用逻辑前添加名称映射
-const MODEL_NAME_MAPPING: ModelMapping = {
-  'IP3': {
-    '第三个ip004': '铃铛',
-    '第三个ip': '身体',
-    '第三个ip005': '眼睛',
-    '第三个ip006': '鼻子',
-    '第三个ip003': '头部'
-  },
-  'IP4': {
-    '嘴巴': '头部'
-  },
-  'IP6': {
-    '6号': '身体'
-  },
-  'IP8': {
-    'polySurface20': '头部',
-    'polySurface19': '身体',
-  }
-};
-
-// 手动贴图模型组件
-function Model({ modelId }: { modelId: string }) {
-  // 加载FBX模型
-  const fbx = useLoader(FBXLoader, `/models/${modelId}/${modelId}.fbx`);
-
-  // 调整模型整体缩放和位置
-  fbx.scale.set(0.005, 0.005, 0.005);
-  fbx.position.set(0, -1, 0);
-
-  // 手动加载贴图
+// Add a loading fallback component
+function LoadingFallback({ setIsLoading }: { setIsLoading: (loading: boolean) => void }) {
   useEffect(() => {
-    if (!fbx) return;
-
-    console.log(`开始加载 ${modelId} 的贴图...`);
-
-    // 创建纹理加载器
-    const textureLoader = new THREE.TextureLoader();
-
-    // 加载所有贴图 - 根据模型ID动态确定路径
-    const textures = {
-      body: textureLoader.load(`/models/${modelId}/${modelId}.fbm/身体.png`),
-      head: textureLoader.load(`/models/${modelId}/${modelId}.fbm/头部.png`),
-      eyes: textureLoader.load(`/models/${modelId}/${modelId}.fbm/眼睛.png`),
-      nose: textureLoader.load(`/models/${modelId}/${modelId}.fbm/鼻子.png`),
-      bell: textureLoader.load(`/models/${modelId}/${modelId}.fbm/铃铛.png`),
-      line: textureLoader.load(`/models/${modelId}/${modelId}.fbm/法线贴图.png`),
+    return () => {
+      // When fallback unmounts, we know the model has loaded
+      setIsLoading(false);
     };
-
-    // 设置贴图颜色空间
-    Object.values(textures).forEach(texture => {
-      texture.colorSpace = THREE.SRGBColorSpace;
-    });
-
-    // 在fbx.traverse之前添加
-    console.log('所有网格名称:');
-    fbx.traverse(child => {
-      if (child instanceof THREE.Mesh) {
-        console.log('完整网格名称:', child.name);
-      }
-    });
-
-    // 更可靠的检测方式
-    fbx.traverse(child => {
-      if ((child as any).isMesh) { // 替代 instanceof 检查
-        console.log('网格类型:', child.type);
-        console.log('网格名称:', child.name || '<未命名>');
-        console.log('子级深度:', child.id);
-      }
-    });
-
-    // 添加统计计数器
-    let meshCount = 0;
-    fbx.traverse(child => {
-      if ((child as any).isMesh) meshCount++;
-    });
-    console.log(`共检测到 ${meshCount} 个网格`);
-
-
-
-    // 将贴图应用到模型
-    fbx.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        // 确保法线计算正确
-        child.geometry.computeVertexNormals();
-
-        // 设置双面渲染，解决某些面反向问题
-        child.material.side = THREE.DoubleSide;
-
-        // 设置阴影
-        child.castShadow = true;
-        child.receiveShadow = true;
-
-        // 获取映射后的部件名称
-        const mappedName = MODEL_NAME_MAPPING[modelId]?.[child.name] || child.name;
-        const meshName = mappedName.toLowerCase();
-
-        // 根据网格名称应用不同贴图
-        if (meshName.includes('body') || meshName.includes('身体')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.body,
-            roughness: 0.7,
-            metalness: 0.2,
-            side: THREE.DoubleSide,  // 双面渲染
-            transparent: false,      // 确保不透明
-            alphaTest: 0.5           // 处理半透明边缘
-          });
-        }
-        else if (meshName.includes('head') || meshName.includes('头')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.head,
-            roughness: 0.7,
-            metalness: 0.2
-          });
-        }
-        else if (meshName.includes('eye') || meshName.includes('眼')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.eyes,
-            roughness: 0.5,
-            metalness: 0.3
-          });
-        }
-        else if (meshName.includes('nose') || meshName.includes('鼻')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.nose,
-            roughness: 0.6,
-            metalness: 0.2
-          });
-        }
-        else if (meshName.includes('bell') || meshName.includes('铃铛')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.bell,
-            roughness: 0.4,
-            metalness: 0.6
-          });
-        }
-        else if (meshName.includes('line') || meshName.includes('法线')) {
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.line,
-            roughness: 0.4,
-            metalness: 0.6
-          });
-        }
-        // 对于其他部分
-        else {
-          console.log('未匹配的网格:', child.name);
-          // 默认使用身体贴图
-          child.material = new THREE.MeshStandardMaterial({
-            map: textures.body,
-            roughness: 0.7,
-            metalness: 0.2
-          });
-        }
-
-        console.log(`贴图应用到: ${child.name}`);
-      }
-    });
-
-  }, [fbx, modelId]);
-
-  return <primitive object={fbx} />;
+  }, [setIsLoading]);
+  
+  return (
+    <mesh position={[0, 0, 0]}>
+      <sphereGeometry args={[0.5, 16, 16]} />
+      <meshStandardMaterial color="#8b7355" wireframe />
+    </mesh>
+  );
 }
 
-// 模型选择器UI组件
-function ModelSelector({ currentModel, onChange }: { currentModel: string, onChange: (modelId: string) => void }) {
+// 模型选择器UI组件 with loading state
+function ModelSelector({ 
+  currentModel, 
+  onChange, 
+  isLoading 
+}: { 
+  currentModel: string, 
+  onChange: (modelId: string) => void,
+  isLoading: boolean 
+}) {
   return (
     <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 
                    md:bg-white/80 md:backdrop-blur-md rounded-full px-4 py-2 max-w-[90vw]">
@@ -274,7 +132,6 @@ function ModelSelector({ currentModel, onChange }: { currentModel: string, onCha
 function Scene() {
   return (
     <>
-
       {/* 博物馆 */}
       < Museum />
 
@@ -358,13 +215,35 @@ function Scene() {
 export default function ModelViewPage() {
   // 添加状态来跟踪当前选择的模型
   const [currentModel, setCurrentModel] = useState('IP1');
+  const [loadingModels, setLoadingModels] = useState<Record<string, boolean>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // 添加模型加载完成的处理器
+  const handleModelLoaded = (modelId: string) => {
+    setLoadingModels(prev => ({...prev, [modelId]: true}));
+    
+    // 如果当前显示的模型已加载完成，则设置loading为false
+    if (modelId === currentModel) {
+      setIsLoading(false);
+    }
+  };
+  
+  // 修改模型切换处理器
+  const handleModelChange = (modelId: string) => {
+    if (modelId !== currentModel) {
+      // 如果切换到未加载完成的模型，显示加载状态
+      setIsLoading(!loadingModels[modelId]);
+      setCurrentModel(modelId);
+    }
+  };
 
   return (
     <div className="w-full h-screen bg-gradient-to-b from-[#FBF8F1] to-[#F5F0E6]">
       {/* 添加模型选择器 */}
       <ModelSelector
         currentModel={currentModel}
-        onChange={setCurrentModel}
+        onChange={handleModelChange}
+        isLoading={isLoading}
       />
 
       <Canvas
@@ -400,15 +279,20 @@ export default function ModelViewPage() {
         <pointLight position={[-2, 3, 2]} intensity={0.8} color="#FFD54F" />
 
         {/* 环境贴图 - 使用中国传统风格环境 */}
-        {/* <Environment preset="sunset" /> */}
         <Environment files="/models/venice_sunset_1k.hdr" />
 
         {/* 轻雾效果 - 增加传统山水画氛围 */}
         <fog attach="fog" args={["#FBF8F1", 15, 30]} />
 
-        <Suspense fallback={null}>
-          <Scene />
-          <Model modelId={currentModel} />
+        {/* Scene is outside Suspense to prevent it from reloading */}
+        <Scene />
+        
+        {/* 替换 ModelFactory 为 AllModels */}
+        <Suspense fallback={<LoadingFallback setIsLoading={setIsLoading} />}>
+          <ModelFactory 
+            activeModelId={currentModel} 
+            onLoad={handleModelLoaded}
+          />
         </Suspense>
 
         <OrbitControls
