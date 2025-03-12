@@ -84,7 +84,7 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             {/* 移动端显示3个，桌面端显示7个 */}
-            {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7]).map((num) => (
+            {(windowSize.width < 768 ? [1, 2, 3] : [1, 2, 3, 4, 5, 6, 7, 14]).map((num) => (
               <HoverCard key={num} openDelay={0} closeDelay={100}>
                 <HoverCardTrigger asChild>
                   <div
