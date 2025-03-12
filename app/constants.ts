@@ -6,6 +6,7 @@ export const NFT_TRAIT_LAYERS = [
   { trait: '鼻子', zIndex: 3 },
   { trait: '头', zIndex: 4 },
   { trait: '佩饰', zIndex: 5 },
+  { trait: '耳朵', zIndex: 6 },
 ] as const;
 
 export const NFT_TAGS_MAP = {

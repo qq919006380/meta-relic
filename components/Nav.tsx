@@ -3,7 +3,7 @@ import { useState } from "react";
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Menu, X, View, Shapes } from "lucide-react";
+import { Menu, X, View, Shapes,Coins } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 
@@ -22,6 +22,11 @@ export default function Nav() {
             href: '/model-view',
             text: '全景观赏',
             icon: <View className="inline-block h-5 w-5" />
+        },
+        {
+            href: '/wish-pool',
+            text: '许愿池',
+            icon: <Coins className="inline-block h-5 w-5" />
         },
     ];
 
@@ -48,6 +53,7 @@ export default function Nav() {
                         <div className="hidden md:flex items-center space-x-6">
                             {navLinks
                                 .filter(link => link.href !== '/model-view') // 过滤掉/model-view链接
+                                .filter(link => link.href !== '/wish-pool') // 过滤掉/wish-pool链接
                                 .map((link) => (
                                     <a key={link.href} href={link.href} className="group relative flex items-center">
                                         {link.icon && link.icon}
@@ -75,6 +81,15 @@ export default function Nav() {
                                 >
                                     <View className="inline-block h-5 w-5" />
                                     全景观赏
+                                </Button>
+                            </Link>
+                            <Link href="/wish-pool" className="hidden mr-8 md:block">
+                                <Button
+                                    variant="default"
+                                    className="bg-museum-sand text-museum-ink hover:bg-[#251b16] hover:text-museum-sand ring-1 ring-[#f4eccf]"
+                                >
+                                    <Coins className="inline-block h-5 w-5" />
+                                    许愿池
                                 </Button>
                             </Link>
                             <Link href="/nft">

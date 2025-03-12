@@ -4,7 +4,7 @@ export default function Pavilion() {
     return (
         <>
             {/* 古代亭子 - 右侧 */}
-            <group position={[10, -1, -5]}>
+            <group position={[11, -1, -3]}>
                 {/* 亭子底座 */}
                 <mesh position={[0, 0, 0]} receiveShadow>
                     <cylinderGeometry args={[2, 2.2, 0.4, 8]} />

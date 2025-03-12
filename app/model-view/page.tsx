@@ -31,6 +31,8 @@ import Cloud from './components/Cloud';
 import MountainBg from './components/MountainBg';
 import CloudPattern from './components/CloudPattern';
 import LandscapeStone from './components/LandscapeStone';
+import ViewTower from './components/ViewTower';
+import Museum from './components/Museum';
 
 // 定义可用的模型
 const AVAILABLE_MODELS = [
@@ -213,60 +215,58 @@ function Model({ modelId }: { modelId: string }) {
 // 模型选择器UI组件
 function ModelSelector({ currentModel, onChange }: { currentModel: string, onChange: (modelId: string) => void }) {
   return (
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 
+    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 
                    md:bg-white/80 md:backdrop-blur-md rounded-full px-4 py-2 max-w-[90vw]">
-        {/* 移动端下拉菜单 - 只在移动端显示 */}
-        <div className="block md:hidden">
-          <Select value={currentModel} onValueChange={onChange}>
-            <SelectTrigger
-              className="w-full p-6 bg-white/80 backdrop-blur-lg border-[1.5px] border-[#3a2b23]/15
-               text-[#3a2b23] text-base font-medium rounded-[1.5rem] shadow-lg
-               transition-all duration-200
-               [&>span]:truncate [&>svg]:text-[#3a2b23]/50"
-            >
-              <SelectValue
-                placeholder="选择模型"
-                className="placeholder:text-[#3a2b23]/60"
-              />
-            </SelectTrigger>
-            <SelectContent
-              position="popper"
-              side="bottom"
-              className="bg-white/90 backdrop-blur-xl rounded-xl border border-[#3a2b23]/15
+      {/* 移动端下拉菜单 - 只在移动端显示 */}
+      <div className="block md:hidden">
+        <Select value={currentModel} onValueChange={onChange}>
+          <SelectTrigger
+            className="px-6 py-6 bg-[#3a2b23] text-museum-sand rounded-full shadow-lg 
+               transition-colors duration-300 
+                text-lg md:text-xl font-zhanku whitespace-nowrap"
+          >
+            <SelectValue
+              placeholder="选择模型"
+              className="placeholder:text-[#3a2b23]/60"
+            />
+          </SelectTrigger>
+          <SelectContent
+            position="popper"
+            side="bottom"
+            className="bg-white/90 text-museum-sand backdrop-blur-xl rounded-xl border border-[#3a2b23]/15
                shadow-lg max-h-[50vh] overflow-y-auto py-2 px-2
                animate-in fade-in slide-in-from-top-2"
-            >
-              {AVAILABLE_MODELS.map(model => (
-                <SelectItem
-                  key={model.id}
-                  value={model.id}
-                  className="data-[state=active]:bg-[#3a2b23]/8 data-[state=checked]:bg-[#3a2b23]/15
+          >
+            {AVAILABLE_MODELS.map(model => (
+              <SelectItem
+                key={model.id}
+                value={model.id}
+                className="data-[state=active]:bg-[#3a2b23]/8 data-[state=checked]:bg-[#3a2b23]/15
                    text-[#3a2b23]/90 text-sm px-6 py-2 hover:bg-[#3a2b23]/5 rounded-xl
                    transition-colors duration-150 border-b border-[#3a2b23]/5 last:border-0"
-                >
-                  {model.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* 桌面端按钮组 - 只在桌面端显示 */}
-        <div className="hidden md:flex gap-2 overflow-x-auto scrollbar-hide">
-          {AVAILABLE_MODELS.map(model => (
-            <button
-              key={model.id}
-              onClick={() => onChange(model.id)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap
-                      ${currentModel === model.id
-                  ? 'bg-[#3a2b23] text-white'
-                  : 'bg-white/50 text-[#3a2b23] hover:bg-[#3a2b23]/10'}`}
-            >
-              {model.name}
-            </button>
-          ))}
-        </div>
+              >
+                {model.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
+
+      {/* 桌面端按钮组 - 只在桌面端显示 */}
+      <div className="hidden md:flex gap-4 overflow-x-auto scrollbar-hide">
+        {AVAILABLE_MODELS.map(model => (
+          <button
+            key={model.id}
+            onClick={() => onChange(model.id)}
+            className="px-6 py-3 bg-[#3a2b23] text-museum-sand rounded-full shadow-lg 
+               transition-colors duration-300 
+                text-lg md:text-xl font-zhanku whitespace-nowrap"
+          >
+            {model.name}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -274,74 +274,83 @@ function ModelSelector({ currentModel, onChange }: { currentModel: string, onCha
 function Scene() {
   return (
     <>
+
+      {/* 博物馆 */}
+      < Museum />
+
+      {/* 观景塔 */}
+      < ViewTower />
+
       {/* 传统风格底座 */}
-      <Base />
+      < Base />
 
       {/* 装饰纹样底盘 */}
-      <Baseplate />
+      < Baseplate />
 
       {/* 地面 - 模拟古代地砖 */}
-      <Ground />
+      < Ground />
 
       {/* 传统装饰柱 - 东 */}
-      <DecorativePillar position={[6, -1, -2]} />
+      < DecorativePillar position={[6, -1, -2]} />
 
       {/* 传统装饰柱 - 西 */}
-      <DecorativePillar position={[-6, -1, -2]} />
+      < DecorativePillar position={[-6, -1, -2]} />
 
       {/* 传统中式牌坊 - 背景 */}
-      <MemorialArchway />
+      < MemorialArchway />
 
       {/* 古代亭子 - 右侧 */}
-      <Pavilion />
+      < Pavilion />
 
       {/* 古代石桥 - 左侧 */}
-      <StoneBridge />
+      < StoneBridge />
 
       {/* 香炉 - 模型前方 */}
-      <Censer />
+      < Censer />
 
       {/* 远景背景 - 传统山水画风格 */}
-      <Background />
+      < Background />
 
       {/* 远景山脉 - 左侧 */}
-      <Mountain position={[-10, 2, -14]} opacity={0.6} args={[8, 7, 16, 1, true]} />
+      < Mountain position={[-10, 2, -14]} opacity={0.6} args={[8, 7, 16, 1, true]} />
 
       {/* 远景山脉 - 右侧 */}
-      <Mountain position={[10, 1, -14]} opacity={0.5} args={[10, 5, 16, 1, true]} />
+      < Mountain position={[10, 1, -14]} opacity={0.5} args={[10, 5, 16, 1, true]} />
 
       {/* 点缀小石狗装饰 - 左侧 */}
-      <StoneDog position={[-3, -0.95, 2]} />
+      < StoneDog position={[-3, -0.95, 2]} />
 
       {/* 点缀小石狗装饰 - 右侧 */}
-      <StoneDog position={[3, -0.95, 2]} />
+      < StoneDog position={[3, -0.95, 2]} />
 
       {/* 添加远处的塔楼 - 远景点缀 */}
-      <Tower />
+      < Tower />
 
       {/* 传统松树群 - 右前方 */}
-      <TreeRight />
+      < TreeRight />
 
       {/* 传统松树群 - 左前方 */}
-      <TreeLeft />
+      < TreeLeft />
 
       {/* 传统灯笼 - 成对放置 */}
-      <Lantern />
+      < Lantern />
 
       {/* 云雾效果 - 远景装饰 */}
-      <Cloud />
+      < Cloud />
 
       {/* 更多远景山脉 - 层叠效果 */}
-      <MountainBg />
+      < MountainBg />
 
       {/* 装饰云纹图案 - 地面上 */}
-      <CloudPattern />
+      < CloudPattern />
 
       {/* 景观石 - 右侧装饰 */}
-      <LandscapeStone position1={[6, -1, 6]} position2={[0.8, 0.6, 0.3]} position3={[-0.5, 0.3, 0.5]} args1={[1.2]} args2={[0.7]} args3={[0.6]} />
+      < LandscapeStone position1={[6, -1, 6]} position2={[0.8, 0.6, 0.3]} position3={[-0.5, 0.3, 0.5]} args1={[1.2]} args2={[0.7]} args3={[0.6]} />
+      < LandscapeStone position1={[10, -1, 3]} position2={[0.8, 0.6, 0.3]} position3={[-0.5, 0.3, 0.5]} args1={[1.2]} args2={[0.7]} args3={[0.6]} />
 
       {/* 景观石 - 左侧装饰 */}
-      <LandscapeStone position1={[-6, -1, 6]} position2={[0.6, 0.7, -0.2]} position3={[-0.7, 0.4, 0.3]} args1={[1]} args2={[0.6]} args3={[0.5]} />
+      < LandscapeStone position1={[-6, -1, 6]} position2={[0.6, 0.7, -0.2]} position3={[-0.7, 0.4, 0.3]} args1={[1]} args2={[0.6]} args3={[0.5]} />
+      < LandscapeStone position1={[-10, -1, 3]} position2={[0.8, 0.6, 0.3]} position3={[-0.5, 0.3, 0.5]} args1={[1.2]} args2={[0.7]} args3={[0.6]} />
     </>
   );
 }

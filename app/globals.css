@@ -241,6 +241,7 @@ body {
     line-height: 1.8;
     margin-bottom: 1.5em;
     color: rgb(var(--color-text-primary));
+    text-align: justify;    /* 启用两端对齐  使文字均匀分布在容器宽度内 */
 }
 
 .article-content ul{

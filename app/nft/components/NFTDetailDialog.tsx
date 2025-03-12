@@ -152,7 +152,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
             </div>
 
             <Tabs defaultValue={NFT_TRAIT_LAYERS[0].trait} className="w-full">
-              <TabsList className="grid grid-cols-3 md:grid-cols-5 h-auto gap-1 bg-museum-stone/5">
+              <TabsList className="grid grid-cols-3 h-auto gap-1 bg-museum-stone/5">
                 {NFT_TRAIT_LAYERS.map(({ trait }) => (
                   <TabsTrigger
                     key={trait}
