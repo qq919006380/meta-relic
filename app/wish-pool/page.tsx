@@ -409,7 +409,7 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
   return (
     <>
       {/* 天空和环境 */}
-      <Environment preset="sunset" />
+      <Environment files="/models/venice_sunset_1k.hdr" />
       <fog attach="fog" args={['#FBF8F1', 15, 30]} />
 
       {/* 地面 */}
