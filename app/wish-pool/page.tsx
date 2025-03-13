@@ -138,9 +138,9 @@ function Mountain({ position, scale = 1 }: { position: [number, number, number];
 }
 
 // 寺庙组件
-function Temple({ position = [0, 0, -15], scale = 1 }) {
+function Temple({ position = [0, 0, -15] as [number, number, number], scale = 1 }: { position?: [number, number, number]; scale?: number }) {
   return (
-    <group position={position} scale={[scale, scale, scale]}>
+    <group position={position} scale={[scale, scale, scale] as [number, number, number]}>
       {/* 寺庙台基 - 更宽更大的基座 */}
       <mesh position={[0, 0, 0]} receiveShadow castShadow>
         <boxGeometry args={[16, 0.5, 12]} />
@@ -631,8 +631,16 @@ function FloatingPetal({ position }: { position: [number, number, number] }) {
   );
 }
 
+// 添加接口定义
+interface LotusFlowerProps {
+  position?: [number, number, number];
+  scale?: number;
+  rotation?: number;
+  bloomLevel?: number;
+}
+
 // 莲花组件
-function LotusFlower({ position = [0, 0, 0], scale = 1, rotation = 0, bloomLevel = 1 }) {
+function LotusFlower({ position = [0, 0, 0] as [number, number, number], scale = 1, rotation = 0, bloomLevel = 1 }: LotusFlowerProps) {
   // 基础颜色
   const petalColor = "#f8bbd0";
   const centerColor = "#fdd835";
@@ -640,7 +648,11 @@ function LotusFlower({ position = [0, 0, 0], scale = 1, rotation = 0, bloomLevel
   const leafColor = "#1b5e20";
 
   return (
-    <group position={position} rotation={[0, rotation, 0]} scale={[scale, scale, scale]}>
+    <group 
+      position={position} 
+      rotation={[0, rotation, 0] as [number, number, number]} 
+      scale={[scale, scale, scale] as [number, number, number]}
+    >
       {/* 莲茎 */}
       <mesh position={[0, -0.1, 0]} castShadow>
         <cylinderGeometry args={[0.03, 0.05, 0.3, 8]} />
@@ -748,11 +760,21 @@ function LotusFlower({ position = [0, 0, 0], scale = 1, rotation = 0, bloomLevel
 }
 
 // 莲叶组件
-function LotusLeaf({ position = [0, 0, 0], scale = 1, rotation = 0 }) {
+interface LotusLeafProps {
+  position?: [number, number, number];
+  scale?: number;
+  rotation?: number;
+}
+
+function LotusLeaf({ position = [0, 0, 0] as [number, number, number], scale = 1, rotation = 0 }: LotusLeafProps) {
   const leafColor = "#1b5e20";
 
   return (
-    <group position={position} rotation={[0, rotation, 0]} scale={[scale, scale, scale]}>
+    <group 
+      position={position} 
+      rotation={[0, rotation, 0] as [number, number, number]} 
+      scale={[scale, scale, scale] as [number, number, number]}
+    >
       {/* 叶柄 */}
       <mesh position={[0, -0.1, -0.15]} rotation={[Math.PI / 8, 0, 0]} castShadow>
         <cylinderGeometry args={[0.03, 0.05, 0.4, 8]} />
@@ -824,7 +846,7 @@ function LotusLeaf({ position = [0, 0, 0], scale = 1, rotation = 0 }) {
 }
 
 // 莲花组 - 组合多个莲花和叶子
-function LotusGroup({ position = [0, 0, 0] }) {
+function LotusGroup({ position = [0, 0, 0] as [number, number, number] }) {
   return (
     <group position={position}>
       {/* 莲花 - 不同的开放程度和旋转角度 */}
@@ -990,7 +1012,7 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
     , []);
 
   // 蝴蝶
-  const butterfly = React.useMemo(() => {
+  const butterfly = React.useMemo(() => (
     [...Array(5)].map((_, i) => (
       <Butterfly
         key={`butterfly-${i}`}
@@ -1001,10 +1023,10 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
         ]}
       />
     ))
-  }, [])
+  ), []);
 
   // 花瓣
-  const petal = React.useMemo(() => {
+  const petal = React.useMemo(() => (
     [...Array(20)].map((_, i) => (
       <FloatingPetal
         key={`petal-${i}`}
@@ -1015,7 +1037,7 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
         ]}
       />
     ))
-  }, [])
+  ), []);
 
   return (
     <>
@@ -1086,10 +1108,10 @@ function WishPoolScene({ onCoinThrow }: { onCoinThrow: () => void }) {
       ].map((config, i) => (
         <group key={i}>
           {/* 石狗 */}
-          <SimpleStoneDog position={config.position} rotation={config.rotation} />
+          <SimpleStoneDog position={config.position as [number, number, number]} rotation={config.rotation} />
 
           {/* 装饰柱 */}
-          <group position={config.position} rotation={[0, config.rotation + Math.PI / 4, 0]}>
+          <group position={config.position as [number, number, number]} rotation={[0, config.rotation + Math.PI / 4, 0]}>
             <mesh castShadow>
               <boxGeometry args={[0.4, 1.5, 0.4]} />
               <meshStandardMaterial color="#8B7355" roughness={0.7} />
