@@ -1,12 +1,13 @@
 export const NFT_TAGS = ['守', '镇', '勇', '忠', '勤', '福', '尊'] as const;
 
 export const NFT_TRAIT_LAYERS = [
+  { trait: '耳朵', zIndex: 0 },
   { trait: '身体', zIndex: 1 },
   { trait: '眼睛', zIndex: 2 },
   { trait: '鼻子', zIndex: 3 },
   { trait: '头', zIndex: 4 },
   { trait: '佩饰', zIndex: 5 },
-  { trait: '耳朵', zIndex: 6 },
+  
 ] as const;
 
 export const NFT_TAGS_MAP = {
