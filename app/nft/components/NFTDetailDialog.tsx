@@ -139,7 +139,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
           </div>
 
           {/* 右侧属性选择 */}
-          <div className="p-4 md:p-6 overflow-y-auto max-h-[60vh] md:max-h-none">
+          <div className="p-4 md:p-6 max-h-[60vh] md:max-h-none">
             <div className="flex items-center  space-x-3 mb-4">
               <h2 className="text-lg md:text-xl font-bold text-museum-ink">{nft.name}</h2>
               <Button
@@ -165,7 +165,7 @@ export function NFTDetailDialog({ nft, onOpenChange, allMetadata }: NFTDetailDia
               </TabsList>
 
               {NFT_TRAIT_LAYERS.map(({ trait }) => (
-                <TabsContent key={trait} value={trait} className="mt-4">
+                <TabsContent key={trait} value={trait} className="mt-2 p-1 overflow-y-scroll h-[210px]">
                   <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
                     {getTraitOptions(allMetadata, trait).map((option) => {
                       const isSelected = currentTraits[trait] === option;

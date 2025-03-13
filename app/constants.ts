@@ -1,4 +1,4 @@
-export const NFT_TAGS = ['守', '镇', '勇', '忠', '勤', '福', '尊'] as const;
+export const NFT_TAGS = ['守', '镇', '勇', '忠', '勤', '福', '尊','丰'] as const;
 
 export const NFT_TRAIT_LAYERS = [
   { trait: '耳朵', zIndex: 0 },
@@ -17,7 +17,8 @@ export const NFT_TAGS_MAP = {
   '忠': '忠肝义胆',
   '勤': '勤勤恳恳',
   '福': '福星高照',
-  '尊': '荣华富贵'
+  '尊': '荣华富贵',
+  '丰': '五谷丰登'
 } as const;
 
 export const BOTTOM_TAGS = [
@@ -69,3 +70,10 @@ export const IP_TAGS = [
   }
 ] as const;
 
+// 定义石狗类型
+export const STONE_DOGS = [
+  { id: 'guardian', name: '守护石狗', description: '用于保护安全、家庭和健康的愿望', modelId: 'IP1' },
+  { id: 'diligent', name: '勤劳石狗', description: '用于学业、工作和事业成功的愿望', modelId: 'IP3' },
+  { id: 'loyal', name: '忠诚石狗', description: '用于感情、友谊和忠诚相关的愿望', modelId: 'IP4' },
+  { id: 'brave', name: '勇敢石狗', description: '用于克服困难、勇气和挑战的愿望', modelId: 'IP7' },
+] as const;
