@@ -588,8 +588,7 @@ export default function WishPoolPage() {
         <motion.button
           onClick={toggleWishList}
           className="fixed right-0 top-1/2 transform -translate-y-1/2 bg-[#8B4513] text-white py-3 px-2 rounded-l-lg shadow-lg z-10"
-          whileHover={{ x: -5 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ backgroundColor: "#A0522D" }}
         >
           <div className="flex flex-col items-center">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
