@@ -24,11 +24,11 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
       <DialogTitle className="sr-only">
         {nft.name} - NFT Details
       </DialogTitle>
-      <DialogContent className="rounded-xl sm:max-w-[700px] w-[80vw]  sm:min-h-[410px] p-0 gap-0 bg-[#a2855d] border-museum-stone/30 overflow-hidden [&>button]:hidden">
+      <DialogContent className="rounded-xl max-w-[85vw] sm:max-w-[600px] sm:min-h-[410px] p-0 gap-0 bg-[#a2855d] border-museum-stone/30 overflow-hidden [&>button]:hidden">
         <div className="relative">
           {/* 顶部标题 */}
           <div className="bg-museum-ink text-white h-[15%] sm:h-[27%] flex items-center">
-            <h2 className="text-3xl sm:text-6xl py-2 px-4 font-bold tracking-wider font-condensed flex flex-wrap sm:flex-nowrap justify-between w-full"
+            <h2 className="text-2xl sm:text-5xl py-2 px-4 font-bold tracking-wider font-condensed flex flex-wrap sm:flex-nowrap justify-between w-full"
               style={{
                 fontFamily: "'Oswald', sans-serif",
                 WebkitTextStroke: '3px white',
@@ -83,8 +83,6 @@ export function NFTIntroDialog({ nft, onOpenChange }: NFTIntroDialogProps) {
                 ))}
               </div>
             </div>
-
-
           </div>
 
           {/* 右侧图片 - 移动端居中显示，桌面端靠右 */}
